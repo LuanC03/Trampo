@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DadosFornecedorDTO } from '../../models/dados-fornecedor.dto';
 
 /**
  * Generated class for the CadastroFornecedorPage page.
@@ -15,14 +16,25 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CadastroFornecedorPage {
 
-  public anArray:any=[];
-  public data:boolean;
+  especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
+  
+  dados_fornecedor : DadosFornecedorDTO = {
+    foto : "",
+    nome : "",
+    username : "",
+    email : "",
+    senha : "",
+    conf_senha : "",
+    especialidades : []
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+
   }
 
-  Add(){
-   this.anArray.push({'value':''});
+  cadastrar(){
+    console.log(this.dados_fornecedor);
   }
+
 
 }
