@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { DadosFornecedorDTO } from '../../models/dados-fornecedor.dto';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
@@ -11,7 +11,7 @@ export class CadastroFornecedorPage {
 
   especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
   
-  dados_fornecedor : DadosFornecedorDTO = {
+  dados_fornecedor : DadosUsuarioDTO = {
     foto : "",
     nome : "",
     username : "",

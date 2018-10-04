@@ -1,4 +1,4 @@
-export interface DadosFornecedorDTO {
+export interface DadosUsuarioDTO {
     foto : string;
     nome : string;
     username : string;
