@@ -2,6 +2,8 @@ package br.com.ufcg.repository;
 
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Servico;
+import br.com.ufcg.domain.enums.TipoStatus;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -20,5 +22,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
 
     @Query(value="SELECT s FROM Servico s WHERE s.data=:dt AND s.horario=:hr AND s.cliente=:user AND s.tipo=:tipo")
     Servico findServico(@Param("dt") LocalDate data, @Param("hr") LocalTime hora, @Param("user") Cliente user, @Param("tipo") String tipo);
+    
+    @Query(value="SELECT a FROM Servico a WHERE a.cliente=:user AND a.status=:stt")
+	List<Servico> findServicosCliente(@Param("user") Cliente user, @Param("stt") TipoStatus status);
 
 }

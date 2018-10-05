@@ -1,10 +1,14 @@
 package br.com.ufcg.domain;
 
 import javax.persistence.*;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Objects;
 
 @Entity
 @Table(name = "TAB_ENDERECO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Endereco {
 
     @Id

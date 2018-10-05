@@ -6,8 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "TAB_ESPECIALIDADE")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Especialidade {
 	
 	@Id
