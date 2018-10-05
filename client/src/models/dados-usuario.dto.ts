@@ -5,5 +5,5 @@ export interface DadosUsuarioDTO {
     email : string;
     senha : string;
     conf_senha : string;
-    especialidades : string[];
+    listaEspecialidades : string[];
 }

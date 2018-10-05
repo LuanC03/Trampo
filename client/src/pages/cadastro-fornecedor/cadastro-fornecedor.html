@@ -24,7 +24,7 @@
 
         <ion-item class="item">
           <ion-label floating>Nome Completo</ion-label>
-          <ion-input type="text" name="nome" pattern=".{6,}" [(ngModel)]="dados_fornecedor.nome" required #name="ngModel"
+          <ion-input type="text" name="nome" pattern=".{6,}" [(ngModel)]="dados_fornecedor.nomeCompleto" required #name="ngModel"
                     [class.invalid]="name.errors && name.dirty"></ion-input>
         </ion-item>
         <ion-item class="error-message" *ngIf="name.errors?.required && name.dirty">
@@ -32,7 +32,7 @@
         </ion-item>
         <ion-item>
           <ion-label floating>Nome de Usuário</ion-label>
-          <ion-input type="text" name="nomeusuario" pattern=".{4,}" [(ngModel)]="dados_fornecedor.username" required #username="ngModel"
+          <ion-input type="text" name="nomeusuario" pattern=".{4,}" [(ngModel)]="dados_fornecedor.login" required #username="ngModel"
                     [class.invalid]="username.errors && username.dirty"></ion-input>
         </ion-item>
         <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
@@ -49,7 +49,7 @@
 
         <ion-item>
           <ion-label floating>Especialidades</ion-label>
-          <ion-select name="specs" [(ngModel)]="dados_fornecedor.especialidades" multiple="true">
+          <ion-select name="specs" [(ngModel)]="dados_fornecedor.listaEspecialidades" multiple="true">
             <ion-option *ngFor="let especialidade of especialidades">{{especialidade}}</ion-option>
           </ion-select>
         </ion-item>

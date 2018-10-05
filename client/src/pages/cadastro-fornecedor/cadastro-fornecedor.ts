@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 
 @IonicPage()
 @Component({
@@ -12,27 +13,30 @@ export class CadastroFornecedorPage {
   especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
   
   dados_fornecedor : DadosUsuarioDTO = {
-    foto : "",
-    nome : "",
-    username : "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
     email : "",
     senha : "",
     conf_senha : "",
-    especialidades : []
+    listaEspecialidades : []
   };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public cadastro: CadastroUsuarioService) {
 
   }
 
   cadastrar(){
     let alert : boolean = false;
     let myMessage : string = "";
-    if (this.dados_fornecedor.nome.length == 0){
+    if (this.dados_fornecedor.nomeCompleto.length == 0){
       alert = true;
       myMessage += "*Nome inválido\n";
     }
-    if (this.dados_fornecedor.username.length < 4){
+    if (this.dados_fornecedor.login.length < 4){
       alert = true;
       myMessage += "*Username inválido\n"
     }
@@ -55,6 +59,10 @@ export class CadastroFornecedorPage {
       alertMessage.present();
       return;
     }
+    this.cadastro.cadastrar_fornecedor(this.dados_fornecedor)
+    .subscribe(
+      //this.navCtrl.setRoot('LoginPage');
+    );
     console.log(this.dados_fornecedor);
   }
 

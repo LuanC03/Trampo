@@ -9,9 +9,16 @@ export class CadastroUsuarioService {
     constructor(public http: HttpClient){
     }
 
-    cadastrar(dados : DadosUsuarioDTO){
+    cadastrar_cliente(dados : DadosUsuarioDTO){
         return this.http.post(
             `${API_CONFIG.baseUrl}/api/cliente`,
+            dados);
+        
+    }
+
+    cadastrar_fornecedor(dados : DadosUsuarioDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/api/fornecedor`,
             dados);
         
     }

@@ -17,7 +17,7 @@ export class CadastroClientePage {
     email : "",
     senha : "",
     conf_senha : "",
-    especialidades : []
+    listaEspecialidades : []
   };
 
   constructor(public navCtrl: NavController, 
@@ -59,7 +59,7 @@ export class CadastroClientePage {
       alertMessage.present();
       return;
     }
-    this.cadastro.cadastrar(this.dados_cliente)
+    this.cadastro.cadastrar_cliente(this.dados_cliente)
     .subscribe(
       //this.navCtrl.setRoot('LoginPage');
     );
