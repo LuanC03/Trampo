@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 
 @IonicPage()
 @Component({
@@ -10,16 +11,18 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 export class CadastroClientePage {
 
   dados_cliente : DadosUsuarioDTO = {
-    foto : "",
-    nome : "",
-    username : "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
     email : "",
     senha : "",
     conf_senha : "",
     especialidades : []
   };
 
-  constructor(public navCtrl: NavController, public alertCtrl: AlertController) {
+  constructor(public navCtrl: NavController, 
+    public alertCtrl: AlertController,
+    public cadastro: CadastroUsuarioService) {
   }
 
   ionViewDidLoad() {
@@ -29,11 +32,11 @@ export class CadastroClientePage {
   cadastrar(){
     let alert : boolean = false;
     let myMessage : string = "";
-    if (this.dados_cliente.nome.length == 0){
+    if (this.dados_cliente.nomeCompleto.length == 0){
       alert = true;
       myMessage += "*Nome inválido\n";
     }
-    if (this.dados_cliente.username.length < 4){
+    if (this.dados_cliente.login.length < 4){
       alert = true;
       myMessage += "*Username inválido\n"
     }
@@ -56,6 +59,10 @@ export class CadastroClientePage {
       alertMessage.present();
       return;
     }
+    this.cadastro.cadastrar(this.dados_cliente)
+    .subscribe(
+      //this.navCtrl.setRoot('LoginPage');
+    );
     console.log(this.dados_cliente);
   }
 
