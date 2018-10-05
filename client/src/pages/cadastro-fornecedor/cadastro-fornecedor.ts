@@ -60,10 +60,28 @@ export class CadastroFornecedorPage {
       return;
     }
     this.cadastro.cadastrar_fornecedor(this.dados_fornecedor)
-    .subscribe(
-      //this.navCtrl.setRoot('LoginPage');
-    );
-    console.log(this.dados_fornecedor);
+    .subscribe(response => {
+      console.log(response.headers.get('Cadastro'));
+      let alertMessage = this.alertCtrl.create({
+        title: "Cadastro efetuado com sucesso",
+        message: "Bem vindo!",
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+      this.navCtrl.setRoot('LoginPage');
+    },
+    error => {
+      let alertMessage = this.alertCtrl.create({
+        title: "Problema no cadastro",
+        message: error.message,
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+    });
   }
 
 

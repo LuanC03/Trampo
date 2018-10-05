@@ -12,14 +12,23 @@ export class CadastroUsuarioService {
     cadastrar_cliente(dados : DadosUsuarioDTO){
         return this.http.post(
             `${API_CONFIG.baseUrl}/api/cliente`,
-            dados);
+            dados,
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
         
     }
 
     cadastrar_fornecedor(dados : DadosUsuarioDTO){
         return this.http.post(
             `${API_CONFIG.baseUrl}/api/fornecedor`,
-            dados);
+            dados,
+            {
+                observe: 'response',
+                responseType: 'text'
+            });
+            
         
     }
 }

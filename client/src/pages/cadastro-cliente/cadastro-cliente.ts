@@ -60,8 +60,29 @@ export class CadastroClientePage {
       return;
     }
     this.cadastro.cadastrar_cliente(this.dados_cliente)
-    .subscribe(
-      //this.navCtrl.setRoot('LoginPage');
+    .subscribe(response => {
+      console.log(response.headers.get('Cadastro'));
+      let alertMessage = this.alertCtrl.create({
+        title: "Cadastro efetuado com sucesso",
+        message: "Bem vindo!",
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+      this.navCtrl.setRoot('LoginPage');
+    },
+    error => {
+      let alertMessage = this.alertCtrl.create({
+        title: "Problema no cadastro",
+        message: error.message,
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+    }
+      
     );
     console.log(this.dados_cliente);
   }
