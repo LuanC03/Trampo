@@ -61,7 +61,7 @@ export class CadastroClientePage {
     }
     this.cadastro.cadastrar_cliente(this.dados_cliente)
     .subscribe(response => {
-      console.log(response.headers.get('Cadastro'));
+      console.log(response.headers.get('Authorization'));
       let alertMessage = this.alertCtrl.create({
         title: "Cadastro efetuado com sucesso",
         message: "Bem vindo!",

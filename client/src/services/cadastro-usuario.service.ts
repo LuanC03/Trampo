@@ -15,7 +15,7 @@ export class CadastroUsuarioService {
             dados,
             {
                 observe: 'response',
-                responseType: 'text'
+                responseType: 'json'
             });
         
     }
@@ -26,7 +26,7 @@ export class CadastroUsuarioService {
             dados,
             {
                 observe: 'response',
-                responseType: 'text'
+                responseType: 'json'
             });
             
         

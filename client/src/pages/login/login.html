@@ -14,7 +14,7 @@
 
           <ion-item>
             <ion-label floating>Usuário</ion-label>
-            <ion-input type="text" name="username" pattern=".{4,}" [(ngModel)]="creds.username" required #username="ngModel"
+            <ion-input type="text" name="username" pattern=".{4,}" [(ngModel)]="creds.login" required #username="ngModel"
                     [class.invalid]="username.errors && username.dirty"></ion-input>
           </ion-item>
           <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
@@ -22,7 +22,7 @@
           </ion-item>
           <ion-item>
             <ion-label floating>Senha</ion-label>
-            <ion-input type="password" name="password" pattern=".{4,}" [(ngModel)]="creds.password" required #password="ngModel"
+            <ion-input type="password" name="password" pattern=".{4,}" [(ngModel)]="creds.senha" required #password="ngModel"
                     [class.invalid]="password.errors && password.dirty"></ion-input>
           </ion-item>
           <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">

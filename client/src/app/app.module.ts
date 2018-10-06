@@ -7,6 +7,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { CadastroUsuarioService } from '../services/cadastro-usuario.service';
 import { HttpClientModule } from '@angular/common/http';
+import { AutenticacaoService } from '../services/autenticacao.service';
+import { StorageService } from '../services/storage.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    CadastroUsuarioService
+    CadastroUsuarioService,
+    AutenticacaoService,
+    StorageService
   ]
 })
 export class AppModule {}
