@@ -73,9 +73,10 @@ export class CadastroClientePage {
       this.navCtrl.setRoot('LoginPage');
     },
     error => {
+      console.log(error)
       let alertMessage = this.alertCtrl.create({
         title: "Problema no cadastro",
-        message: error.message,
+        message: error.error.message,
         buttons: [{
           text: 'Ok'
         }]
@@ -84,7 +85,6 @@ export class CadastroClientePage {
     }
       
     );
-    console.log(this.dados_cliente);
   }
 
 }

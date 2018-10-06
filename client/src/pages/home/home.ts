@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AutenticacaoService } from '../../services/autenticacao.service';
+import { StorageService } from '../../services/storage.service';
 
 
 /**
@@ -18,12 +19,18 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 })
 export class HomePage {
 
+  user: string;
+
   constructor(public navCtrl: NavController,
-    public autenticacaoService: AutenticacaoService)     {
+    public autenticacaoService: AutenticacaoService,
+    public storageService: StorageService)     {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    let localUser = this.storageService.getLocalUser();
+    if (localUser && localUser.email){
+      this.user = localUser.email;
+    }
   }
 
   logout(){

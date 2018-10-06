@@ -75,7 +75,7 @@ export class CadastroFornecedorPage {
     error => {
       let alertMessage = this.alertCtrl.create({
         title: "Problema no cadastro",
-        message: error.message,
+        message: error.error.message,
         buttons: [{
           text: 'Ok'
         }]
