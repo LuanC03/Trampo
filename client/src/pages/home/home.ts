@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 
@@ -18,7 +18,8 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController)     {
+  constructor(public navCtrl: NavController,
+    public autenticacaoService: AutenticacaoService)     {
   }
 
   ionViewDidLoad() {
@@ -26,7 +27,7 @@ export class HomePage {
   }
 
   logout(){
-
+    this.autenticacaoService.logout();
     this.navCtrl.setRoot(LoginPage);
   }
 
