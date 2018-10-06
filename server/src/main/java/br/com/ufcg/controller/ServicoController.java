@@ -33,10 +33,13 @@ public class ServicoController {
     	
     	try {
     		Cliente cliente = (Cliente) request.getAttribute("user");
-    		List<Servico> servicosDoCliente = servicoService.getServicosCliente(cliente, TipoStatus.EM_ABERTO);
+    		List<Servico> servicosDoCliente = servicoService.getServicosCliente(cliente);
     		List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoCliente);
+    		
         	response = new Response("Servicos em aberto do cliente", HttpStatus.ACCEPTED.value(), servicosOrdenados);
+      
         	return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        	
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -62,6 +65,7 @@ public class ServicoController {
 
             response = new Response("Serviço cadastrado com sucesso !", HttpStatus.OK.value(), servicoCadastrado);
             return new ResponseEntity<>(response, HttpStatus.CREATED);
+            
         } catch(Exception e) {
             response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
