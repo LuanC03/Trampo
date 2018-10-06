@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { AutenticacaoService } from '../../services/autenticacao.service';
+import { StorageService } from '../../services/storage.service';
 
 
 /**
@@ -17,15 +19,23 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  user: string;
+
+  constructor(public navCtrl: NavController,
+    public autenticacaoService: AutenticacaoService,
+    public storageService: StorageService)     {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    let localUser = this.storageService.getLocalUser();
+    if (localUser && localUser.email){
+      this.user = localUser.email;
+    }
   }
 
-  login(){
-    this.navCtrl.push(LoginPage);
+  logout(){
+    this.autenticacaoService.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
 
 }

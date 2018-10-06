@@ -1,6 +1,6 @@
 
 <ion-header class="home-header">
-    <h5>Olá USUARIO</h5> 
+    <h5>Olá {{ user }}</h5> 
 </ion-header>
 
 <ion-content class="home-content">
@@ -9,7 +9,7 @@
     <ion-list class="form-logout">
 
       <ion-item>    	
-        <button class="logout" ion-button round full color="pink" (click)="login()">
+        <button class="logout" ion-button round full color="pink" (click)="logout()">
 				LOGOUT
 	            &nbsp; <!-- non-breaking space -->  
 				<ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
