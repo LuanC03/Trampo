@@ -1,6 +1,7 @@
 package br.com.ufcg.controller;
 
 import br.com.ufcg.domain.Cliente;
+import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.enums.TipoStatus;
 import br.com.ufcg.service.ServicoService;
@@ -71,5 +72,35 @@ public class ServicoController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
         }
 
+    }
+    
+    @RequestMapping(value = "/api/servicos/fornecedor/{login}")
+    public ResponseEntity<Response> getServicosDisponiveisForThisFornecedor(HttpServletRequest request, @PathVariable("login") String login) {
+  
+    	Response response;
+    	
+    	try {
+    		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		
+    		if(fornecedor.getLogin().equals(login)) {
+    			List<Servico> servicosDoFornecedor = servicoService.getServicosFornecedor(fornecedor);
+    			
+    			if(!servicosDoFornecedor.isEmpty()) {
+    				List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
+    				response = new Response("Servicos em aberto disponiveis para voce", HttpStatus.ACCEPTED.value(), servicosOrdenados);
+        			return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+    			}
+    			
+    			response = new Response("Nao encontramos servicos disponiveis para voce", HttpStatus.ACCEPTED.value());
+    			return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+    		}
+    		
+    		response = new Response("Acesso negado: login nao autenticado", HttpStatus.UNAUTHORIZED.value());
+    		return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
     }
 }
