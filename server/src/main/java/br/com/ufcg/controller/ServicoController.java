@@ -26,8 +26,33 @@ public class ServicoController {
 
     @Autowired
     private ServicoService servicoService;
+    
+    @RequestMapping(value = "api/servicos/fornecedor/{login}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response> setServicoParaFornecedor(HttpServletRequest request, @PathVariable("login") String login, @RequestBody Servico servico) {
+    	Response response;
+    	
+    	try {
+    		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		
+    		if(servicoService.servicoEhValidoParaFornecedor(servico, fornecedor)) {
+    			Servico servicoAtualizado = servicoService.getServico(servico);
+    			servicoAtualizado = servicoService.setServicoParaFornecedor(servico, fornecedor);
+    			
+    			response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+    			
+    		} else {
+    			response = new Response("Esse servico nao esta disponivel para voce.", HttpStatus.BAD_REQUEST.value(), servico);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    		}
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
 
-    @RequestMapping(value = "/api/servicos/{login}")
+    @RequestMapping(value = "/api/servicos/cliente/{login}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response> getServicosFromCliente(HttpServletRequest request, @PathVariable("login") String login) {
   
     	Response response;
@@ -52,7 +77,7 @@ public class ServicoController {
     	return servicoService.getAll();
     }
     
-    @RequestMapping(value = "/api/servicos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = "/api/servicos/cliente", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> cadastrarServico(HttpServletRequest request, @RequestBody Servico servico) {
 
         Response response;
@@ -74,7 +99,7 @@ public class ServicoController {
 
     }
     
-    @RequestMapping(value = "/api/servicos/fornecedor/{login}")
+    @RequestMapping(value = "/api/servicos/fornecedor/{login}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response> getServicosDisponiveisForThisFornecedor(HttpServletRequest request, @PathVariable("login") String login) {
   
     	Response response;
