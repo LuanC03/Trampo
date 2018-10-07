@@ -4,11 +4,14 @@ import javax.persistence.DiscriminatorValue;
 import javax.persistence.Embeddable;
 import javax.persistence.Entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
 @DiscriminatorValue(value = "Cliente")
 @Embeddable
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente extends Usuario {
 
 	public Cliente(String nomeCompleto, String login, String fotoPerfil, 

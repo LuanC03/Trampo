@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,13 +22,37 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 @RestController
-@RequestMapping("/api/servicos")
 public class ServicoController {
 
     @Autowired
     private ServicoService servicoService;
 
-    @RequestMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = "/api/servicos/{login}")
+    public ResponseEntity<Response> getServicosFromCliente(HttpServletRequest request, @PathVariable("login") String login) {
+  
+    	Response response;
+    	
+    	try {
+    		Cliente cliente = (Cliente) request.getAttribute("user");
+    		List<Servico> servicosDoCliente = servicoService.getServicosCliente(cliente);
+    		List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoCliente);
+    		
+        	response = new Response("Servicos em aberto do cliente", HttpStatus.ACCEPTED.value(), servicosOrdenados);
+      
+        	return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
+        	
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @GetMapping(value = "/api/servicos", produces="application/json")
+    public List<Servico> getServicos() {
+    	return servicoService.getAll();
+    }
+    
+    @RequestMapping(value = "/api/servicos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> cadastrarServico(HttpServletRequest request, @RequestBody Servico servico) {
 
         Response response;
@@ -40,7 +65,8 @@ public class ServicoController {
             Servico servicoCadastrado = servicoService.criarServico(servico);
 
             response = new Response("Serviço cadastrado com sucesso !", HttpStatus.OK.value(), servicoCadastrado);
-            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            
         } catch(Exception e) {
             response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
