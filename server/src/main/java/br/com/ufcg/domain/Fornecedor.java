@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
 @DiscriminatorValue(value = "Fornecedor")
 @Embeddable
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Fornecedor extends Usuario {
 	
 	@ManyToMany(cascade = { CascadeType.PERSIST, CascadeType.MERGE }, fetch = FetchType.EAGER)

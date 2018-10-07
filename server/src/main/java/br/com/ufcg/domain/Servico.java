@@ -2,7 +2,7 @@ package br.com.ufcg.domain;
 
 import br.com.ufcg.domain.enums.TipoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -12,6 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "TAB_SERVICO")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Servico {
 
     @Id
@@ -148,4 +149,8 @@ public class Servico {
     public int hashCode() {
         return Objects.hash(data, horario, valor, endereco, tipo);
     }
+
+
 }
+
+
