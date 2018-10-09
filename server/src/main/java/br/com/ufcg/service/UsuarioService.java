@@ -24,6 +24,8 @@ public class UsuarioService {
 	@Autowired
 	UsuarioRepository usuarioRepository;
 	
+
+	
 	public Usuario getByLogin(String login) throws Exception {
 		Usuario usuario = usuarioRepository.findByLogin(login);
 		
@@ -48,6 +50,8 @@ public class UsuarioService {
 		
 		return null;
 	}
+	
+	
 	
 	private boolean usuarioEhUnico(Usuario usuario) throws Exception {
 		

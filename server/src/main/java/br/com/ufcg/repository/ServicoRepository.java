@@ -22,10 +22,13 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
     @Query(value="SELECT s FROM Servico s WHERE s.data=:dt AND s.horario=:hr AND s.cliente=:user AND s.tipo=:tipo")
     Servico findServico(@Param("dt") LocalDate data, @Param("hr") LocalTime hora, @Param("user") Cliente user, @Param("tipo") String tipo);
     
-    @Query(value="SELECT a FROM Servico a WHERE a.cliente=:user")
+    @Query(value="SELECT s FROM Servico s WHERE s.cliente=:user")
 	List<Servico> findServicosCliente(@Param("user") Cliente user);
     
     @Query(value="SELECT s FROM Servico s WHERE s.data=:dt AND s.horario=:hr AND s.tipo=:tipo")
     Servico findServico(@Param("dt") LocalDate data, @Param("hr") LocalTime hora, @Param("tipo") String tipo);
+    
+    @Query(value="SELECT s FROM Servico s WHERE s.id=:id")
+    Servico findByID(@Param("id") long id);
 
 }

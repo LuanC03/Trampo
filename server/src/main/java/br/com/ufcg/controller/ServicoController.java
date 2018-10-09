@@ -27,15 +27,15 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
     
-    @RequestMapping(value = "api/servicos/fornecedor/{login}", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Response> setServicoParaFornecedor(HttpServletRequest request, @PathVariable("login") String login, @RequestBody Servico servico) {
+    @RequestMapping(value = "/api/servicos/fornecedor", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response> setServicoParaFornecedor(HttpServletRequest request, @RequestBody Servico servico) {
     	Response response;
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
     		
     		if(servicoService.servicoEhValidoParaFornecedor(servico, fornecedor)) {
-    			Servico servicoAtualizado = servicoService.getServico(servico);
+    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
     			servicoAtualizado = servicoService.setServicoParaFornecedor(servico, fornecedor);
     			
     			response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
@@ -52,8 +52,8 @@ public class ServicoController {
     	}
     }
 
-    @RequestMapping(value = "/api/servicos/cliente/{login}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<Response> getServicosFromCliente(HttpServletRequest request, @PathVariable("login") String login) {
+    @RequestMapping(value = "/api/servicos/cliente", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> getServicosFromCliente(HttpServletRequest request) {
   
     	Response response;
     	
@@ -99,30 +99,25 @@ public class ServicoController {
 
     }
     
-    @RequestMapping(value = "/api/servicos/fornecedor/{login}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
-    public ResponseEntity<Response> getServicosDisponiveisForThisFornecedor(HttpServletRequest request, @PathVariable("login") String login) {
+    @RequestMapping(value = "/api/servicos/fornecedor", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> getServicosDisponiveisForThisFornecedor(HttpServletRequest request) {
   
     	Response response;
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
-    		
-    		if(fornecedor.getLogin().equals(login)) {
-    			List<Servico> servicosDoFornecedor = servicoService.getServicosFornecedor(fornecedor);
+    		List<Servico> servicosDoFornecedor = servicoService.getServicosFornecedor(fornecedor);
     			
-    			if(!servicosDoFornecedor.isEmpty()) {
-    				List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
-    				response = new Response("Servicos em aberto disponiveis para voce", HttpStatus.ACCEPTED.value(), servicosOrdenados);
-        			return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
-    			}
-    			
-    			response = new Response("Nao encontramos servicos disponiveis para voce", HttpStatus.ACCEPTED.value());
-    			return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
+    		if(!servicosDoFornecedor.isEmpty()) {
+    			List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
+    			response = new Response("Servicos em aberto disponiveis para voce", HttpStatus.ACCEPTED.value(), servicosOrdenados);
+        		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     		}
+    			
+    		response = new Response("Nao encontramos servicos disponiveis para voce", HttpStatus.ACCEPTED.value());
+    		return new ResponseEntity<>(response,HttpStatus.ACCEPTED);
     		
-    		response = new Response("Acesso negado: login nao autenticado", HttpStatus.UNAUTHORIZED.value());
-    		return new ResponseEntity<>(response,HttpStatus.UNAUTHORIZED);
-    		
+    	
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);

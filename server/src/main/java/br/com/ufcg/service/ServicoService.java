@@ -42,7 +42,6 @@ public class ServicoService {
     	
     	for(Servico servico : servicos ) {
     		for(Especialidade especialidade : especialidadeFornecedor) {
-    			//Checando se o fornecedor tem especialidade para realizar tal servico e se o servico em questao esta em aberto
     			if(servico.getTipo().equalsIgnoreCase(especialidade.getNome()) && servico.getStatus().equals(TipoStatus.EM_ABERTO)) {
     				servicosDisponiveisFornecedor.add(servico);
     			}
@@ -71,9 +70,7 @@ public class ServicoService {
 						return 1;
 					} else if(servico1.getData().isBefore(servico2.getData())) {
 						return -1;
-					}
-				  
-				  if(servico1.getHorario().isAfter(servico2.getHorario())) {
+					} else if(servico1.getHorario().isAfter(servico2.getHorario())) {
 					  return 1;
 				  } else if(servico1.getHorario().isBefore(servico2.getHorario())) {
 					  return -1;
@@ -89,20 +86,29 @@ public class ServicoService {
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.ACEITO);
 		servicoAtualizado.setFornecedor(fornecedor);
-		servicoRepository.save(servicoAtualizado);
+		return servicoRepository.saveAndFlush(servicoAtualizado);
 		
-		return servicoAtualizado;
 	}
 	
 	public Servico getServico(Servico servico) {
-		Servico foundServico = servicoRepository.findServico(servico.getData(), servico.getHorario(), servico.getTipo().toLowerCase());
+		Servico foundServico = servicoRepository.findServico(servico.getData(), servico.getHorario(), servico.getCliente(), servico.getTipo().toLowerCase());
 		return foundServico;
+	}
+	
+	public Servico getServicoByID(long id) throws Exception {
+		Servico servico = servicoRepository.findByID(id);
+		if(servico == null) {
+			throw new Exception("Serviço não cadastrado no banco de dados.");
+		}
+		
+		return servico;
 	}
 
 	public boolean servicoEhValidoParaFornecedor(Servico servico, Fornecedor fornecedor) {
 		boolean ehValido = false;
 		List<Especialidade> especialidadesDoFornecedor = fornecedor.getListaEspecialidades();
-		Servico foundServico = getServico(servico);
+		Servico foundServico = servicoRepository.findByID(servico.getId());
+		
 		for(Especialidade esp: especialidadesDoFornecedor) {
 			if(esp.getNome().equalsIgnoreCase(foundServico.getTipo()) && foundServico.getStatus().equals(TipoStatus.EM_ABERTO)) {
 				ehValido = true;
