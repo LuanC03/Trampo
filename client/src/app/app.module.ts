@@ -28,7 +28,7 @@ import { StorageService } from '../services/storage.service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    {provide: LocationStrategy, useClass: PathLocationStrategy},
+    //{provide: LocationStrategy, useClass: PathLocationStrategy},
     CadastroUsuarioService,
     AutenticacaoService,
     StorageService
