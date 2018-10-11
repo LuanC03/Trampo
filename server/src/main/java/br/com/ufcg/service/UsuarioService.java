@@ -6,8 +6,11 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ufcg.domain.Especialidade;
+import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
+import br.com.ufcg.repository.EspecialidadeRepository;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 
@@ -19,10 +22,14 @@ public class UsuarioService {
 
 	private static final String USUARIO_NAO_ENCONTRADO_EXCEPTION = "Usuario nao encontrado";
 	private static final String EMAIL_LOGIN_JA_EXISTENTE_EXCEPTION = "Email e/ou login já estão sendo usados. Tente outros, por favor.";
+	private static final String FORNECEDOR_SEM_ESPECIALIDADE = "O fornecedor tem que ter ao menos 1 especialidade";
 	
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	EspecialidadeService especialidadeService;
 	
 
 	
@@ -43,12 +50,34 @@ public class UsuarioService {
 		return (userToCheck != null);
 	}
 	
+
 	public Usuario criarUsuario(Usuario usuario) throws Exception {
 		if (UsuarioValidador.validaUsuario(usuario) && usuarioEhUnico(usuario)) {
+			if(usuario.getTipo().equals(TipoUsuario.FORNECEDOR)) {
+				usuario = criarFornecedor(usuario, ((Fornecedor) usuario).getListaEspecialidades());
+			}
 			return usuarioRepository.save(usuario);
 		} 
 		
-		return null;
+		throw new Exception("Problemas ao cadastrar usuario! Campos invalidos!");
+	}
+	
+	private Usuario criarFornecedor(Usuario usuario, List<Especialidade> especialidades) throws Exception {
+		List<Especialidade> especialidadesValidas = setEspecialidadesFornecedor(((Fornecedor) usuario).getListaEspecialidades());
+		
+		if(especialidadesValidas.size() > 0) {
+			((Fornecedor) usuario).setListaEspecialidades(especialidadesValidas);
+		
+			return usuario;
+		}
+		
+		throw new Exception(FORNECEDOR_SEM_ESPECIALIDADE);
+	}
+	
+	private List<Especialidade> setEspecialidadesFornecedor(List<Especialidade> especialidades) {
+		
+		return especialidadeService.getEspecialidadesValidas(especialidades);
+		
 	}
 	
 	

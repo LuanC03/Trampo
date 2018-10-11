@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class UsuarioController {
     public static final Integer HORAS = (3600 * 1000);
     public static final Integer HORAS_NO_DIA = 24;
 
-    @RequestMapping(value = "api/login", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    @RequestMapping(value = "/api/login", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> login(@RequestBody LoginForm usuario) {
 
         Response response = new Response();
@@ -80,38 +81,52 @@ public class UsuarioController {
     }
 	
 	@GetMapping(value = "/api/cliente", produces="application/json")
-	public @ResponseBody List<Usuario> listaClientes(){
-		
-		return usuarioService.getClientes();
+	public @ResponseBody ResponseEntity<Response> listaClientes(){
+		Response response;
+		List<Usuario> clientesCadastrados =  usuarioService.getClientes();
+		response = new Response("Clientes cadastrados no sistema", HttpStatus.OK.value(), clientesCadastrados);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
 	@GetMapping(value = "/api/fornecedor", produces="application/json")
-	public @ResponseBody List<Usuario> listaFornecedores(){
-		return usuarioService.getFornecedores();
+	public @ResponseBody ResponseEntity<Response> listaFornecedores(){
+		Response response;
+		List<Usuario> fornecedoresCadastrados =  usuarioService.getFornecedores();
+		response = new Response("Fornecedores cadastrados no sistema", HttpStatus.OK.value(), fornecedoresCadastrados);
+		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
 	
-	@RequestMapping(value = "api/cliente", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<Usuario> cadastrarCliente(@RequestBody Cliente cliente) throws Exception {
-		Usuario retorno = usuarioService.criarUsuario(cliente);
-	    	
-	    if(retorno != null) {
-	    	return new ResponseEntity<>(retorno, HttpStatus.CREATED);
-	    } 
-	    
-	    return new ResponseEntity<>(retorno, HttpStatus.EXPECTATION_FAILED);
-	}
-	    
-	@RequestMapping(value = "api/fornecedor", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<Usuario> cadastrarFornecedor(@RequestBody Fornecedor fornecedor) throws Exception {
-		Usuario retorno = usuarioService.criarUsuario(fornecedor);
+	@RequestMapping(value = "/api/cliente", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public ResponseEntity<Response> cadastrarCliente(@RequestBody Cliente cliente)  {
 		
-	    if(retorno != null) {
-	    	return new ResponseEntity<>(retorno, HttpStatus.CREATED);
-	    } 
+		Response response;
+		try {
+			
+			Usuario retorno = usuarioService.criarUsuario(cliente);
+			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch(Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}	
 	    
-	    return new ResponseEntity<>(retorno, HttpStatus.EXPECTATION_FAILED);
 	}
 
+	@RequestMapping(value = "/api/fornecedor", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+	public ResponseEntity<Response> cadastrarFornecedor(@RequestBody Fornecedor fornecedor) throws Exception {
+
+		Response response;
+		try {
+			
+			Usuario retorno = usuarioService.criarUsuario(fornecedor);
+			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch(Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}	
+	}
+	
 	private class LoginResponse {
         String token;
 
