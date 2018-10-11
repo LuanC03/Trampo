@@ -1,0 +1,98 @@
+
+<ion-header  hideBackButton="true" class="requisicao-header">
+  <ion-toolbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <h5>Requisição do Serviço</h5>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu [content]="content">
+  <ion-header  hideBackButton="true" class="requisicao-header">
+    <ion-toolbar>
+      <h5>Menu</h5>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="ionBackPage()">
+        Home
+      </button>
+      <button ion-item (click)="ionBackPage()">
+        Voltar
+      </button>
+      <button ion-item (click)="resetMenu()">
+        Fechar Menu
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+
+<ion-content class="requisicao-content">
+  <div padding>
+    <ion-list>
+     
+      <form name="dadosServicoForm">
+        <ion-card-content>
+
+          <h5>Serviço</h5>
+          <ion-list>
+            <ion-item>
+              <ion-label floating> Tipo do Serviço: </ion-label>
+              <ion-select name="specs" [(ngModel)]="dados_fornecedor.listaEspecialidades" multiple="true">
+                <ion-option *ngFor="let especialidade of especialidades">{{especialidade}}</ion-option>
+              </ion-select>
+            </ion-item>
+            <ion-item>
+              <ion-label>Data do Serviço:</ion-label>
+              <ion-datetime displayFormat="DD MMM YYYY"></ion-datetime>
+            </ion-item>
+            <ion-item>
+              <ion-label>Horário do Serviço:</ion-label>
+              <ion-datetime displayFormat="H:mm " pickerFormat="H mm"></ion-datetime>            
+            </ion-item>
+              <ion-item>
+                <ion-label>Valor do Serviço:</ion-label>
+               <ion-input type="tel" name="valorservico" pattern=".{4,}"></ion-input>            
+              </ion-item>
+          </ion-list>
+
+          <ion-card-content>
+            <h5>Endereço</h5>
+            <ion-list>
+              <ion-item>
+                <ion-label>Bairro:</ion-label>
+                <ion-input type="text" name="localservico" pattern=".{20,}"></ion-input>            
+              </ion-item>
+              <ion-item>
+                <ion-label>Rua:</ion-label>
+                <ion-input type="text" name="localservico" pattern=".{20,}"></ion-input>            
+              </ion-item>
+              <ion-item>
+                <ion-label>Número:</ion-label>
+                <ion-input type="number" name="localservico" pattern=".{4,}" min="0"></ion-input>            
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-content>
+      </form>
+
+      <ion-item>
+        <button class="cadastrar" ion-button round full color="pink" (click)="confirmar()">Confirmar Requisição de Serviço</button>
+      </ion-item>
+      
+      <ion-item>      
+        <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
+          Voltar
+              &nbsp; <!-- non-breaking space -->  
+          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+        </button>
+      </ion-item>
+
+    </ion-list> 
+  </div>
+
+</ion-content>

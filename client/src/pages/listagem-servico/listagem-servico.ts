@@ -16,10 +16,10 @@ import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-detalhes',
-  templateUrl: 'detalhe-servico.html',
+  selector: 'page-listagem',
+  templateUrl: 'listagem-servico.html',
 })
-export class DetalheServicoPage {
+export class ListagemServicoPage {
 
   user: string;
 
@@ -41,7 +41,7 @@ export class DetalheServicoPage {
   }
 
   ionBackPage(){
-    this.navCtrl.push('ListagemServicoPage');
+    this.navCtrl.push('HomePage');
   }
 
 }

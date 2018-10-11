@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-import { DetalheServicoPage } from '../detalhe-servico/detalhe-servico';
+//import { DetalheServicoPage } from '../detalhe-servico/detalhe-servico';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 
@@ -45,5 +45,13 @@ export class HomePage {
 
   }
       
+  requisitionService() {
+     this.navCtrl.push('RequisicaoServicoPage'); 
+     //this.navCtrl.setRoot(RequisicaoServicoPage);
+  }
 
+  listService() {
+     this.navCtrl.push('ListagemServicoPage'); 
+     //this.navCtrl.setRoot(RequisicaoServicoPage);
+  }
 }

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -16,12 +17,24 @@ import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-detalhes',
-  templateUrl: 'detalhe-servico.html',
+  selector: 'page-requisicao',
+  templateUrl: 'requisicao-servico.html',
 })
-export class DetalheServicoPage {
+export class RequisicaoServicoPage {
 
   user: string;
+  especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
+
+  dados_fornecedor : DadosUsuarioDTO = {
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : "",
+    senha : "",
+    conf_senha : "",
+    listaEspecialidades : []
+  };
+
 
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
@@ -35,13 +48,13 @@ export class DetalheServicoPage {
     }
   }
 
-  logout(){
+  logout() {
     this.autenticacaoService.logout();
     this.navCtrl.setRoot(LoginPage);
   }
 
-  ionBackPage(){
-    this.navCtrl.push('ListagemServicoPage');
+  ionBackPage() {
+    this.navCtrl.push('HomePage');
   }
 
 }
