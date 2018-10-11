@@ -51,6 +51,22 @@ public class ServicoController {
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     	}
     }
+    
+    @RequestMapping(value = "/api/servicosCadastrados/", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> getServicos() {
+    	Response response; 
+    	
+    	try {
+    		List<Servico> servicosCadastrados = servicoService.getAll();
+    		List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosCadastrados);
+    		
+    		response = new Response("Servicos cadastrados no sistema", HttpStatus.OK.value(), servicosOrdenados);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
 
     @RequestMapping(value = "/api/servicos/cliente", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response> getServicosFromCliente(HttpServletRequest request) {
@@ -72,10 +88,7 @@ public class ServicoController {
     	}
     }
     
-    @GetMapping(value = "/api/servicos", produces="application/json")
-    public List<Servico> getServicos() {
-    	return servicoService.getAll();
-    }
+
     
     @RequestMapping(value = "/api/servicos/cliente", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> cadastrarServico(HttpServletRequest request, @RequestBody Servico servico) {
