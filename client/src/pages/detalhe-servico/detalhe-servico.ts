@@ -42,7 +42,6 @@ export class DetalheServicoPage {
 
   ionBackPage(){
     this.navCtrl.push('HomePage');
-
   }
 
 }

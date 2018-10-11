@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
+import { DetalheServicoPage } from '../detalhe-servico/detalhe-servico';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 
@@ -40,6 +41,8 @@ export class HomePage {
   
   ionViewDetails() {
     this.navCtrl.push('DetalheServicoPage');
+    //this.navCtrl.setRoot(DetalheServicoPage);
+
   }
       
 

@@ -1,62 +1,160 @@
 
 <ion-header class="detalhes-header">
-  <ion-navbar>
+  <ion-toolbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
     <h5>Detalhes do Serviço</h5>
-  </ion-navbar>
+  </ion-toolbar>
 </ion-header>
 
-<ion-content class="detalhes-content">
+<ion-menu [content]="content">
+  <ion-header class="detalhes-header">
+    <ion-toolbar>
+      <h5>Menu</h5>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="ionBackPage()">
+        Home
+      </button>
+      <button ion-item (click)="ionBackPage()">
+        Voltar
+      </button>
+      <button ion-item (click)="resetMenu()">
+        Fechar Menu
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
 
+<ion-content class="detalhes-content">
   <div padding>
     <ion-list>
 
-      <form name="dadosClienteForm">
-        <h5>Cliente</h5>
-        <ion-avatar item-start>
-          <ion-row>
-            <ion-col col-5>
-              <img src="assets/imgs/default-avatar2.png">
-            </ion-col>
-            <ion-col col-5>
-              <p color="dark">{{ user }}</p>
-            </ion-col>
-          </ion-row>
-        </ion-avatar>
-        <ion-item class="item">
-          <ion-label floating>Nome do Cliente</ion-label>
-          <ion-input type="text" name="nome" pattern=".{6,}"  ></ion-input>
-        </ion-item>
+      <form name="dadosClienteForm">      
+        <ion-card-content>
+          <h5>Cliente</h5>
+          <ion-item>
+            Nome:
+            <ion-note class="note" item-end>
+              {{ user }}
+            </ion-note>
+          </ion-item>
+
+          <!--
+          <ion-item>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <div>Nome:</div>
+                </ion-col>
+                <ion-col>
+                  <div class="informacoes">
+                    <ion-note class="note">
+                      {{ user }}
+                    </ion-note>
+                  </div>
+                </ion-col>
+                <ion-col>
+                <div>
+                  <ion-avatar>
+                    <img src="assets/imgs/default-avatar2.png">
+                  </ion-avatar>
+                </div>          
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-item>
+          -->
+        </ion-card-content>     
       </form>
-
+      
       <form name="dadosServicoForm">
-        <h5>Servico</h5>
+        <ion-card-content>
+          <h5>Serviço</h5>
+          <ion-list>
+            <ion-item>
+                Tipo do Serviço:
+              <ion-note class="note" item-end>
+                {{ service }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Data do Serviço:
+              <ion-note class="note" item-end>
+                {{ date }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Horário do Serviço:
+              <ion-note class="note" item-end>
+                {{ date }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Valor do Serviço:
+              <ion-note class="note" item-end>
+                {{ service }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Status:
+              <ion-note class="note" item-end>
+                {{ service }}
+              </ion-note>
+            </ion-item>
+          </ion-list>
 
+          <ion-card-content>
+            <h5>Endereço</h5>
+            <ion-list>
+              <ion-item>
+                  Rua:
+                <ion-note class="note" item-end>
+                  {{ address }}
+                </ion-note>
+              </ion-item>
+              <ion-item>
+                  Número:
+                <ion-note class="note" item-end>
+                  {{ number }}
+                </ion-note>
+              </ion-item>
+              <ion-item>
+                  Bairro:
+                <ion-note class="note" item-end>
+                  {{ address }}
+                </ion-note>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-content>
       </form>
 
       <form name="dadosFornecedorForm">
-        <h5>Fornecedor</h5>
-        <ion-avatar item-start>
-          <ion-row>
-            <ion-col col-5>
-              <img src="assets/imgs/default-avatar2.png">
-            </ion-col>
-            <ion-col col-5>
-              <p color="dark">{{ user }}</p>
-            </ion-col>
-          </ion-row>
-        </ion-avatar>
-        <ion-item class="item">
-          <ion-label floating>Nome do Cliente</ion-label>
-          <ion-input type="text" name="nome" pattern=".{6,}"  ></ion-input>
-        </ion-item>
+        <ion-card-content>
+          <h5>Fornecedor</h5>
+          <ion-list>
+            <ion-item>
+                Nome:
+              <ion-note class="note" item-end>
+                {{ name }}
+              </ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
       </form>
 
       <ion-item>      
-        <button class="logout" ion-button round full color="pink" (click)="ionBackPage()">
+        <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
           Voltar
               &nbsp; <!-- non-breaking space -->  
           <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-            </button>
+        </button>
       </ion-item>
 
     </ion-list> 
