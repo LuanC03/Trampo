@@ -1,6 +1,8 @@
 package br.com.ufcg.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import br.com.ufcg.domain.Especialidade;
@@ -8,7 +10,9 @@ import br.com.ufcg.domain.Especialidade;
 @Repository
 public interface EspecialidadeRepository extends JpaRepository<Especialidade, String> {
 	
-	Especialidade findById(Long id);
+	@Query("SELECT e FROM Especialidade e WHERE e.id=:id")
+	Especialidade findById(@Param("id") Long id);
 	
-	Especialidade findByNome(String nome);
+	@Query("SELECT e FROM Especialidade e WHERE e.nome=:nome")
+	Especialidade findByNome(@Param("nome") String nome);
 }

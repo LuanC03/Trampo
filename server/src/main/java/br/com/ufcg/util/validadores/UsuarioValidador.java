@@ -1,6 +1,8 @@
 package br.com.ufcg.util.validadores;
 
+import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
+import br.com.ufcg.domain.enums.TipoUsuario;
 
 public class UsuarioValidador {
 	
@@ -17,15 +19,31 @@ public class UsuarioValidador {
 	private static final String TAMANHO_MINIMO_NOME_EXCEPTION = "O nome completo deve ter no minimo 8 digitos";
 	private static final String TAMANHO_MINIMO_LOGIN_EXCEPTION = "O login deve ter no minimo 4 digitos e nao pode conter espaco";
 	private static final String TAMANHO_MINIMO_SENHA_EXCEPTION = "A senha deve ter no minimo 8 digitos";
+	private static final String FORNECEDOR_SEM_ESPECIALIDADE = "O fornecedor tem que ter ao menos uma especialidade.";
 	
 	public static boolean validaUsuario(Usuario usuario) throws Exception {
 		boolean senhaComMaisDe8Digitos = validaSenha(usuario.getSenha());
 		boolean loginValido = validaLogin(usuario.getLogin());
 		boolean nomeValido = validaNome(usuario.getNomeCompleto());
+		boolean temEspecialidade = validaEspecialidade(usuario);
 		
-		return (senhaComMaisDe8Digitos && loginValido && nomeValido);
+		return (senhaComMaisDe8Digitos && loginValido && nomeValido && temEspecialidade);
 	}
 	
+	private static boolean validaEspecialidade(Usuario usuario) throws Exception {
+		if(usuario.getTipo().equals(TipoUsuario.CLIENTE)) {
+			return true;
+		}
+		
+		if(((Fornecedor) usuario).getListaEspecialidades() != null) {
+			if(((Fornecedor) usuario).getListaEspecialidades().size() > 0) {
+				return true;
+			}
+		}
+		
+		throw new Exception(FORNECEDOR_SEM_ESPECIALIDADE);
+	}
+
 	private static boolean validaNome(String nomeCompleto) throws Exception {
 		int tamanho = nomeCompleto.length();
 		

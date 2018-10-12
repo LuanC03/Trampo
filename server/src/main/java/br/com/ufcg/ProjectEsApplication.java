@@ -1,6 +1,7 @@
 package br.com.ufcg;
 
 import br.com.ufcg.middlewares.ClienteFilter;
+import br.com.ufcg.middlewares.FornecedorFilter;
 import br.com.ufcg.middlewares.jwt.TokenFilter;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -33,14 +34,23 @@ public class ProjectEsApplication {
 	@Bean
 	public FilterRegistrationBean filtroCliente() {
 		ArrayList<String> urlPatterns = new ArrayList<>();
-		urlPatterns.add("/api/servicos/*");
+		urlPatterns.add("/api/servicos/cliente/*");
 		FilterRegistrationBean frb = new FilterRegistrationBean();
 		frb.setFilter(new ClienteFilter());
 		frb.setUrlPatterns(urlPatterns);
 		return frb;
 	}
 
-
+	@Bean
+	public FilterRegistrationBean filtroFornecedor() {
+		ArrayList<String> urlPatterns = new ArrayList<>();
+		urlPatterns.add("/api/servicos/fornecedor/*");
+		FilterRegistrationBean frb = new FilterRegistrationBean();
+		frb.setFilter(new FornecedorFilter());
+		frb.setUrlPatterns(urlPatterns);
+		return frb;
+	}
+	
 	@Bean
 	public FilterRegistrationBean corsFilter() {
 		UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
