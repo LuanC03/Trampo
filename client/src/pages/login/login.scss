@@ -12,6 +12,12 @@ page-login {
 
         margin: 0.2em;
     }
+    
+    ion-avatar {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
 
     div {
         display: flex;

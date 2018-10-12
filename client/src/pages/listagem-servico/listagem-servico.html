@@ -1,0 +1,79 @@
+
+<!-- 
+<ion-header class="listagem-header">
+  <ion-toolbar>
+    <button ion-button menuToggle icon-only>
+      <ion-icon name='menu'></ion-icon>
+    </button>
+    <h5>Serviços</h5>
+  </ion-toolbar>
+</ion-header>
+
+<ion-menu [content]="content">
+  <ion-header class="listagem-header">
+    <ion-toolbar>
+      <h5>Menu</h5>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <button ion-item (click)="ionBackPage()">
+        Home
+      </button>
+      <button ion-item (click)="ionBackPage()">
+        Voltar
+      </button>
+      <button ion-item (click)="resetMenu()">
+        Fechar Menu
+      </button>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
+-->
+<ion-header class="listagem-header">
+  <ion-navbar>
+    <h5>Serviços</h5>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="listagem-content">
+
+  <div padding>
+    <ion-list>
+   
+      <form name="dadosServicoForm">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Tipo do Serviço</th>
+              <th>Data do Serviço</th>
+              <th>Horário do Serviço</th>
+              <th>Valor do Serviço</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr>
+                <td>show up</td>
+                <td>show up</td>
+                <td>show up</td>
+                <td>show up</td>
+                <td>show up</td>
+              </tr>
+          </tbody>
+        </table> 
+      </form>
+
+      <ion-item>      
+        <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
+          Voltar
+              &nbsp; <!-- non-breaking space -->  
+          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+        </button>
+      </ion-item>
+
+    </ion-list> 
+  </div>
+
+</ion-content>

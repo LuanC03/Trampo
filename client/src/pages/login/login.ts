@@ -21,7 +21,7 @@ export class LoginPage {
     public loadingCrtl: LoadingController,
     public autenticacao: AutenticacaoService,
     public storage: StorageService) {
-  	
+    
   }
 
   cadastroCliente(){
@@ -87,4 +87,3 @@ export class LoginPage {
   }
 
 }
-

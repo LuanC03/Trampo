@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
+
 import { LoginPage } from '../login/login';
-//import { DetalheServicoPage } from '../detalhe-servico/detalhe-servico';
+
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 
@@ -15,10 +16,10 @@ import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-home',
-  templateUrl: 'home.html',
+  selector: 'page-detalhes',
+  templateUrl: 'detalhe-servico.html',
 })
-export class HomePage {
+export class DetalheServicoPage {
 
   user: string;
 
@@ -38,20 +39,9 @@ export class HomePage {
     this.autenticacaoService.logout();
     this.navCtrl.setRoot(LoginPage);
   }
-  
-  ionViewDetails() {
-    this.navCtrl.push('DetalheServicoPage');
-    //this.navCtrl.setRoot(DetalheServicoPage);
 
-  }
-      
-  requisitionService() {
-     this.navCtrl.push('RequisicaoServicoPage'); 
-     //this.navCtrl.setRoot(RequisicaoServicoPage);
+  ionBackPage(){
+    this.navCtrl.push('ListagemServicoPage');
   }
 
-  listService() {
-     this.navCtrl.push('ListagemServicoPage'); 
-     //this.navCtrl.setRoot(RequisicaoServicoPage);
-  }
 }
