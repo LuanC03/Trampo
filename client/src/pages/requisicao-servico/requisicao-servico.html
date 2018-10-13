@@ -58,7 +58,7 @@
       </form>
 
       <ion-item>
-        <button class="cadastrar" ion-button round full color="pink" (click)="cadastrar()">Confirmar Requisição de Serviço</button>
+        <button class="cadastrar" ion-button round full color="pink" (click)="cadastrar()" [disabled]="!isEnabled()">Confirmar Requisição de Serviço</button>
       </ion-item>
       
       <ion-item>      
