@@ -30,8 +30,8 @@ export class DetalheServicoPage {
 
   ionViewDidLoad() {
     let localUser = this.storageService.getLocalUser();
-    if (localUser && localUser.email){
-      this.user = localUser.email;
+    if (localUser && localUser.username){
+      this.user = localUser.username;
     }
   }
 

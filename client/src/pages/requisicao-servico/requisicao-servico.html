@@ -18,21 +18,21 @@
           <ion-list>
             <ion-item>
               <ion-label floating> Tipo do Serviço: </ion-label>
-              <ion-select name="specs" [(ngModel)]="dados_fornecedor.listaEspecialidades" multiple="true">
+              <ion-select name="specs" [(ngModel)]="dados_servico.tipo">
                 <ion-option *ngFor="let especialidade of especialidades">{{especialidade}}</ion-option>
               </ion-select>
             </ion-item>
             <ion-item>
               <ion-label>Data do Serviço:</ion-label>
-              <ion-datetime displayFormat="DD MMM YYYY"></ion-datetime>
+              <ion-datetime displayFormat="DD MMM YYYY" name="data"[(ngModel)]="dados_servico.data"></ion-datetime>
             </ion-item>
             <ion-item>
               <ion-label>Horário do Serviço:</ion-label>
-              <ion-datetime displayFormat="H:mm " pickerFormat="H mm"></ion-datetime>            
+              <ion-datetime displayFormat="H:mm " pickerFormat="H mm" name="horario" [(ngModel)]="dados_servico.horario"></ion-datetime>            
             </ion-item>
               <ion-item>
                 <ion-label>Valor do Serviço:</ion-label>
-               <ion-input type="tel" name="valorservico" pattern=".{4,}"></ion-input>            
+               <ion-input type="tel" name="valorservico" pattern=".{4,}"[(ngModel)]="dados_servico.valor"></ion-input>            
               </ion-item>
           </ion-list>
 
@@ -41,15 +41,15 @@
             <ion-list>
               <ion-item>
                 <ion-label>Bairro:</ion-label>
-                <ion-input type="text" name="localservico" pattern=".{20,}"></ion-input>            
+                <ion-input type="text" name="bairro" pattern=".{20,}" [(ngModel)]="dados_servico.endereco.bairro"></ion-input>            
               </ion-item>
               <ion-item>
                 <ion-label>Rua:</ion-label>
-                <ion-input type="text" name="localservico" pattern=".{20,}"></ion-input>            
+                <ion-input type="text" name="rua" pattern=".{20,}" [(ngModel)]="dados_servico.endereco.rua"></ion-input>            
               </ion-item>
               <ion-item>
                 <ion-label>Número:</ion-label>
-                <ion-input type="number" name="localservico" pattern=".{4,}" min="0"></ion-input>            
+                <ion-input type="number" name="numero" pattern=".{4,}" min="0" [(ngModel)]="dados_servico.endereco.numero"></ion-input>            
               </ion-item>
             </ion-list>
           </ion-card-content>
@@ -58,7 +58,7 @@
       </form>
 
       <ion-item>
-        <button class="cadastrar" ion-button round full color="pink" (click)="confirmar()">Confirmar Requisição de Serviço</button>
+        <button class="cadastrar" ion-button round full color="pink" (click)="cadastrar()">Confirmar Requisição de Serviço</button>
       </ion-item>
       
       <ion-item>      

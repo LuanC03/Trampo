@@ -10,6 +10,10 @@ import { CadastroUsuarioService } from '../services/cadastro-usuario.service';
 import { HttpClientModule } from '@angular/common/http';
 import { AutenticacaoService } from '../services/autenticacao.service';
 import { StorageService } from '../services/storage.service';
+import { EspecialidadesService } from '../services/especialidades.service';
+import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
+import { UsuarioService } from '../services/usuario.service';
+import { CadastroServService } from '../services/cadastro-servico-cliente.service';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,11 @@ import { StorageService } from '../services/storage.service';
     //{provide: LocationStrategy, useClass: PathLocationStrategy},
     CadastroUsuarioService,
     AutenticacaoService,
-    StorageService
+    StorageService,
+    EspecialidadesService,
+    AuthInterceptorProvider,
+    CadastroServService,
+    UsuarioService
   ]
 })
 export class AppModule {}

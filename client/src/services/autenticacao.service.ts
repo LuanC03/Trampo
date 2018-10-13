@@ -26,9 +26,10 @@ export class AutenticacaoService {
     }
 
     successfulLogin(value : string){
+        let aux = (this.jwtHelper.decodeToken(value).sub).split(" ")[0];
         let user : LocalUser = {
             token: value,
-            email: this.jwtHelper.decodeToken(value).sub
+            username: aux
         }
         this.storage.setLocalUser(user);
     }
