@@ -10,7 +10,6 @@ import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
-import br.com.ufcg.repository.EspecialidadeRepository;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 

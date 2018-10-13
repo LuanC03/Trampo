@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -80,6 +80,34 @@ public class UsuarioController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 	
+    @GetMapping(value ="/api/cliente/{login}", produces = "application/json")
+    public @ResponseBody ResponseEntity<Response> getCliente(@PathVariable(value="login") String login) {
+    	Response response;
+    	
+    	try {
+    		Usuario user = usuarioService.getByLogin(login);
+    		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @GetMapping(value ="/api/fornecedor/{login}", produces = "application/json")
+    public @ResponseBody ResponseEntity<Response> getFornecedor(@PathVariable(value="login") String login) {
+    	Response response;
+    	
+    	try {
+    		Usuario user = usuarioService.getByLogin(login);
+    		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
 	@GetMapping(value = "/api/cliente", produces="application/json")
 	public @ResponseBody ResponseEntity<Response> listaClientes(){
 		Response response;
