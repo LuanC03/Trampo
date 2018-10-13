@@ -1,6 +1,10 @@
-
 <ion-header class="home-header">
-    <h5>Olá {{ user }}</h5> 
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Olá {{ user }}</ion-title>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="home-content">
@@ -15,31 +19,6 @@
           <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
         </button>
       </ion-item>
-
-      <ion-item>      
-        <button class="ionViewDetails" ion-button round full color="pink" (click)="ionViewDetails()">
-          Detalhes (só pra testes)
-              &nbsp; <!-- non-breaking space -->  
-          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-        </button>
-      </ion-item>
-
-      <ion-item>      
-        <button class="requisitionService" ion-button round full color="pink" (click)="requisitionService()">
-          Requisitar Serviço
-              &nbsp; <!-- non-breaking space -->  
-          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-        </button>
-      </ion-item>
-
-      <ion-item>      
-        <button class="listService" ion-button round full color="pink" (click)="listService()">
-          Listagem dos seus serviços
-              &nbsp; <!-- non-breaking space -->  
-          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-        </button>
-      </ion-item>
-
     </ion-list>
   </div>
 
