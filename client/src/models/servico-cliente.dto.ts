@@ -7,5 +7,8 @@ export interface ServicoClienteDTO {
     rua: string,
     bairro: string,
     numero: string
-    }
+    },
+    fornecedor?: string,
+    status?: string,
+    cliente?: string
 }

@@ -1,18 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
 
-import { LoginPage } from '../login/login';
-
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
+import { NavParams } from 'ionic-angular/navigation/nav-params';
+import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
 
-
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -22,10 +15,25 @@ import { StorageService } from '../../services/storage.service';
 export class DetalheServicoPage {
 
   user: string;
+  servico: ServicoClienteDTO = {
+    data: "",
+    horario: "",
+    valor: "",
+    tipo: "",
+    endereco: {
+    rua: "",
+    bairro: "",
+    numero: ""
+    },
+    fornecedor: "",
+    status: "",
+    cliente: ""
+  };
 
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService)     {
+    public storageService: StorageService,
+    public navParams: NavParams)     {
   }
 
   ionViewDidLoad() {
@@ -33,15 +41,17 @@ export class DetalheServicoPage {
     if (localUser && localUser.username){
       this.user = localUser.username;
     }
-  }
+    this.servico.tipo = this.navParams.get("tipo");
+    this.servico.data = this.navParams.get("data");
+    this.servico.horario = this.navParams.get("horario");
+    this.servico.valor = this.navParams.get("valor");
+    this.servico.status = this.navParams.get("status");
+    this.servico.endereco = this.navParams.get("endereco");
 
-  logout(){
-    this.autenticacaoService.logout();
-    this.navCtrl.setRoot(LoginPage);
   }
 
   ionBackPage(){
-    this.navCtrl.push('ListagemServicoPage');
+    this.navCtrl.pop();
   }
 
 }

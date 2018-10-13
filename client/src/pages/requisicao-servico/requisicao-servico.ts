@@ -5,7 +5,7 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
 import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
-import { CadastroServService } from '../../services/cadastro-servico-cliente.service';
+import { ServicoClienteService } from '../../services/servico-cliente.service';
 
 @IonicPage()
 @Component({
@@ -35,7 +35,7 @@ export class RequisicaoServicoPage {
     public autenticacaoService: AutenticacaoService,
     public storageService: StorageService,
     public especialidadesService: EspecialidadesService,
-    public cadastroServService: CadastroServService,
+    public cadastroServService: ServicoClienteService,
     public alertCtrl: AlertController)     {
       this.getEspecialidades();
   }

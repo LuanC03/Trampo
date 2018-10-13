@@ -4,7 +4,7 @@ import { API_CONFIG } from "../config/api.config";
 import { ServicoClienteDTO } from "../models/servico-cliente.dto";
 
 @Injectable()
-export class CadastroServService {
+export class ServicoClienteService {
 
     constructor(public http: HttpClient){
     }
@@ -17,5 +17,13 @@ export class CadastroServService {
             responseType: 'json'
         });
 
+    }
+
+    getServicos(){
+        return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/cliente`,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
     }
 }
