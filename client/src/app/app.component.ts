@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { Platform, Nav } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -7,7 +7,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
   templateUrl: 'app.html'
 })
 export class MyApp {
+  @ViewChild(Nav) nav: Nav;
+
   rootPage: string = 'LoginPage';
+
+  pages: Array<{title: string, component: string}>;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen) {
     platform.ready().then(() => {
@@ -16,6 +20,16 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
     });
+
+    this.pages = [
+      { title: 'Home', component: 'HomePage'},
+      { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
+      { title: 'Requisição de Serviço', component: 'RequisicaoServicoPage'}
+    ];
+  }
+
+  openPage(page) {
+    this.nav.setRoot(page.component);
   }
 }
 

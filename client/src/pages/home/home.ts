@@ -4,6 +4,7 @@ import { LoginPage } from '../login/login';
 //import { DetalheServicoPage } from '../detalhe-servico/detalhe-servico';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
+import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 
 /**
@@ -54,4 +55,5 @@ export class HomePage {
      this.navCtrl.push('ListagemServicoPage'); 
      //this.navCtrl.setRoot(RequisicaoServicoPage);
   }
+
 }
