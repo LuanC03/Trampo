@@ -1,17 +1,16 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
+import { ServicoClienteDTO } from "../models/servico-cliente.dto";
 
 @Injectable()
-export class EspecialidadesService {
+export class CadastroServClienteService {
 
     constructor(public http: HttpClient){
     }
 
-    getEspecialidades(){
-        return this.http.get(`${API_CONFIG.baseUrl}/api/especialidade`, {
-            observe: 'response',
-            responseType: 'json'
-        });
+    cadastraServico(dados: ServicoClienteDTO){
+        return null;
+
     }
 }

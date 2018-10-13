@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, MenuController } from 'ionic-angular';
 
-import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
-
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
+import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
 
 @IonicPage()
 @Component({
@@ -17,15 +16,18 @@ export class RequisicaoServicoPage {
   user: string;
   especialidades : string[] = [];
 
-  dados_fornecedor : DadosUsuarioDTO = {
-    fotoPerfil : "",
-    nomeCompleto : "",
-    login : "",
-    email : "",
-    senha : "",
-    conf_senha : "",
-    listaEspecialidades : []
-  };
+  dados_servico : ServicoClienteDTO  = {
+    data: "",
+    horario: "",
+    valor: "",
+    tipo: "",
+    endereco: {
+    rua: "",
+    bairro: "",
+    numero: ""
+    }
+}
+
 
 
   constructor(public navCtrl: NavController,
@@ -38,8 +40,8 @@ export class RequisicaoServicoPage {
 
   ionViewDidLoad() {
     let localUser = this.storageService.getLocalUser();
-    if (localUser && localUser.email){
-      this.user = localUser.email;
+    if (localUser && localUser.username){
+      this.user = localUser.username.split(" ")[0];
     }
   }
 
@@ -53,6 +55,10 @@ export class RequisicaoServicoPage {
         this.especialidades.push(response.body[key]['nome']);    
       }
     });      
+  }
+
+  cadastrar(){
+    console.log(this.dados_servico);
   }
 
 }
