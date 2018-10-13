@@ -4,13 +4,18 @@ import { API_CONFIG } from "../config/api.config";
 import { ServicoClienteDTO } from "../models/servico-cliente.dto";
 
 @Injectable()
-export class CadastroServClienteService {
+export class CadastroServService {
 
     constructor(public http: HttpClient){
     }
 
-    cadastraServico(dados: ServicoClienteDTO){
-        return null;
+    cadastraServicoCliente(dados: ServicoClienteDTO){
+        return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/cliente`,
+        dados,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
 
     }
 }

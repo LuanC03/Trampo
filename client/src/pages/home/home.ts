@@ -3,6 +3,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { LoginPage } from '../login/login';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @IonicPage()
 @Component({
@@ -15,7 +16,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService)     {
+    public storageService: StorageService,
+    public usuarioService: UsuarioService)     {
   }
 
   ionViewDidLoad() {

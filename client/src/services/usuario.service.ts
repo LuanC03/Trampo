@@ -1,21 +1,24 @@
 import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
-import { CredenciaisDTO } from "../models/credenciais.dto";
-import { LocalUser } from "../models/local-user";
 import { StorageService } from "./storage.service";
-import { DadosUsuarioDTO } from "../models/dados-usuario.dto";
 
 
 @Injectable()
-export class AutenticacaoService {
+export class UsuarioService {
 
     
-    constructor(public http: HttpClient){
+    constructor(public http: HttpClient,
+        public storage: StorageService){
     }
 
-    findByUsername(username: string) : DadosUsuarioDTO {
-        return null;
+    findByUsername(username: string) : any {
+        let user = this.storage.getLocalUser().username;
+        return this.http.get(`${API_CONFIG}/api/cliente/${user}`);
+    }
+
+    getClientes() : any {
+        
     }
     
 }

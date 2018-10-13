@@ -1,10 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, MenuController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
 import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
+import { CadastroServService } from '../../services/cadastro-servico-cliente.service';
 
 @IonicPage()
 @Component({
@@ -33,8 +34,9 @@ export class RequisicaoServicoPage {
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
     public storageService: StorageService,
-    public menuCtrl: MenuController,
-    public especialidadesService: EspecialidadesService)     {
+    public especialidadesService: EspecialidadesService,
+    public cadastroServService: CadastroServService,
+    public alertCtrl: AlertController)     {
       this.getEspecialidades();
   }
 
@@ -58,7 +60,30 @@ export class RequisicaoServicoPage {
   }
 
   cadastrar(){
-    console.log(this.dados_servico);
+    this.cadastroServService.cadastraServicoCliente(this.dados_servico).subscribe(
+      response => {
+        console.log()
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.navCtrl.setRoot('HomePage');
+      },
+      error => {
+        console.log(error);
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+      }
+    );
+    
   }
 
 }

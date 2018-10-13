@@ -12,6 +12,8 @@ import { AutenticacaoService } from '../services/autenticacao.service';
 import { StorageService } from '../services/storage.service';
 import { EspecialidadesService } from '../services/especialidades.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
+import { UsuarioService } from '../services/usuario.service';
+import { CadastroServService } from '../services/cadastro-servico-cliente.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +37,9 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
     AutenticacaoService,
     StorageService,
     EspecialidadesService,
-    AuthInterceptorProvider
+    AuthInterceptorProvider,
+    CadastroServService,
+    UsuarioService
   ]
 })
 export class AppModule {}

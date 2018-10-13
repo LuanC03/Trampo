@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+import { DadosCadastroUsuarioDTO } from '../../models/dados-cadastro-usuario.dto';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 
 @IonicPage()
@@ -10,7 +10,7 @@ import { CadastroUsuarioService } from '../../services/cadastro-usuario.service'
 })
 export class CadastroClientePage {
 
-  dados_cliente : DadosUsuarioDTO = {
+  dados_cliente : DadosCadastroUsuarioDTO = {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
