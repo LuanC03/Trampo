@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
+import { EspecialidadesService } from '../../services/especialidades.service';
 
 @IonicPage()
 @Component({
@@ -10,7 +11,7 @@ import { CadastroUsuarioService } from '../../services/cadastro-usuario.service'
 })
 export class CadastroFornecedorPage {
 
-  especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
+  especialidades : string[] = [];
   
   dados_fornecedor : DadosUsuarioDTO = {
     fotoPerfil : "",
@@ -25,7 +26,9 @@ export class CadastroFornecedorPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public cadastro: CadastroUsuarioService) {
+    public cadastro: CadastroUsuarioService,
+    public especialidadesService: EspecialidadesService) {
+      this.getEspecialidades();
 
   }
 
@@ -82,6 +85,14 @@ export class CadastroFornecedorPage {
       });
       alertMessage.present();
     });
+  }
+
+  getEspecialidades(){
+    this.especialidadesService.getEspecialidades().subscribe(response => {
+      for (var key in response.body){
+        this.especialidades.push(response.body[key]['nome']);    
+      }
+    });      
   }
 
 

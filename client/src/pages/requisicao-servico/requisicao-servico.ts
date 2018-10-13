@@ -5,6 +5,7 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
+import { EspecialidadesService } from '../../services/especialidades.service';
 
 @IonicPage()
 @Component({
@@ -14,7 +15,7 @@ import { StorageService } from '../../services/storage.service';
 export class RequisicaoServicoPage {
 
   user: string;
-  especialidades : string[] = ["Chaveiro","Encanador", "Marceneiro", "Motorista","Pedreiro" ];
+  especialidades : string[] = [];
 
   dados_fornecedor : DadosUsuarioDTO = {
     fotoPerfil : "",
@@ -30,7 +31,9 @@ export class RequisicaoServicoPage {
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
     public storageService: StorageService,
-    public menuCtrl: MenuController)     {
+    public menuCtrl: MenuController,
+    public especialidadesService: EspecialidadesService)     {
+      this.getEspecialidades();
   }
 
   ionViewDidLoad() {
@@ -42,6 +45,14 @@ export class RequisicaoServicoPage {
 
   ionBackPage() {
     this.navCtrl.setRoot('HomePage');
+  }
+
+  getEspecialidades(){
+    this.especialidadesService.getEspecialidades().subscribe(response => {
+      for (var key in response.body){
+        this.especialidades.push(response.body[key]['nome']);    
+      }
+    });      
   }
 
 }
