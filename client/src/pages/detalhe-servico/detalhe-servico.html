@@ -1,37 +1,3 @@
-
-<!-- 
-<ion-header class="detalhes-header">
-  <ion-toolbar>
-    <button ion-button menuToggle icon-only>
-      <ion-icon name='menu'></ion-icon>
-    </button>
-    <h5>Detalhes do Serviço</h5>
-  </ion-toolbar>
-</ion-header>
-
-<ion-menu [content]="content">
-  <ion-header class="detalhes-header">
-    <ion-toolbar>
-      <h5>Menu</h5>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content>
-    <ion-list>
-      <button ion-item (click)="ionBackPage()">
-        Home
-      </button>
-      <button ion-item (click)="ionBackPage()">
-        Voltar
-      </button>
-      <button ion-item (click)="resetMenu()">
-        Fechar Menu
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-<ion-nav id="nav" #content [root]="rootPage"></ion-nav>
--->
-
 <ion-header class="detalhes-header">
   <ion-navbar>
     <h5>Detalhes do Serviço</h5>
@@ -51,32 +17,6 @@
               {{ user }}
             </ion-note>
           </ion-item>
-
-          <!--
-          <ion-item>
-            <ion-grid>
-              <ion-row>
-                <ion-col>
-                  <div>Nome:</div>
-                </ion-col>
-                <ion-col>
-                  <div class="informacoes">
-                    <ion-note class="note">
-                      {{ user }}
-                    </ion-note>
-                  </div>
-                </ion-col>
-                <ion-col>
-                <div>
-                  <ion-avatar>
-                    <img src="assets/imgs/default-avatar2.png">
-                  </ion-avatar>
-                </div>          
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </ion-item>
-          -->
         </ion-card-content>     
       </form>
       
@@ -87,31 +27,31 @@
             <ion-item>
                 Tipo do Serviço:
               <ion-note class="note" item-end>
-                {{ service }}
+                {{ servico.tipo }}
               </ion-note>
             </ion-item>
             <ion-item>
                 Data do Serviço:
               <ion-note class="note" item-end>
-                {{ date }}
+                {{ servico.data }}
               </ion-note>
             </ion-item>
             <ion-item>
                 Horário do Serviço:
               <ion-note class="note" item-end>
-                {{ date }}
+                {{ servico.horario }}
               </ion-note>
             </ion-item>
             <ion-item>
                 Valor do Serviço:
               <ion-note class="note" item-end>
-                {{ service }}
+                {{ servico.valor }}
               </ion-note>
             </ion-item>
             <ion-item>
                 Status:
               <ion-note class="note" item-end>
-                {{ service }}
+                {{ servico.status }}
               </ion-note>
             </ion-item>
           </ion-list>
@@ -122,19 +62,19 @@
               <ion-item>
                   Rua:
                 <ion-note class="note" item-end>
-                  {{ address }}
+                  {{ servico.endereco.rua }}
                 </ion-note>
               </ion-item>
               <ion-item>
                   Número:
                 <ion-note class="note" item-end>
-                  {{ number }}
+                  {{ servico.endereco.numero }}
                 </ion-note>
               </ion-item>
               <ion-item>
                   Bairro:
                 <ion-note class="note" item-end>
-                  {{ address }}
+                  {{ servico.endereco.bairro }}
                 </ion-note>
               </ion-item>
             </ion-list>
@@ -150,7 +90,7 @@
             <ion-item>
                 Nome:
               <ion-note class="note" item-end>
-                {{ name }}
+                {{ servico.fornecedor }}
               </ion-note>
             </ion-item>
           </ion-list>

@@ -3,6 +3,8 @@ import { IonicPage, NavController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
+import { ServicoClienteService } from '../../services/servico-cliente.service';
+import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
 
 
 @IonicPage()
@@ -13,10 +15,13 @@ import { StorageService } from '../../services/storage.service';
 export class ListagemServicoPage {
 
   user: string;
+  servicos: ServicoClienteDTO[];
 
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService)     {
+    public storageService: StorageService,
+    public servicoClienteService: ServicoClienteService)     {
+      this.getServicosCliente();
   }
 
   ionViewDidLoad() {
@@ -28,6 +33,19 @@ export class ListagemServicoPage {
 
   ionBackPage(){
     this.navCtrl.setRoot('HomePage');
+  }
+
+  getServicosCliente(){
+    this.servicoClienteService.getServicos().subscribe(
+        response => {
+          this.servicos = response.body['data'];
+          console.log(this.servicos);
+        }
+    );
+  }
+
+  openDetalhes(servico: ServicoClienteDTO){
+    this.navCtrl.push('DetalheServicoPage', servico)
   }
 
 }
