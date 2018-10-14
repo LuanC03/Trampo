@@ -35,7 +35,7 @@ export class MyApp {
     events.subscribe('user:fornecedor', () => {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
-        { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
+        { title: 'Listagem de Serviço', component: 'ListagemServicoFornecedorPage'},
         { title: 'Aceitar de Serviço', component: 'RequisicaoServicoPage'}
       ];
     });
