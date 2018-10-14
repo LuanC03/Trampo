@@ -4,7 +4,7 @@ import { IonicPage, NavController } from 'ionic-angular';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
-import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
+import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
@@ -18,7 +18,7 @@ import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 export class ListagemServicoPage {
 
   user: DadosUsuarioLogadoDTO;
-  servicos: ServicoClienteDTO[];
+  servicos: ServicoDTO[];
   
 
   constructor(public navCtrl: NavController,
@@ -33,7 +33,6 @@ export class ListagemServicoPage {
   ionViewDidLoad() {
     this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
       response => {
-        console.log(response['data']['tipo']);
         if (response['data']['tipo'] == 'CLIENTE'){
           this.servicoClienteService.getServicos().subscribe(
             response => {
@@ -53,7 +52,7 @@ export class ListagemServicoPage {
     this.navCtrl.setRoot('HomePage');
   }
 
-  openDetalhes(servico: ServicoClienteDTO){
+  openDetalhes(servico: ServicoDTO){
     this.navCtrl.push('DetalheServicoPage', servico)
   }
 

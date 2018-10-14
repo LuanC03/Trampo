@@ -10,14 +10,13 @@
 <ion-content class="listagem-content">
 
   <div padding>
-    <ion-item *ngFor="let servico of servicos">
+    <button ion-item *ngFor="let servico of servicos" (click)="openDetalhes(servico)">
       <ion-thumbnail item-start>
         <img src="assets/imgs/default-avatar2.png">
       </ion-thumbnail>
       <h2>{{ servico.tipo }}</h2>
       <p> {{ servico.fornecedor }} • Status: {{ servico.status }}</p>
-      <button class="view" ion-button clear item-end  (click)="openDetalhes(servico)">View</button>
-    </ion-item>
+    </button>
   </div>
 
 </ion-content>

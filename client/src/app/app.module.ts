@@ -39,7 +39,8 @@ import { ServicoFornecedorService } from '../services/servico-fornecedor.service
     AuthInterceptorProvider,
     ServicoClienteService,
     ServicoFornecedorService,
-    UsuarioService
+    UsuarioService,
+    ServicoFornecedorService
   ]
 })
 export class AppModule {}

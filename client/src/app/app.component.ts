@@ -33,8 +33,8 @@ export class MyApp {
     events.subscribe('user:FORNECEDOR', () => {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
-        { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
-        { title: 'Aceitar de Serviço', component: 'RequisicaoServicoPage'}
+        { title: 'Serviços Disponíveis', component: 'ListagemServicoPage'},
+        { title: 'Meus Serviços', component: 'ListagemServicoPage'}
       ];
     });
   }
