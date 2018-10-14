@@ -19,7 +19,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class ServicoService {
 
-    @Autowired
+    private static final String FORNECEDOR_SEM_SERVICOS = "O fornecedor nao possui nenhum servico aceito.";
+    
+	@Autowired
     ServicoRepository servicoRepository;
 
     public Servico criarServico(Servico servico) throws Exception {
@@ -116,6 +118,16 @@ public class ServicoService {
 		}
 		
 		return ehValido;
+	}
+
+	public List<Servico> getServicosDoFornecedor(Fornecedor fornecedor) throws Exception {
+		List<Servico> servicos = servicoRepository.findServicosFornecedor(fornecedor);
+		
+		if(servicos.size() == 0) {
+			throw new Exception(FORNECEDOR_SEM_SERVICOS);
+		}
+		
+		return servicos;
 	}
 
 }
