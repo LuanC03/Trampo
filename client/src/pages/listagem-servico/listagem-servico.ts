@@ -5,6 +5,9 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
 import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
+import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
+import { UsuarioService } from '../../services/usuario.service';
+import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 
 
 @IonicPage()
@@ -14,34 +17,40 @@ import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
 })
 export class ListagemServicoPage {
 
-  user: string;
+  user: DadosUsuarioLogadoDTO;
   servicos: ServicoClienteDTO[];
+  
 
   constructor(public navCtrl: NavController,
     public autenticacaoService: AutenticacaoService,
     public storageService: StorageService,
-    public servicoClienteService: ServicoClienteService)     {
-      this.getServicosCliente();
+    public servicoClienteService: ServicoClienteService,
+    public servicoFornecedorService: ServicoFornecedorService,
+    public usuarioService: UsuarioService)     {
+
   }
 
   ionViewDidLoad() {
-    let localUser = this.storageService.getLocalUser();
-    if (localUser && localUser.username){
-      this.user = localUser.username;
-    }
+    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+      response => {
+        console.log(response['data']['tipo']);
+        if (response['data']['tipo'] == 'CLIENTE'){
+          this.servicoClienteService.getServicos().subscribe(
+            response => {
+              this.servicos = response.body['data'];
+            });
+        }else {
+          this.servicoFornecedorService.getServicos().subscribe(
+            response => {
+              this.servicos = response.body['data'];
+            });   
+        }
+      }
+    )
   }
 
   ionBackPage(){
     this.navCtrl.setRoot('HomePage');
-  }
-
-  getServicosCliente(){
-    this.servicoClienteService.getServicos().subscribe(
-        response => {
-          this.servicos = response.body['data'];
-          console.log(this.servicos);
-        }
-    );
   }
 
   openDetalhes(servico: ServicoClienteDTO){

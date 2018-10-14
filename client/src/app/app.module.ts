@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-//import { LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -14,6 +13,7 @@ import { EspecialidadesService } from '../services/especialidades.service';
 import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
+import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
 
 @NgModule({
   declarations: [
@@ -32,13 +32,13 @@ import { ServicoClienteService } from '../services/servico-cliente.service';
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    //{provide: LocationStrategy, useClass: PathLocationStrategy},
     CadastroUsuarioService,
     AutenticacaoService,
     StorageService,
     EspecialidadesService,
     AuthInterceptorProvider,
     ServicoClienteService,
+    ServicoFornecedorService,
     UsuarioService
   ]
 })

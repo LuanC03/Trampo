@@ -21,7 +21,6 @@ export class HomePage {
     public usuarioService: UsuarioService,
     public events: Events,
     public navParams: NavParams)     {
-      
   }
 
   ionViewDidLoad() {
@@ -29,7 +28,6 @@ export class HomePage {
     if (localUser && localUser.username){
       this.user = localUser.username;
     }
-    console.log(this.events);
     this.tipo_usuario = this.navParams.get("tipo");
   }
 

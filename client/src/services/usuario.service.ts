@@ -7,7 +7,9 @@ import { StorageService } from "./storage.service";
 @Injectable()
 export class UsuarioService {
 
-    
+    cliente: any;
+    fornecedor: any;
+
     constructor(public http: HttpClient,
         public storage: StorageService){
     }
@@ -15,5 +17,6 @@ export class UsuarioService {
     findByUsername(username: string) {
         return this.http.get(`${API_CONFIG.baseUrl}/api/cliente/${username}`);
     }
+
   
 }
