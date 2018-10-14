@@ -3,18 +3,21 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Serviços</ion-title>
+    <h5>Serviços</h5>
   </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content class="listagem-content">
 
   <div padding>
-    <ion-list>
-      <button ion-item *ngFor="let servico of servicos" (click)="openDetalhes(servico)">
-        <h2> {{ servico.tipo }} </h2>
-      </button>
-    </ion-list>
+    <ion-item *ngFor="let servico of servicos">
+      <ion-thumbnail item-start>
+        <img src="assets/imgs/default-avatar2.png">
+      </ion-thumbnail>
+      <h2>{{ servico.tipo }}</h2>
+      <p> {{ servico.fornecedor }} • Status: {{ servico.status }}</p>
+      <button class="view" ion-button clear item-end  (click)="openDetalhes(servico)">View</button>
+    </ion-item>
   </div>
 
 </ion-content>

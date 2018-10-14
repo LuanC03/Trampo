@@ -86,13 +86,4 @@ export class RequisicaoServicoPage {
     
   }
 
-  isEnabled() {
-    let isValid = false;
-    if (this.dados_servico.data && this.dados_servico.horario && this.dados_servico.valor && this.dados_servico.tipo
-       && this.dados_servico.endereco.bairro && this.dados_servico.endereco.rua && this.dados_servico.endereco.numero){
-      isValid=true;
-    } 
-    return isValid;
-  }
-
 }
