@@ -12,13 +12,8 @@ export class UsuarioService {
         public storage: StorageService){
     }
 
-    findByUsername(username: string) : any {
-        let user = this.storage.getLocalUser().username;
-        return this.http.get(`${API_CONFIG}/api/cliente/${user}`);
+    findByUsername(username: string) {
+        return this.http.get(`${API_CONFIG.baseUrl}/api/cliente/${username}`);
     }
-
-    getClientes() : any {
-        
-    }
-    
+  
 }
