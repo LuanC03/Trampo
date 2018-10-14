@@ -86,6 +86,7 @@ public class UsuarioController {
     	
     	try {
     		Usuario user = usuarioService.getByLogin(login);
+    		user.setSenha("");
     		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
@@ -100,6 +101,7 @@ public class UsuarioController {
     	
     	try {
     		Usuario user = usuarioService.getByLogin(login);
+    		user.setSenha("");
     		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
@@ -131,6 +133,7 @@ public class UsuarioController {
 		try {
 			
 			Usuario retorno = usuarioService.criarUsuario(cliente);
+			retorno.setSenha("");
 			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch(Exception e) {
@@ -147,6 +150,7 @@ public class UsuarioController {
 		try {
 			
 			Usuario retorno = usuarioService.criarUsuario(fornecedor);
+			retorno.setSenha("");
 			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch(Exception e) {

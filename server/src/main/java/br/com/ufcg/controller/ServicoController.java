@@ -50,6 +50,22 @@ public class ServicoController {
     	}
     }
     
+    @RequestMapping(value = "/api/servicos/fornecedor/aceitos", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> getServicoFornecedor(HttpServletRequest request) {
+    	Response response;
+    	
+    	try {
+    		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		List<Servico> servicosAceitos = servicoService.getServicosDoFornecedor(fornecedor);
+    		response = new Response("Servicos que o fornecedor aceitou!", HttpStatus.OK.value(), servicosAceitos);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    		
+    	}
+    }
+    
     @RequestMapping(value = "/api/servicosCadastrados/", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public ResponseEntity<Response> getServicos() {
     	Response response; 

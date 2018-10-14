@@ -30,7 +30,7 @@ public class ProjectEsApplication {
 		frb.setUrlPatterns(urlPatterns);
 		return frb;
 	}
-
+	
 	@Bean
 	public FilterRegistrationBean filtroCliente() {
 		ArrayList<String> urlPatterns = new ArrayList<>();

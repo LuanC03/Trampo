@@ -1,6 +1,7 @@
 package br.com.ufcg.repository;
 
 import br.com.ufcg.domain.Cliente;
+import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -30,5 +31,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
     
     @Query(value="SELECT s FROM Servico s WHERE s.id=:id")
     Servico findByID(@Param("id") long id);
+    
+    @Query(value="SELECT s FROM Servico s WHERE s.fornecedor=:user")
+	List<Servico> findServicosFornecedor(@Param("user") Fornecedor user);
 
 }
