@@ -37,6 +37,7 @@ export class ListagemServicoPage {
           this.servicoClienteService.getServicos().subscribe(
             response => {
               this.servicos = response.body['data'];
+              console.log(this.servicos);
             });
         }else {
           this.servicoFornecedorService.getServicos().subscribe(
@@ -45,7 +46,8 @@ export class ListagemServicoPage {
             });   
         }
       }
-    )
+    );
+    
   }
 
   ionBackPage(){

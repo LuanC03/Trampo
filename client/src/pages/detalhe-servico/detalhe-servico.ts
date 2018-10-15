@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -17,6 +17,7 @@ import { ServicoFornecedorService } from '../../services/servico-fornecedor.serv
 })
 export class DetalheServicoPage {
 
+  nomeFornecedor: string;
   user: DadosUsuarioLogadoDTO;
   servico: ServicoDTO = {
     id: null,
@@ -39,7 +40,8 @@ export class DetalheServicoPage {
     public storageService: StorageService,
     public navParams: NavParams,
     public usuarioService: UsuarioService,
-    public servicoFornecedorService: ServicoFornecedorService )     {
+    public servicoFornecedorService: ServicoFornecedorService,
+    public alertCtrl: AlertController )     {
   }
 
   ionViewDidLoad() {
@@ -55,6 +57,10 @@ export class DetalheServicoPage {
         this.servico.valor = this.navParams.get("valor");
         this.servico.status = this.navParams.get("status");
         this.servico.endereco = this.navParams.get("endereco");
+        if (this.navParams.get("fornecedor")){
+          this.servico.fornecedor = this.navParams.get("fornecedor");
+          this.nomeFornecedor = this.servico.fornecedor['nomeCompleto']
+        }
       });
   }
 
@@ -67,9 +73,22 @@ export class DetalheServicoPage {
     console.log(this.servico);
     this.servicoFornecedorService.cadastrarServico(this.servico).subscribe(
       response => {
-        console.log(response);
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.navCtrl.setRoot('ListagemServicoPage');
       },error => {
-        console.log(error);
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
       });
   }
 
