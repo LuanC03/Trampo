@@ -1,22 +1,21 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-
+import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
+import { ServicoDTO } from '../../models/servico.dto';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
-import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
+
 
 
 @IonicPage()
 @Component({
-  selector: 'page-listagem',
-  templateUrl: 'listagem-servico.html',
+  selector: 'page-listagem-servico-aceitos',
+  templateUrl: 'listagem-servico-aceitos.html',
 })
-export class ListagemServicoPage {
-
+export class ListagemServicoAceitosPage {
   user: DadosUsuarioLogadoDTO;
   servicos: ServicoDTO[];
   
@@ -33,18 +32,10 @@ export class ListagemServicoPage {
   ionViewDidLoad() {
     this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
       response => {
-        if (response['data']['tipo'] == 'CLIENTE'){
-          this.servicoClienteService.getServicos().subscribe(
-            response => {
-              this.servicos = response.body['data'];
-              console.log(this.servicos);
-            });
-        }else {
-          this.servicoFornecedorService.getServicos().subscribe(
+          this.servicoFornecedorService.getServicosAceitos().subscribe(
             response => {
               this.servicos = response.body['data'];
             });   
-        }
       }
     );
     

@@ -1,4 +1,5 @@
-export interface ServicoClienteDTO {
+export interface ServicoDTO {
+    id: number,
     data: string,
     horario: string,
     valor: string,

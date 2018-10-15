@@ -4,7 +4,7 @@ import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
-import { ServicoClienteDTO } from '../../models/servico-cliente.dto';
+import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
 
 @IonicPage()
@@ -17,7 +17,8 @@ export class RequisicaoServicoPage {
   user: string;
   especialidades : string[] = [];
 
-  dados_servico : ServicoClienteDTO  = {
+  dados_servico : ServicoDTO  = {
+    id: null,
     data: "",
     horario: "",
     valor: "",

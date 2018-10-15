@@ -18,13 +18,11 @@ export class MyApp {
     splashScreen: SplashScreen,
     events: Events) {
     platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
     });
 
-    events.subscribe('user:cliente', () => {
+    events.subscribe('user:CLIENTE', () => {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
         { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
@@ -32,11 +30,11 @@ export class MyApp {
       ];
     });
 
-    events.subscribe('user:fornecedor', () => {
+    events.subscribe('user:FORNECEDOR', () => {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
-        { title: 'Listagem de Serviço', component: 'ListagemServicoFornecedorPage'},
-        { title: 'Aceitar de Serviço', component: 'RequisicaoServicoPage'}
+        { title: 'Serviços Disponíveis', component: 'ListagemServicoPage'},
+        { title: 'Meus Serviços', component: 'ListagemServicoAceitosPage'}
       ];
     });
   }

@@ -14,7 +14,7 @@
           <ion-item>
             Nome:
             <ion-note class="note" item-end>
-              {{ user }}
+              {{ servico.cliente }}
             </ion-note>
           </ion-item>
         </ion-card-content>     
@@ -83,14 +83,14 @@
         </ion-card-content>
       </form>
 
-      <form name="dadosFornecedorForm">
+      <form name="dadosFornecedorForm" *ngIf="servico.status != 'EM_ABERTO'">
         <ion-card-content>
           <h5>Fornecedor</h5>
           <ion-list>
             <ion-item>
                 Nome:
               <ion-note class="note" item-end>
-                {{ servico.fornecedor }}
+                {{ nomeFornecedor }}
               </ion-note>
             </ion-item>
           </ion-list>
@@ -98,6 +98,11 @@
       </form>
 
       <ion-item>      
+          <button class="voltar" *ngIf="servico.status == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
+              Confirmar
+                  &nbsp; <!-- non-breaking space -->  
+              <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+            </button>
         <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
           Voltar
               &nbsp; <!-- non-breaking space -->  

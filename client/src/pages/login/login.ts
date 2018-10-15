@@ -79,11 +79,8 @@ export class LoginPage {
       this.usuario.findByUsername(this.storage.getLocalUser().username).subscribe(
         response => {
           this.dadosUsuario = response['data'];
-          if (this.dadosUsuario.tipo == 'CLIENTE'){
-            this.events.publish('user:cliente');
-          }else if (this.dadosUsuario.tipo == 'FORNECEDOR'){
-            this.events.publish('user:fornecedor');
-          }
+          this.events.publish(`user:${this.dadosUsuario.tipo}`)
+          console.log(`user:${this.dadosUsuario.tipo} published`)
           this.navCtrl.setRoot('HomePage', this.dadosUsuario);
         }
       )
