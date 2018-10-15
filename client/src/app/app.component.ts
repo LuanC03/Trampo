@@ -34,7 +34,7 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
         { title: 'Serviços Disponíveis', component: 'ListagemServicoPage'},
-        { title: 'Meus Serviços', component: 'ListagemServicoPage'}
+        { title: 'Meus Serviços', component: 'ListagemServicoAceitosPage'}
       ];
     });
   }

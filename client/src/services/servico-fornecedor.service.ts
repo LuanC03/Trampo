@@ -17,6 +17,14 @@ export class ServicoFornecedorService {
         });
     }
 
+    getServicosAceitos(){
+        return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/aceitos`,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
+
     cadastrarServico(servico: ServicoDTO){
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor`,
         servico,
