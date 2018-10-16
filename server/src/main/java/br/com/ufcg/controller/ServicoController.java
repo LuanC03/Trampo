@@ -25,6 +25,58 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
     
+    @RequestMapping(value = "/api/servicos/fornecedor/concluir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response> concluirServico(HttpServletRequest request, @RequestBody Servico servico) {
+    	Response response;
+    	
+    	try {
+    		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		
+    		if(servicoService.checarFornecedor(servico, fornecedor)) {
+    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    			servicoAtualizado = servicoService.concluirServico(servico);
+    			
+    			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+    			
+    		} else {
+    			response = new Response("Esse servico nao foi aceito por voce!.", HttpStatus.BAD_REQUEST.value(), servico);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    		}
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+
+
+
+    @RequestMapping(value = "/api/servicos/cliente/cancelar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response> cancelarServicoCliente(HttpServletRequest request, @RequestBody Servico servico) {
+    	Response response;
+    	
+    	try {
+    		Cliente cliente = (Cliente) request.getAttribute("user");
+    		
+    		if(servicoService.checarCliente(servico, cliente)) {
+    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    			servicoAtualizado = servicoService.cancelarServicoCliente(servico);
+    			
+    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+    			
+    		} else {
+    			response = new Response("Esse servico nao foi requerido por voce!.", HttpStatus.BAD_REQUEST.value(), servico);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    		}
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
     @RequestMapping(value = "/api/servicos/fornecedor", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> setServicoParaFornecedor(HttpServletRequest request, @RequestBody Servico servico) {
     	Response response;
