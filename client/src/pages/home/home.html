@@ -1,6 +1,10 @@
-
 <ion-header class="home-header">
-    <h5>Olá USUARIO</h5> 
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <h5>Olá {{ user }}</h5>
+  </ion-navbar>
 </ion-header>
 
 <ion-content class="home-content">
@@ -8,14 +12,14 @@
   <div padding>
     <ion-list class="form-logout">
 
-      <ion-item>    	
-        <button class="logout" ion-button round full color="pink" (click)="login()">
-				LOGOUT
-	            &nbsp; <!-- non-breaking space -->  
-				<ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-		</button>
+      <ion-item>      
+        <h2> Você é um {{ tipo_usuario}} </h2>
+        <button class="logout" ion-button round full color="pink" (click)="logout()">
+          LOGOUT
+              &nbsp; <!-- non-breaking space -->  
+          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+        </button>
       </ion-item>
-
     </ion-list>
   </div>
 

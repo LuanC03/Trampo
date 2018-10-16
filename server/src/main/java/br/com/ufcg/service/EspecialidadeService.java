@@ -61,4 +61,18 @@ public class EspecialidadeService {
 		
 		return nomes;
 	}
+	
+	public List<Especialidade> getEspecialidadesValidas(List<Especialidade> especialidades) {
+		ArrayList<Especialidade> especialidadesValidas = new ArrayList<>();
+		List<Especialidade> especialidadesCadastradas = getEspecialidades();
+		for(Especialidade especialidade: especialidades) {
+			for(Especialidade especialidadeC: especialidadesCadastradas) {
+				if(especialidadeC.getNome().equalsIgnoreCase(especialidade.getNome())) {
+					especialidadesValidas.add(especialidadeC);
+					}
+			}
+		}
+		
+		return especialidadesValidas;
+	}
 }

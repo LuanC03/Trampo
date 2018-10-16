@@ -1,14 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, Events, NavParams } from 'ionic-angular';
 import { LoginPage } from '../login/login';
-
-
-/**
- * Generated class for the HomePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { AutenticacaoService } from '../../services/autenticacao.service';
+import { StorageService } from '../../services/storage.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @IonicPage()
 @Component({
@@ -17,15 +12,28 @@ import { LoginPage } from '../login/login';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController) {
+  user: string;
+  tipo_usuario: string;
+
+  constructor(public navCtrl: NavController,
+    public autenticacaoService: AutenticacaoService,
+    public storageService: StorageService,
+    public usuarioService: UsuarioService,
+    public events: Events,
+    public navParams: NavParams)     {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad HomePage');
+    let localUser = this.storageService.getLocalUser();
+    if (localUser && localUser.username){
+      this.user = localUser.username;
+    }
+    this.tipo_usuario = this.navParams.get("tipo");
   }
 
-  login(){
-    this.navCtrl.push(LoginPage);
+  logout(){
+    this.autenticacaoService.logout();
+    this.navCtrl.setRoot(LoginPage);
   }
-
+  
 }

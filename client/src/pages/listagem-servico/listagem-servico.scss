@@ -1,0 +1,47 @@
+page-listagem {
+    font-family: Dessau-Light;
+
+    ion-header.listagem-header {
+        font-weight: bold;  
+
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+
+        color:  black;
+        background: #EFEEF4;
+    }
+
+    ion-content.listagem-content {      
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        background: transparent !important;
+    }
+
+    h5 {
+        font-weight: bold;  
+    }
+
+    p {
+        font-size: 1em;
+        align-items: left;
+    }
+
+    button.view {
+        width: 40px;
+        height: 35px;
+
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+}
+
+

@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the CadastroFornecedorPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { DadosCadastroUsuarioDTO } from '../../models/dados-cadastro-usuario.dto';
+import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
+import { EspecialidadesService } from '../../services/especialidades.service';
 
 @IonicPage()
 @Component({
@@ -15,14 +11,89 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class CadastroFornecedorPage {
 
-  public anArray:any=[];
-  public data:boolean;
+  especialidades : string[] = [];
+  
+  dados_fornecedor : DadosCadastroUsuarioDTO = {
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : "",
+    senha : "",
+    conf_senha : "",
+    listaEspecialidades : []
+  };
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    public alertCtrl: AlertController,
+    public cadastro: CadastroUsuarioService,
+    public especialidadesService: EspecialidadesService) {
+      this.getEspecialidades();
+
   }
 
-  Add(){
-   this.anArray.push({'value':''});
+  cadastrar(){
+    let alert : boolean = false;
+    let myMessage : string = "";
+    if (this.dados_fornecedor.nomeCompleto.length == 0){
+      alert = true;
+      myMessage += "*Nome inválido\n";
+    }
+    if (this.dados_fornecedor.login.length < 4){
+      alert = true;
+      myMessage += "*Username inválido\n"
+    }
+    if (this.dados_fornecedor.email.length < 3 && !this.dados_fornecedor.email.includes("@")){
+      alert = true;
+      myMessage += "*Email inválido\n";
+    }
+    if (this.dados_fornecedor.senha.length < 4 || this.dados_fornecedor.senha != this.dados_fornecedor.conf_senha){
+      alert = true;
+      myMessage += "*Senha inválida\n";
+    }
+    if (alert){
+      let alertMessage = this.alertCtrl.create({
+        title: "Problemas no cadastro",
+        message: myMessage,
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+      return;
+    }
+    this.cadastro.cadastrar_fornecedor(this.dados_fornecedor)
+    .subscribe(response => {
+      console.log(response.headers.get('Cadastro'));
+      let alertMessage = this.alertCtrl.create({
+        title: "Cadastro efetuado com sucesso",
+        message: "Bem vindo!",
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+      this.navCtrl.setRoot('LoginPage');
+    },
+    error => {
+      let alertMessage = this.alertCtrl.create({
+        title: "Problema no cadastro",
+        message: error.error.message,
+        buttons: [{
+          text: 'Ok'
+        }]
+      });
+      alertMessage.present();
+    });
   }
+
+  getEspecialidades(){
+    this.especialidadesService.getEspecialidades().subscribe(response => {
+      for (var key in response.body){
+        this.especialidades.push(response.body[key]['nome']);    
+      }
+    });      
+  }
+
 
 }

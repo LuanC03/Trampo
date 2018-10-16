@@ -1,25 +1,20 @@
 package br.com.ufcg.domain;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
 @Table(name = "TAB_USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "TX_LOGIN", name = "login"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Usuario {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name = "ID_USUARIO")
 	private Long id;
 

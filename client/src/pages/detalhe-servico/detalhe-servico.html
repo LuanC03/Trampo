@@ -1,0 +1,116 @@
+<ion-header class="detalhes-header">
+  <ion-navbar>
+    <h5>Detalhes do Serviço</h5>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="detalhes-content">
+  <div padding>
+    <ion-list>
+
+      <form name="dadosClienteForm">      
+        <ion-card-content>
+          <h5>Cliente</h5>
+          <ion-item>
+            Nome:
+            <ion-note class="note" item-end>
+              {{ servico.cliente }}
+            </ion-note>
+          </ion-item>
+        </ion-card-content>     
+      </form>
+      
+      <form name="dadosServicoForm">
+        <ion-card-content>
+          <h5>Serviço</h5>
+          <ion-list>
+            <ion-item>
+                Tipo do Serviço:
+              <ion-note class="note" item-end>
+                {{ servico.tipo }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Data do Serviço:
+              <ion-note class="note" item-end>
+                {{ servico.data }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Horário do Serviço:
+              <ion-note class="note" item-end>
+                {{ servico.horario }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Valor do Serviço:
+              <ion-note class="note" item-end>
+                {{ servico.valor }}
+              </ion-note>
+            </ion-item>
+            <ion-item>
+                Status:
+              <ion-note class="note" item-end>
+                {{ servico.status }}
+              </ion-note>
+            </ion-item>
+          </ion-list>
+
+          <ion-card-content>
+            <h5>Endereço</h5>
+            <ion-list>
+              <ion-item>
+                  Rua:
+                <ion-note class="note" item-end>
+                  {{ servico.endereco.rua }}
+                </ion-note>
+              </ion-item>
+              <ion-item>
+                  Número:
+                <ion-note class="note" item-end>
+                  {{ servico.endereco.numero }}
+                </ion-note>
+              </ion-item>
+              <ion-item>
+                  Bairro:
+                <ion-note class="note" item-end>
+                  {{ servico.endereco.bairro }}
+                </ion-note>
+              </ion-item>
+            </ion-list>
+          </ion-card-content>
+
+        </ion-card-content>
+      </form>
+
+      <form name="dadosFornecedorForm" *ngIf="servico.status != 'EM_ABERTO'">
+        <ion-card-content>
+          <h5>Fornecedor</h5>
+          <ion-list>
+            <ion-item>
+                Nome:
+              <ion-note class="note" item-end>
+                {{ nomeFornecedor }}
+              </ion-note>
+            </ion-item>
+          </ion-list>
+        </ion-card-content>
+      </form>
+
+      <ion-item>      
+          <button class="voltar" *ngIf="servico.status == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
+              Confirmar
+                  &nbsp; <!-- non-breaking space -->  
+              <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+            </button>
+        <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
+          Voltar
+              &nbsp; <!-- non-breaking space -->  
+          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+        </button>
+      </ion-item>
+
+    </ion-list> 
+  </div>
+
+</ion-content>
