@@ -31,9 +31,9 @@ public class ServicoController {
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
     		
-    		if(servicoService.checarFornecedor(servico, fornecedor)) {
-    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    		if(servicoService.checarFornecedor(servicoAtualizado, fornecedor)) {
     			servicoAtualizado = servicoService.concluirServico(servico);
     			
     			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
