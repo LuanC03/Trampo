@@ -157,4 +157,14 @@ public class ServicoService {
 		return servicos;
 	}
 
+	public boolean checarStatus(Servico servicoAtualizado) {
+		boolean cancelado = servicoAtualizado.getStatus().equals(TipoStatus.CANCELADO);
+		boolean concluido = servicoAtualizado.getStatus().equals(TipoStatus.CONCLUIDO);
+		if(cancelado || concluido) {
+			return false;
+		}
+		
+		return true;
+	}
+
 }

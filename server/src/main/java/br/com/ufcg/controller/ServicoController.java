@@ -34,6 +34,11 @@ public class ServicoController {
     		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
     		
     		if(servicoService.checarFornecedor(servicoAtualizado, fornecedor)) {
+    			if(!servicoService.checarStatus(servicoAtualizado)){
+    				response = new Response("Não é possivel concluir esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado);
+        			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
+    			}
+    			
     			servicoAtualizado = servicoService.concluirServico(servico);
     			
     			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
@@ -61,6 +66,11 @@ public class ServicoController {
     		
     		if(servicoService.checarCliente(servico, cliente)) {
     			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    			if(!servicoService.checarStatus(servicoAtualizado)){
+    				response = new Response("Não é possivel cancelar esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado);
+        			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
+    			}
+    			
     			servicoAtualizado = servicoService.cancelarServicoCliente(servico);
     			
     			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
