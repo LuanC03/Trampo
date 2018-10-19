@@ -3,6 +3,8 @@ package br.com.ufcg.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import br.com.ufcg.util.response.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -79,29 +81,13 @@ public class UsuarioController {
         response.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-	
-    @GetMapping(value ="/api/cliente/{login}", produces = "application/json")
-    public @ResponseBody ResponseEntity<Response> getCliente(@PathVariable(value="login") String login) {
-    	Response response;
-    	
-    	try {
-    		Usuario user = usuarioService.getByLogin(login);
-    		user.setSenha("");
-    		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
-    		return new ResponseEntity<>(response, HttpStatus.OK);
-    	} catch(Exception e) {
-    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
-    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    	}
-    }
     
-    @GetMapping(value ="/api/fornecedor/{login}", produces = "application/json")
-    public @ResponseBody ResponseEntity<Response> getFornecedor(@PathVariable(value="login") String login) {
+    @GetMapping(value ="/api/usuarios/me", produces = "application/json")
+    public @ResponseBody ResponseEntity<Response> getUsuario(HttpServletRequest request) {
     	Response response;
     	
     	try {
-    		Usuario user = usuarioService.getByLogin(login);
-    		user.setSenha("");
+    		Usuario user = (Usuario) request.getAttribute("user");
     		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
@@ -109,6 +95,7 @@ public class UsuarioController {
     		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     	}
     }
+	
     
 	@GetMapping(value = "/api/cliente", produces="application/json")
 	public @ResponseBody ResponseEntity<Response> listaClientes(){
