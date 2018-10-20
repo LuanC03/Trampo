@@ -92,6 +92,33 @@ public class ServicoService {
 		
 	}
 	
+	public boolean checarCliente(Servico servico, Cliente cliente){
+		if(servico.getCliente().equals(cliente))
+			return true;
+		return false;
+}
+
+
+	public boolean checarFornecedor(Servico servico, Fornecedor fornecedor){
+		if(servico.getFornecedor().equals(fornecedor))
+			return true;
+		return false;
+}
+
+	public Servico cancelarServicoCliente(Servico servico) {
+		Servico servicoAtualizado = servico;
+		servicoAtualizado.setStatus(TipoStatus.CANCELADO);
+		return servicoRepository.saveAndFlush(servicoAtualizado);
+		
+	}		
+
+	public Servico concluirServico(Servico servico) {
+		Servico servicoAtualizado = servico;
+		servicoAtualizado.setStatus(TipoStatus.CONCLUIDO);
+		return servicoRepository.saveAndFlush(servicoAtualizado);
+		
+	}
+	
 	public Servico getServico(Servico servico) {
 		Servico foundServico = servicoRepository.findServico(servico.getData(), servico.getHorario(), servico.getCliente(), servico.getTipo().toLowerCase());
 		return foundServico;
@@ -128,6 +155,16 @@ public class ServicoService {
 		}
 		
 		return servicos;
+	}
+
+	public boolean checarStatus(Servico servicoAtualizado) {
+		boolean cancelado = servicoAtualizado.getStatus().equals(TipoStatus.CANCELADO);
+		boolean concluido = servicoAtualizado.getStatus().equals(TipoStatus.CONCLUIDO);
+		if(cancelado || concluido) {
+			return false;
+		}
+		
+		return true;
 	}
 
 }
