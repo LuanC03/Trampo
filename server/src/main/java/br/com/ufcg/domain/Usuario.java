@@ -12,13 +12,12 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 @Entity
 @Table(name = "TAB_USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "TX_LOGIN", name = "login"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "senha","id"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "senha"})
 public abstract class Usuario {
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
 	@Column(name = "ID_USUARIO")
-	@JsonIgnore
 	private Long id;
 
 	@Column(name = "TX_NOME_COMPLETO")
