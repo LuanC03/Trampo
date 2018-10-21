@@ -3,14 +3,16 @@ package br.com.ufcg.domain;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
 @Table(name = "TAB_USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "TX_LOGIN", name = "login"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "senha"})
 public abstract class Usuario {
 
 	
@@ -78,6 +80,7 @@ public abstract class Usuario {
 	private String email;
 
 	@Column(name = "TX_SENHA", nullable = false)
+	@JsonIgnore
 	private String senha;
 
 	@Column(name = "CD_TIPO", nullable = false, updatable = false)
@@ -138,7 +141,8 @@ public abstract class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
+	
+	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
