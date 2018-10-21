@@ -5,9 +5,9 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { ServicoDTO } from '../../models/servico.dto';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 
 @IonicPage()
@@ -18,7 +18,7 @@ import { ServicoFornecedorService } from '../../services/servico-fornecedor.serv
 export class DetalheServicoPage {
 
   nomeFornecedor: string;
-  user: DadosUsuarioLogadoDTO;
+  user: DadosUsuarioDTO;
   servico: ServicoDTO = {
     id: null,
     data: "",

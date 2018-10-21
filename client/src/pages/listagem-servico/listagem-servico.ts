@@ -7,7 +7,8 @@ import { ServicoClienteService } from '../../services/servico-cliente.service';
 import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+
 
 
 @IonicPage()
@@ -17,7 +18,7 @@ import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 })
 export class ListagemServicoPage {
 
-  user: DadosUsuarioLogadoDTO;
+  user: DadosUsuarioDTO;
   servicos: ServicoDTO[];
   
 
@@ -37,7 +38,6 @@ export class ListagemServicoPage {
           this.servicoClienteService.getServicos().subscribe(
             response => {
               this.servicos = response.body['data'];
-              console.log(this.servicos);
             });
         }else {
           this.servicoFornecedorService.getServicos().subscribe(
