@@ -12,7 +12,7 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 @Entity
 @Table(name = "TAB_USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "TX_LOGIN", name = "login"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "senha"})
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Usuario {
 
 	
@@ -80,7 +80,6 @@ public abstract class Usuario {
 	private String email;
 
 	@Column(name = "TX_SENHA", nullable = false)
-	@JsonIgnore
 	private String senha;
 
 	@Column(name = "CD_TIPO", nullable = false, updatable = false)
@@ -142,7 +141,6 @@ public abstract class Usuario {
 		this.email = email;
 	}
 	
-	@JsonIgnore
 	public String getSenha() {
 		return senha;
 	}
