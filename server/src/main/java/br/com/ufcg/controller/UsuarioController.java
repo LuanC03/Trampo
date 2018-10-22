@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
@@ -120,7 +122,6 @@ public class UsuarioController {
 		try {
 			
 			Usuario retorno = usuarioService.criarUsuario(cliente);
-			retorno.setSenha("");
 			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch(Exception e) {
@@ -137,7 +138,6 @@ public class UsuarioController {
 		try {
 			
 			Usuario retorno = usuarioService.criarUsuario(fornecedor);
-			retorno.setSenha("");
 			response = new Response("Usuario cadastrado com sucesso!", HttpStatus.OK.value(), retorno);
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch(Exception e) {

@@ -166,5 +166,29 @@ public class ServicoService {
 		
 		return true;
 	}
+	
+	public boolean checarServicoFornecedor(Servico servico, Fornecedor fornecedor) throws Exception {
+		boolean servicoEhDoFornecedor = getServicosDoFornecedor(fornecedor).contains(servico);
+		boolean servicoEstaAceito = servicoEstaAceito(servico);
+		
+		return servicoEhDoFornecedor && servicoEstaAceito;
+	}
+	
+	public boolean servicoEstaAceito(Servico servico) throws Exception {
+		
+		if(servico.getStatus().equals(TipoStatus.ACEITO)) {
+			return true;
+		}
+		
+		throw new Exception("Esse servico nao foi aceito!");
+	}
+
+	public Servico cancelarServicoFornecedor(Servico servico) {
+		Servico servicoCancelado = servico;
+		servicoCancelado.setStatus(TipoStatus.EM_ABERTO);
+		servicoCancelado.setFornecedor(null);
+		
+		return servicoRepository.saveAndFlush(servicoCancelado);
+	}
 
 }

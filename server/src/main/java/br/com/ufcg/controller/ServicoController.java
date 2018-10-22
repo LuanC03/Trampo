@@ -25,6 +25,34 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
     
+    @RequestMapping(value = "/api/servicos/fornecedor/cancelar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
+    public ResponseEntity<Response> cancelarServicoFornecedor(HttpServletRequest request, @RequestBody Servico servico) {
+    	
+    	Response response;
+    	
+    	try {
+    		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+    		
+    		Servico servicoEncontrado = servicoService.getServicoByID(servico.getId());
+    		
+    		if(servicoService.checarServicoFornecedor(servicoEncontrado, fornecedor)) {
+    			
+    			Servico servicoAtualizado = servicoService.cancelarServicoFornecedor(servicoEncontrado);
+    			
+    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+    			
+    		} else {
+    			response = new Response("Esse servico nao pertence a voce!", HttpStatus.BAD_REQUEST.value(), servico);
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    		}
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
     @RequestMapping(value = "/api/servicos/fornecedor/concluir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> concluirServico(HttpServletRequest request, @RequestBody Servico servico) {
     	Response response;
