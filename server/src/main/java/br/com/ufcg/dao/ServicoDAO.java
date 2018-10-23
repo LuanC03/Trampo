@@ -1,0 +1,115 @@
+package br.com.ufcg.dao;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+import br.com.ufcg.domain.Cliente;
+import br.com.ufcg.domain.Endereco;
+import br.com.ufcg.domain.Fornecedor;
+import br.com.ufcg.domain.enums.TipoStatus;
+
+public final class ServicoDAO {
+	private Long id;
+	private String tipo;
+	private LocalDate data;
+	private LocalTime horario;
+	private BigDecimal valor;
+	private Endereco endereco;
+	private UsuarioDAO cliente;
+	private UsuarioDAO fornecedor;
+	private TipoStatus tipoStatus;
+	
+	public ServicoDAO(Long id, String tipo, LocalDate data, LocalTime horario, BigDecimal valor, Endereco endereco, Cliente cliente, Fornecedor fornecedor, TipoStatus tipoStatus) {
+		this.id = id;
+		this.tipo = tipo;
+		this.data = data;
+		this.horario = horario;
+		this.valor = valor;
+		this.endereco = endereco;
+		this.cliente = cliente.toDAO();
+		
+		if(fornecedor == null) {
+			this.fornecedor = null;
+		} else {
+			this.fornecedor = fornecedor.toDAO();
+		}
+		
+		this.tipoStatus = tipoStatus;
+		
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public LocalDate getData() {
+		return data;
+	}
+
+	public void setData(LocalDate data) {
+		this.data = data;
+	}
+
+	public LocalTime getHorario() {
+		return horario;
+	}
+
+	public void setHorario(LocalTime hora) {
+		this.horario = hora;
+	}
+
+	public BigDecimal getValor() {
+		return valor;
+	}
+
+	public void setValor(BigDecimal valor) {
+		this.valor = valor;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
+	}
+
+	public UsuarioDAO getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(UsuarioDAO cliente) {
+		this.cliente = cliente;
+	}
+
+	public UsuarioDAO getFornecedor() {
+		return fornecedor;
+	}
+
+	public void setFornecedor(UsuarioDAO fornecedor) {
+		this.fornecedor = fornecedor;
+	}
+
+	public TipoStatus getTipoStatus() {
+		return tipoStatus;
+	}
+
+	public void setTipoStatus(TipoStatus tipoStatus) {
+		this.tipoStatus = tipoStatus;
+	}
+	
+
+}

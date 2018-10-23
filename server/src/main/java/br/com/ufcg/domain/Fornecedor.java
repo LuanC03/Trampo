@@ -6,6 +6,8 @@ import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.ufcg.dao.FornecedorDAO;
+import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
@@ -41,5 +43,10 @@ public class Fornecedor extends Usuario {
 	@Override
 	public String toString() {
 		return "Fornecedor " + super.getId() + ": "  + "nome - " + super.getNomeCompleto() + " | Especialidade(s) - " + listaEspecialidades.toString();
+	}
+
+	@Override
+	public UsuarioDAO toDAO() {
+		return new FornecedorDAO(this.getId(), this.getLogin(), this.getNomeCompleto(), this.getEmail(), this.getFotoPerfil(), this.getTipo(), this.getListaEspecialidades());
 	}
 }

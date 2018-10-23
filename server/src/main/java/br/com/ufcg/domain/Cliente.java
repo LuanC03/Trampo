@@ -6,6 +6,8 @@ import javax.persistence.Entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+import br.com.ufcg.dao.ClienteDAO;
+import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
@@ -26,5 +28,10 @@ public class Cliente extends Usuario {
 	@Override
 	public String toString() {
 		return "Cliente " + super.getId() + ": nome - " + super.getNomeCompleto();
+	}
+
+	@Override
+	public UsuarioDAO toDAO() {
+		return new ClienteDAO(this.getId(), this.getLogin(), this.getNomeCompleto(), this.getEmail(), this.getFotoPerfil(), this.getTipo());
 	}
 }
