@@ -1,0 +1,48 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Editar Dados</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content class="perfil-content">
+  <div padding>
+    <ion-list>
+
+      <form name="dadosClienteForm">
+        <ion-avatar item-start>
+       		<ion-card-content>
+       			<h5> {{dadosUsuario.tipo}} </h5>
+       			<ion-thumbnail item-start>
+					<img src="assets/imgs/default-avatar.png">
+				</ion-thumbnail>	
+			</ion-card-content>
+        </ion-avatar>
+        <ion-item>
+          <ion-label floating >Login</ion-label>
+          <ion-input name="login" value="{{dadosUsuario.login}}" [(ngModel)]="dadosUsuario.login"></ion-input>
+        </ion-item>  
+        <ion-item>
+          <ion-label floating >Nome</ion-label>
+          <ion-input name="nomeCompleto" value="{{dadosUsuario.nomeCompleto}}" [(ngModel)]="dadosUsuario.nomeCompleto"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input name="email" value="{{dadosUsuario.email}}" [(ngModel)]="dadosUsuario.email"></ion-input>
+        </ion-item>
+      </form>
+        <ion-item>
+          <button class="salvar" ion-button round full color="pink" (click)="salvar()">
+  			    <ion-icon ios="ios-create" md="md-create"></ion-icon>
+            &nbsp; <!-- non-breaking space -->  
+        	   Salvar
+          </button>
+        </ion-item>
+      
+    </ion-list> 
+  </div>
+
+</ion-content>
