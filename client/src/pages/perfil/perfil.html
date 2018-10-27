@@ -1,7 +1,10 @@
 
 <ion-header class="perfil-header">
   <ion-navbar>
-	 <h5>Perfil</h5>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <h5>Perfil</h5>
   </ion-navbar>
 </ion-header>
 
@@ -12,7 +15,7 @@
       <form name="dadosClienteForm">
         <ion-avatar item-start>
        		<ion-card-content>
-       			<h5>Cliente</h5>
+       			<h5> {{ dadosUsuario.tipo }}</h5>
        			<ion-thumbnail item-start>
 					<img src="assets/imgs/default-avatar.png">
 				</ion-thumbnail>	
@@ -20,23 +23,23 @@
         </ion-avatar>
 
         <ion-item>
-          <ion-label>Nome:</ion-label>
+          <ion-label>Nome: {{ dadosUsuario.nomeCompleto }} </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Nome de Usuário:</ion-label>
+          <ion-label>Nome de Usuário: {{ dadosUsuario.login }} </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Email cadastrado:</ion-label>
+          <ion-label>Email cadastrado: {{ dadosUsuario.email }} </ion-label>
         </ion-item>
 
       </form>
-        <ion-item>
-          <button class="editar" ion-button round full color="pink" (click)="editar()">
-  			    <ion-icon ios="ios-create" md="md-create"></ion-icon>
-            &nbsp; <!-- non-breaking space -->  
-        	   Editar
-          </button>
-        </ion-item>
+      <ion-item>
+        <button class="editar" ion-button round full color="pink" (click)="editar()">
+          <ion-icon ios="ios-create" md="md-create"></ion-icon>
+          &nbsp; <!-- non-breaking space -->  
+            Editar
+        </button>
+      </ion-item>
       
     </ion-list> 
   </div>

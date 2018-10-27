@@ -3,8 +3,8 @@ import { NavController, LoadingController, AlertController, IonicPage, Events } 
 import { CredenciaisDTO } from '../../models/credenciais.dto';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 import { UsuarioService } from '../../services/usuario.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
@@ -18,7 +18,7 @@ export class LoginPage {
     senha : ""
   };
 
-  dadosUsuario : DadosUsuarioLogadoDTO;
+  dadosUsuario : DadosUsuarioDTO;
 
   constructor(public navCtrl: NavController, 
     private alertCtrl: AlertController,
