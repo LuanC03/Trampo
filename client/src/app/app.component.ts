@@ -26,7 +26,8 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
         { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
-        { title: 'Requisição de Serviço', component: 'RequisicaoServicoPage'}
+        { title: 'Requisição de Serviço', component: 'RequisicaoServicoPage'},
+        { title: 'Perfil', component: 'PerfilPage'}
       ];
     });
 
@@ -34,7 +35,8 @@ export class MyApp {
       this.pages = [
         { title: 'Home', component: 'HomePage'},
         { title: 'Serviços Disponíveis', component: 'ListagemServicoPage'},
-        { title: 'Meus Serviços', component: 'ListagemServicoAceitosPage'}
+        { title: 'Meus Serviços', component: 'ListagemServicoAceitosPage'},
+        { title: 'Perfil', component: 'PerfilPage'}
       ];
     });
   }

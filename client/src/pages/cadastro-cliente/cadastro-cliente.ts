@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import { DadosCadastroUsuarioDTO } from '../../models/dados-cadastro-usuario.dto';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
@@ -10,14 +10,15 @@ import { CadastroUsuarioService } from '../../services/cadastro-usuario.service'
 })
 export class CadastroClientePage {
 
-  dados_cliente : DadosCadastroUsuarioDTO = {
+  dados_cliente : DadosUsuarioDTO = {
+    id: null,
+    tipo: "",
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
     email : "",
     senha : "",
-    conf_senha : "",
-    listaEspecialidades : []
+    conf_senha : ""
   };
 
   constructor(public navCtrl: NavController, 

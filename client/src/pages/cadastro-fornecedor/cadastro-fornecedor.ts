@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
-import { DadosCadastroUsuarioDTO } from '../../models/dados-cadastro-usuario.dto';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
@@ -13,7 +13,9 @@ export class CadastroFornecedorPage {
 
   especialidades : string[] = [];
   
-  dados_fornecedor : DadosCadastroUsuarioDTO = {
+  dados_fornecedor : DadosUsuarioDTO = {
+    id: null,
+    tipo: "",
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",

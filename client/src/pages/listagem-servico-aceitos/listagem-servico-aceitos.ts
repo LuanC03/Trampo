@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController } from 'ionic-angular';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 import { ServicoDTO } from '../../models/servico.dto';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { UsuarioService } from '../../services/usuario.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 
 
@@ -16,7 +16,7 @@ import { UsuarioService } from '../../services/usuario.service';
   templateUrl: 'listagem-servico-aceitos.html',
 })
 export class ListagemServicoAceitosPage {
-  user: DadosUsuarioLogadoDTO;
+  user: DadosUsuarioDTO;
   servicos: ServicoDTO[];
   
 

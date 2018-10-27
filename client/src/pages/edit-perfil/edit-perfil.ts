@@ -1,30 +1,31 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { StorageService } from '../../services/storage.service';
-import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+
+
 
 @IonicPage()
 @Component({
-  selector: 'page-perfil',
-  templateUrl: 'perfil.html',
+  selector: 'page-edit-perfil',
+  templateUrl: 'edit-perfil.html',
 })
-export class PerfilPage {
+export class EditPerfilPage {
 
   dadosUsuario : DadosUsuarioDTO = {
-      id: null,
-      tipo: "",
-      fotoPerfil : "",
-      nomeCompleto : "",
-      login : "",
-      email : ""
-    };
-
+    id: null,
+    tipo: "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : ""
+  };
+  
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public usuarioService: UsuarioService,
     public storageService: StorageService) {
-
   }
 
   ionViewDidLoad() {
@@ -37,8 +38,9 @@ export class PerfilPage {
       });
   }
 
-  editar() {
-  	this.navCtrl.push('EditPerfilPage');
+  salvar() {
+    console.log(this.dadosUsuario);
+    this.navCtrl.pop();
   }
 
 }
