@@ -33,4 +33,13 @@ export class ServicoFornecedorService {
             responseType: 'json'
         });
     }
+
+    cancelaServico(servico: ServicoDTO){
+        return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/cancelar`,
+        servico,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
 }

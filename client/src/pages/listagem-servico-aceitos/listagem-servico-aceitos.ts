@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { ServicoDTO } from '../../models/servico.dto';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -25,12 +25,13 @@ export class ListagemServicoAceitosPage {
     public storageService: StorageService,
     public servicoClienteService: ServicoClienteService,
     public servicoFornecedorService: ServicoFornecedorService,
-    public usuarioService: UsuarioService)     {
+    public usuarioService: UsuarioService,
+    public alertCtrl: AlertController)     {
 
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
       response => {
           this.servicoFornecedorService.getServicosAceitos().subscribe(
             response => {
@@ -47,6 +48,30 @@ export class ListagemServicoAceitosPage {
 
   openDetalhes(servico: ServicoDTO){
     this.navCtrl.push('DetalheServicoPage', servico)
+  }
+
+  cancel(servico: ServicoDTO){
+    this.servicoFornecedorService.cancelaServico(servico).subscribe(
+      response => {
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.ionViewDidLoad();
+      }, error => {
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.ionViewDidLoad();
+      }
+    )
   }
 
 }

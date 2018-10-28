@@ -1,3 +1,5 @@
+import { DadosUsuarioDTO } from "./dados-usuario.dto";
+
 export interface ServicoDTO {
     id: number,
     data: string,
@@ -11,5 +13,5 @@ export interface ServicoDTO {
     },
     fornecedor?: string,
     status?: string,
-    cliente?: string
+    cliente?: DadosUsuarioDTO
 }

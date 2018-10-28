@@ -29,7 +29,7 @@ export class EditPerfilPage {
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
       response => {
         this.dadosUsuario = response['data'];
         console.log(this.dadosUsuario);

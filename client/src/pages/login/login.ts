@@ -76,7 +76,7 @@ export class LoginPage {
         duration: 1000
       });
       loading.present();
-      this.usuario.findByUsername(this.storage.getLocalUser().username).subscribe(
+      this.usuario.getMyUser().subscribe(
         response => {
           this.dadosUsuario = response['data'];
           this.events.publish(`user:${this.dadosUsuario.tipo}`)
