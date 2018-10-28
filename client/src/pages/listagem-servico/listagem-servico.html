@@ -10,13 +10,22 @@
 <ion-content class="listagem-content">
 
   <div padding>
-    <button ion-item *ngFor="let servico of servicos" (click)="openDetalhes(servico)">
-      <ion-thumbnail item-start>
-        <img src="assets/imgs/default-avatar2.png">
-      </ion-thumbnail>
-      <h2>{{ servico.tipo }}</h2>
-      <p> • Status: {{ servico.status }}</p>
-    </button>
+    <ion-list>
+      <ion-item-sliding *ngFor="let servico of servicos" #item>
+        <button ion-item (click)="openDetalhes(servico)">
+          <ion-thumbnail item-start>
+            <img src="assets/imgs/default-avatar2.png">
+          </ion-thumbnail>
+          <h2>{{ servico.tipo }}</h2>
+          <p> • Status: {{ servico.status }}</p>
+        </button>
+        <ion-item-options *ngIf="user.tipo == 'CLIENTE'" side="right">
+          <button ion-button color="danger" (click)="cancel(servico)">
+              <ion-icon name="ios-close-outline"></ion-icon>  Cancel
+          </button>
+        </ion-item-options>
+      </ion-item-sliding>
+    </ion-list>
   </div>
 
 </ion-content>

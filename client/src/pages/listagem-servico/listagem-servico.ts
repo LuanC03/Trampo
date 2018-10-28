@@ -18,7 +18,14 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 })
 export class ListagemServicoPage {
 
-  user: DadosUsuarioDTO;
+  user: DadosUsuarioDTO = {
+    id: null,
+    tipo: "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : ""
+  };
   servicos: ServicoDTO[];
   
 
@@ -32,7 +39,12 @@ export class ListagemServicoPage {
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
+      response => {
+        this.user = response['data'];
+      }
+    )
+    this.usuarioService.getMyUser().subscribe(
       response => {
         if (response['data']['tipo'] == 'CLIENTE'){
           this.servicoClienteService.getServicos().subscribe(
@@ -46,8 +58,7 @@ export class ListagemServicoPage {
             });   
         }
       }
-    );
-    
+    );    
   }
 
   ionBackPage(){
@@ -56,6 +67,14 @@ export class ListagemServicoPage {
 
   openDetalhes(servico: ServicoDTO){
     this.navCtrl.push('DetalheServicoPage', servico)
+  }
+
+  cancel(servico: ServicoDTO){
+    this.servicoClienteService.cancelaServico(servico).subscribe(
+      response => {
+        console.log('Serviço removido');
+        this.ionViewDidLoad();
+      });
   }
 
 }

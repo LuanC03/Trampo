@@ -30,7 +30,7 @@ export class ListagemServicoAceitosPage {
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
       response => {
           this.servicoFornecedorService.getServicosAceitos().subscribe(
             response => {

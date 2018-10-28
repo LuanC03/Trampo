@@ -32,7 +32,14 @@ export class DetalheServicoPage {
     },
     fornecedor: null,
     status: "",
-    cliente: null
+    cliente: {
+      id: null,
+      login: "",
+      nomeCompleto: "",
+      tipo: "",
+      fotoPerfil: "",
+      email: "",
+    }
   };
 
   constructor(public navCtrl: NavController,
@@ -46,21 +53,11 @@ export class DetalheServicoPage {
 
   ionViewDidLoad() {
 
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
       response => {
         this.user = response['data'];
-        this.servico.id = this.navParams.get("id");
-        this.servico.cliente = this.user.login;
-        this.servico.tipo = this.navParams.get("tipo");
-        this.servico.data = this.navParams.get("data");
-        this.servico.horario = this.navParams.get("horario");
-        this.servico.valor = this.navParams.get("valor");
-        this.servico.status = this.navParams.get("status");
-        this.servico.endereco = this.navParams.get("endereco");
-        if (this.navParams.get("fornecedor")){
-          this.servico.fornecedor = this.navParams.get("fornecedor");
-          this.nomeFornecedor = this.servico.fornecedor['nomeCompleto']
-        }
+        this.servico = this.navParams['data'];
+        console.log(this.servico);
       });
   }
 

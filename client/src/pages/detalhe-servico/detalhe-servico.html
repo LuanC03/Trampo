@@ -14,7 +14,7 @@
           <ion-item>
             Nome:
             <ion-note class="note" item-end>
-              {{ servico.cliente }}
+              {{ servico.cliente.nomeCompleto }}
             </ion-note>
           </ion-item>
         </ion-card-content>     
@@ -51,7 +51,7 @@
             <ion-item>
                 Status:
               <ion-note class="note" item-end>
-                {{ servico.status }}
+                {{ servico.tipoStatus }}
               </ion-note>
             </ion-item>
           </ion-list>

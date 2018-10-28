@@ -14,8 +14,8 @@ export class UsuarioService {
         public storage: StorageService){
     }
 
-    findByUsername(username: string) {
-        return this.http.get(`${API_CONFIG.baseUrl}/api/cliente/${username}`);
+    getMyUser() {
+        return this.http.get(`${API_CONFIG.baseUrl}/api/usuarios/me`);
     }
 
   

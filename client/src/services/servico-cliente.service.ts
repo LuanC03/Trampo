@@ -9,9 +9,9 @@ export class ServicoClienteService {
     constructor(public http: HttpClient){
     }
 
-    cadastraServicoCliente(dados: ServicoDTO){
+    cadastraServicoCliente(servico: ServicoDTO){
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/cliente`,
-        dados,
+        servico,
         {
             observe: 'response',
             responseType: 'json'
@@ -21,6 +21,15 @@ export class ServicoClienteService {
 
     getServicos(){
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/cliente`,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
+
+    cancelaServico(servico: ServicoDTO){
+        return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/cliente/cancelar`,
+        servico,
         {
             observe: 'response',
             responseType: 'json'
