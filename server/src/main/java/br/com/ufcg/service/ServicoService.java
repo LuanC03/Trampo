@@ -25,7 +25,7 @@ public class ServicoService {
 	@Autowired
     ServicoRepository servicoRepository;
 
-    public ServicoDAO criarServico(Servico servico) throws Exception {
+    public Servico criarServico(Servico servico) throws Exception {
         ServicoValidador.valida(servico);
         servico.setFornecedor(null);
         servico.setTipo(servico.getTipo().toLowerCase());
@@ -35,7 +35,7 @@ public class ServicoService {
             throw new Exception("Serviço já cadastrado no banco de dados.");
         }
 		Servico servicoCriado = servicoRepository.save(servico);
-		return servicoCriado.toDAO();
+		return servicoCriado;
     }
    
 	public List<Servico> getServicosFornecedor(Fornecedor fornecedor){
@@ -124,6 +124,7 @@ public class ServicoService {
 	public Servico cancelarServicoCliente(Servico servico) {
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.CANCELADO);
+		servicoAtualizado.setFornecedor(null);
 		return servicoRepository.saveAndFlush(servicoAtualizado);
 		
 	}		
