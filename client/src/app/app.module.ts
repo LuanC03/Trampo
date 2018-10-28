@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+//import { LocationStrategy, PathLocationStrategy } from '@angular/common'; //Ativar essa função na SPRINT 4
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
@@ -32,6 +33,7 @@ import { ServicoFornecedorService } from '../services/servico-fornecedor.service
     StatusBar,
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
+    //{provide: LocationStrategy, useClass: PathLocationStrategy},  //Ativar essa função na SPRINT 4
     CadastroUsuarioService,
     AutenticacaoService,
     StorageService,
