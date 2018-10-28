@@ -34,7 +34,7 @@ page-detalhes {
         align-items: left;
     }
 
-    button.voltar {
+    button.voltar, .cancelar, .confirmar {
         font-size: 25px;
         font-weight: bold;
     }
@@ -45,5 +45,3 @@ page-detalhes {
     }
 
 }
-
-

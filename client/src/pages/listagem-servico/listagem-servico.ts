@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -18,7 +18,14 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 })
 export class ListagemServicoPage {
 
-  user: DadosUsuarioDTO;
+  user: DadosUsuarioDTO = {
+    id: null,
+    tipo: "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : ""
+  };
   servicos: ServicoDTO[];
   
 
@@ -27,12 +34,18 @@ export class ListagemServicoPage {
     public storageService: StorageService,
     public servicoClienteService: ServicoClienteService,
     public servicoFornecedorService: ServicoFornecedorService,
-    public usuarioService: UsuarioService)     {
+    public usuarioService: UsuarioService,
+    public alertCtrl: AlertController)     {
 
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
+      response => {
+        this.user = response['data'];
+      }
+    )
+    this.usuarioService.getMyUser().subscribe(
       response => {
         if (response['data']['tipo'] == 'CLIENTE'){
           this.servicoClienteService.getServicos().subscribe(
@@ -46,8 +59,7 @@ export class ListagemServicoPage {
             });   
         }
       }
-    );
-    
+    );    
   }
 
   ionBackPage(){
@@ -56,6 +68,29 @@ export class ListagemServicoPage {
 
   openDetalhes(servico: ServicoDTO){
     this.navCtrl.push('DetalheServicoPage', servico)
+  }
+
+  cancel(servico: ServicoDTO){
+    this.servicoClienteService.cancelaServico(servico).subscribe(
+      response => {
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.ionViewDidLoad();
+        this.ionViewDidLoad();
+      },error => {
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+      });
   }
 
 }
