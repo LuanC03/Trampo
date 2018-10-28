@@ -11,20 +11,25 @@
 
   <div padding>
     <ion-list>
+
       <ion-item-sliding *ngFor="let servico of servicos" #item>
+
         <button ion-item (click)="openDetalhes(servico)">
           <ion-thumbnail item-start>
             <img src="assets/imgs/default-avatar2.png">
           </ion-thumbnail>
-          <h2>{{ servico.tipo }}</h2>
-          <p> • Status: {{ servico.status }}</p>
+          <h2>Solicitação: {{ servico.tipo }}</h2>
+          <p>Status: {{ servico.status }} • Data: {{ servico.data }}</p>
         </button>
+
         <ion-item-options side="right">
           <button ion-button color="dark" (click)="cancel(servico)">
-              <ion-icon name="ios-close-outline"></ion-icon>  desistir
+              <ion-icon name="ios-close-outline"></ion-icon>Desistir
           </button>
         </ion-item-options>
+
       </ion-item-sliding>
+
     </ion-list>
   </div>
 

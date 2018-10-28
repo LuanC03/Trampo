@@ -25,8 +25,13 @@ page-login {
         flex-direction: column;
     }
 
-    tr {
-        color: white; 
+    button.cadastrar, .login {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    ion-icon {
+        padding-right: 10px;
     }
 
     .item.error-message {
