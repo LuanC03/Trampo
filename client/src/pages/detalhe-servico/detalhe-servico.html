@@ -83,7 +83,7 @@
         </ion-card-content>
       </form>
 
-      <form name="dadosFornecedorForm" *ngIf="servico.status != 'EM_ABERTO'">
+      <form name="dadosFornecedorForm" *ngIf="servico.status == 'ACEITO'">
         <ion-card-content>
           <h5>Fornecedor</h5>
           <ion-list>

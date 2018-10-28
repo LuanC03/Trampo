@@ -67,7 +67,6 @@ export class DetalheServicoPage {
 
   cadastrarServico(){
     this.servico.cliente = null;
-    console.log(this.servico);
     this.servicoFornecedorService.cadastrarServico(this.servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({

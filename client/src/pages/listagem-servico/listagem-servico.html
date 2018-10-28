@@ -19,7 +19,7 @@
           <h2>{{ servico.tipo }}</h2>
           <p> • Status: {{ servico.status }}</p>
         </button>
-        <ion-item-options *ngIf="user.tipo == 'CLIENTE'" side="right">
+        <ion-item-options *ngIf="user.tipo == 'CLIENTE' && servico.tipoStatus == 'EM_ABERTO'" side="right">
           <button ion-button color="danger" (click)="cancel(servico)">
               <ion-icon name="ios-close-outline"></ion-icon>  Cancel
           </button>
