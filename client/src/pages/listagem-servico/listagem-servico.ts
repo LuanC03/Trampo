@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -34,7 +34,8 @@ export class ListagemServicoPage {
     public storageService: StorageService,
     public servicoClienteService: ServicoClienteService,
     public servicoFornecedorService: ServicoFornecedorService,
-    public usuarioService: UsuarioService)     {
+    public usuarioService: UsuarioService,
+    public alertCtrl: AlertController)     {
 
   }
 
@@ -72,8 +73,23 @@ export class ListagemServicoPage {
   cancel(servico: ServicoDTO){
     this.servicoClienteService.cancelaServico(servico).subscribe(
       response => {
-        console.log('Serviço removido');
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
         this.ionViewDidLoad();
+        this.ionViewDidLoad();
+      },error => {
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
       });
   }
 

@@ -52,7 +52,6 @@ export class DetalheServicoPage {
   }
 
   ionViewDidLoad() {
-
     this.usuarioService.getMyUser().subscribe(
       response => {
         this.user = response['data'];
@@ -66,7 +65,6 @@ export class DetalheServicoPage {
   }
 
   cadastrarServico(){
-    this.servico.cliente = null;
     this.servicoFornecedorService.cadastrarServico(this.servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({

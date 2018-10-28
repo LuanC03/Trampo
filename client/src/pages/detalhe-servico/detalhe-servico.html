@@ -98,7 +98,7 @@
       </form>
 
       <ion-item>      
-          <button class="voltar" *ngIf="servico.status == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
+          <button class="voltar" *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
               Confirmar
                   &nbsp; <!-- non-breaking space -->  
               <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
