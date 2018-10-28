@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Endereco;
 import br.com.ufcg.domain.Fornecedor;
@@ -12,7 +14,11 @@ import br.com.ufcg.domain.enums.TipoStatus;
 public final class ServicoDAO {
 	private Long id;
 	private String tipo;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate data;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "kk:mm")
 	private LocalTime horario;
 	private BigDecimal valor;
 	private Endereco endereco;

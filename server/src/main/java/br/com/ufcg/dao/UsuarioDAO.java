@@ -8,15 +8,15 @@ public abstract class UsuarioDAO {
 	private String nomeCompleto;
 	private String email;
 	private String fotoPerfil;
-	private TipoUsuario tipoUsuario;
+	private TipoUsuario tipo;
 	
-	public UsuarioDAO(long id, String login, String nomeCompleto, String email, String fotoPerfil, TipoUsuario tipoUsuario ) {
+	public UsuarioDAO(long id, String login, String nomeCompleto, String email, String fotoPerfil, TipoUsuario tipo ) {
 		this.id = id;
 		this.login = login;
 		this.nomeCompleto = nomeCompleto;
 		this.email = email;
 		this.fotoPerfil = fotoPerfil;
-		this.tipoUsuario = tipoUsuario;
+		this.tipo = tipo;
 	}
 
 	public Long getId() {
@@ -59,12 +59,12 @@ public abstract class UsuarioDAO {
 		this.fotoPerfil = fotoPerfil;
 	}
 
-	public TipoUsuario getTipoUsuario() {
-		return tipoUsuario;
+	public TipoUsuario getTipo() {
+		return tipo;
 	}
 
-	public void setTipoUsuario(TipoUsuario tipoUsuario) {
-		this.tipoUsuario = tipoUsuario;
+	public void setTipo(TipoUsuario tipoUsuario) {
+		this.tipo = tipoUsuario;
 	}
 
 	@Override
