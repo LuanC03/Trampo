@@ -30,7 +30,7 @@ public class UsuarioValidador {
 		return (senhaComMaisDe8Digitos && loginValido && nomeValido && temEspecialidade);
 	}
 	
-	private static boolean validaEspecialidade(Usuario usuario) throws Exception {
+	public static boolean validaEspecialidade(Usuario usuario) throws Exception {
 		if(usuario.getTipo().equals(TipoUsuario.CLIENTE)) {
 			return true;
 		}
@@ -44,7 +44,7 @@ public class UsuarioValidador {
 		throw new Exception(FORNECEDOR_SEM_ESPECIALIDADE);
 	}
 
-	private static boolean validaNome(String nomeCompleto) throws Exception {
+	public static boolean validaNome(String nomeCompleto) throws Exception {
 		int tamanho = nomeCompleto.length();
 		
 		if (tamanho < TAMANHO_MINIMO_NOME) {
@@ -58,7 +58,7 @@ public class UsuarioValidador {
 		return true;
 	}
 
-	private static boolean validaLogin(String login) throws Exception  {
+	public static boolean validaLogin(String login) throws Exception  {
 		int tamanho = login.length();
 		boolean loginComEspaco = login.contains(" ");
 		
@@ -73,7 +73,7 @@ public class UsuarioValidador {
 		return true;
 	}
 	
-	private static boolean validaSenha(String senha) throws Exception {
+	public static boolean validaSenha(String senha) throws Exception {
 		int tamanho = senha.length();
 		
 		if (tamanho < TAMANHO_MINIMO_SENHA) {

@@ -2,6 +2,7 @@ package br.com.ufcg.service;
 
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
+import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.enums.TipoStatus;
@@ -26,14 +27,15 @@ public class ServicoService {
 
     public Servico criarServico(Servico servico) throws Exception {
         ServicoValidador.valida(servico);
+        servico.setFornecedor(null);
         servico.setTipo(servico.getTipo().toLowerCase());
         Servico hasServico = servicoRepository.findServico(servico.getData(), servico.getHorario(), servico.getCliente(), servico.getTipo());
 		
 		if (hasServico != null) {
             throw new Exception("Serviço já cadastrado no banco de dados.");
         }
-		 
-		return servicoRepository.save(servico);
+		Servico servicoCriado = servicoRepository.save(servico);
+		return servicoCriado;
     }
    
 	public List<Servico> getServicosFornecedor(Fornecedor fornecedor){
@@ -59,10 +61,20 @@ public class ServicoService {
 	}
 
 	public List<Servico> getServicosCliente(Cliente cliente) {
+		
 		return servicoRepository.findServicosCliente(cliente);
 	}
 	
-	public List<Servico> ordenaServicosPorData(List<Servico> servicos) {
+	public List<ServicoDAO> setServicosToDAO(List<Servico> servicos) {
+		List<ServicoDAO> servicosDAO = new ArrayList<ServicoDAO>();
+		for(Servico servico: servicos) {
+			servicosDAO.add(servico.toDAO());
+		}
+		
+		return servicosDAO;
+	}
+	
+	public List<ServicoDAO> ordenaServicosPorData(List<Servico> servicos) {
 		List<Servico> servicosOrdenados = servicos;
 		Collections.sort(servicosOrdenados, new Comparator<Servico>(){
 
@@ -81,13 +93,14 @@ public class ServicoService {
 			  }
 			});
 		
-		return servicosOrdenados;
+		return setServicosToDAO(servicosOrdenados);
 	}
 	
 	public Servico setServicoParaFornecedor(Servico servico, Fornecedor fornecedor) {
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.ACEITO);
 		servicoAtualizado.setFornecedor(fornecedor);
+		
 		return servicoRepository.saveAndFlush(servicoAtualizado);
 		
 	}
@@ -100,8 +113,11 @@ public class ServicoService {
 
 
 	public boolean checarFornecedor(Servico servico, Fornecedor fornecedor){
-		if(servico.getFornecedor().equals(fornecedor))
-			return true;
+		if(servico.getFornecedor() != null) {
+			if(servico.getFornecedor().equals(fornecedor)) {
+				return true;
+			}
+		}
 		return false;
 }
 
@@ -119,9 +135,9 @@ public class ServicoService {
 		
 	}
 	
-	public Servico getServico(Servico servico) {
+	public ServicoDAO getServico(Servico servico) {
 		Servico foundServico = servicoRepository.findServico(servico.getData(), servico.getHorario(), servico.getCliente(), servico.getTipo().toLowerCase());
-		return foundServico;
+		return foundServico.toDAO();
 	}
 	
 	public Servico getServicoByID(long id) throws Exception {

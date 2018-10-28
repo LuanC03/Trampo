@@ -1,5 +1,6 @@
 package br.com.ufcg.controller;
 
+import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
@@ -39,7 +40,7 @@ public class ServicoController {
     			
     			Servico servicoAtualizado = servicoService.cancelarServicoFornecedor(servicoEncontrado);
     			
-    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
     			return new ResponseEntity<>(response, HttpStatus.OK);
     			
     		} else {
@@ -67,13 +68,13 @@ public class ServicoController {
         			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
     			}
     			
-    			servicoAtualizado = servicoService.concluirServico(servico);
+    			servicoAtualizado = servicoService.concluirServico(servicoAtualizado);
     			
-    			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
     			return new ResponseEntity<>(response, HttpStatus.OK);
     			
     		} else {
-    			response = new Response("Esse servico nao foi aceito por voce!.", HttpStatus.BAD_REQUEST.value(), servico);
+    			response = new Response("Esse servico nao foi aceito por voce!.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     		}
     		
@@ -91,21 +92,22 @@ public class ServicoController {
     	
     	try {
     		Cliente cliente = (Cliente) request.getAttribute("user");
+    		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
     		
-    		if(servicoService.checarCliente(servico, cliente)) {
-    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    		if(servicoService.checarCliente(servicoAtualizado, cliente)) {
+    			
     			if(!servicoService.checarStatus(servicoAtualizado)){
-    				response = new Response("Não é possivel cancelar esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado);
+    				response = new Response("Não é possivel cancelar esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado.toDAO());
         			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
     			}
     			
     			servicoAtualizado = servicoService.cancelarServicoCliente(servico);
     			
-    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
     			return new ResponseEntity<>(response, HttpStatus.OK);
     			
     		} else {
-    			response = new Response("Esse servico nao foi requerido por voce!.", HttpStatus.BAD_REQUEST.value(), servico);
+    			response = new Response("Esse servico nao foi requerido por voce!.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     		}
     		
@@ -121,16 +123,16 @@ public class ServicoController {
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
-    		
-    		if(servicoService.servicoEhValidoParaFornecedor(servico, fornecedor)) {
-    			Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
-    			servicoAtualizado = servicoService.setServicoParaFornecedor(servico, fornecedor);
+    		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
+    		if(servicoService.servicoEhValidoParaFornecedor(servicoAtualizado, fornecedor)) {
     			
-    			response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado);
+    			servicoAtualizado = servicoService.setServicoParaFornecedor(servicoAtualizado, fornecedor);
+    			
+    			response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
     			return new ResponseEntity<>(response, HttpStatus.OK);
     			
     		} else {
-    			response = new Response("Esse servico nao esta disponivel para voce.", HttpStatus.BAD_REQUEST.value(), servico);
+    			response = new Response("Esse servico nao esta disponivel para voce.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
                 return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     		}
     		
@@ -147,7 +149,7 @@ public class ServicoController {
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
     		List<Servico> servicosAceitos = servicoService.getServicosDoFornecedor(fornecedor);
-    		response = new Response("Servicos que o fornecedor aceitou!", HttpStatus.OK.value(), servicosAceitos);
+    		response = new Response("Servicos que o fornecedor aceitou!", HttpStatus.OK.value(), servicoService.setServicosToDAO(servicosAceitos));
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
@@ -162,7 +164,7 @@ public class ServicoController {
     	
     	try {
     		List<Servico> servicosCadastrados = servicoService.getAll();
-    		List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosCadastrados);
+    		List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosCadastrados);
     		
     		response = new Response("Servicos cadastrados no sistema", HttpStatus.OK.value(), servicosOrdenados);
     		return new ResponseEntity<>(response, HttpStatus.OK);
@@ -180,7 +182,7 @@ public class ServicoController {
     	try {
     		Cliente cliente = (Cliente) request.getAttribute("user");
     		List<Servico> servicosDoCliente = servicoService.getServicosCliente(cliente);
-    		List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoCliente);
+    		List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoCliente);
     		
         	response = new Response("Servicos em aberto do cliente", HttpStatus.ACCEPTED.value(), servicosOrdenados);
       
@@ -206,7 +208,7 @@ public class ServicoController {
 
             Servico servicoCadastrado = servicoService.criarServico(servico);
 
-            response = new Response("Serviço cadastrado com sucesso !", HttpStatus.OK.value(), servicoCadastrado);
+            response = new Response("Serviço cadastrado com sucesso !", HttpStatus.OK.value(), servicoCadastrado.toDAO());
             return new ResponseEntity<>(response, HttpStatus.CREATED);
             
         } catch(Exception e) {
@@ -226,7 +228,7 @@ public class ServicoController {
     		List<Servico> servicosDoFornecedor = servicoService.getServicosFornecedor(fornecedor);
     			
     		if(!servicosDoFornecedor.isEmpty()) {
-    			List<Servico> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
+    			List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
     			response = new Response("Servicos em aberto disponiveis para voce", HttpStatus.ACCEPTED.value(), servicosOrdenados);
         		return new ResponseEntity<>(response, HttpStatus.ACCEPTED);
     		}

@@ -1,5 +1,6 @@
 package br.com.ufcg.domain;
 
+import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.enums.TipoStatus;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -149,7 +150,10 @@ public class Servico {
     public int hashCode() {
         return Objects.hash(data, horario, valor, endereco, tipo);
     }
-
+    
+    public ServicoDAO toDAO() {
+    	return new ServicoDAO(this.id, this.tipo, this.data, this.horario, this.valor, this.endereco, this.cliente, this.fornecedor, this.status);
+    }
 
 }
 

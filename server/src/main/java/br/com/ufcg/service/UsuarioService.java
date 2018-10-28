@@ -6,10 +6,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
+import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 
@@ -103,29 +105,60 @@ public class UsuarioService {
 	}
 
 	
-	public List<Usuario> getClientes() {
+	public List<UsuarioDAO> getClientes() {
 		Iterable<Usuario> listaUsuarios = usuarioRepository.findAll();
-		ArrayList<Usuario> clientes = new ArrayList<Usuario>();
+		ArrayList<UsuarioDAO> clientes = new ArrayList<UsuarioDAO>();
 		
 		for (Usuario usuario : listaUsuarios) {
 			if (TipoUsuario.CLIENTE.equals(usuario.getTipo())) {
-				clientes.add(usuario);
+				clientes.add(usuario.toDAO());
 			}
 		}
 		
 		return clientes;
 	}
 	
-	public List<Usuario> getFornecedores() {
+	public List<UsuarioDAO> getFornecedores() {
 		Iterable<Usuario> listaUsuarios = usuarioRepository.findAll();
-		ArrayList<Usuario> fornecedores = new ArrayList<Usuario>();
+		ArrayList<UsuarioDAO> fornecedores = new ArrayList<UsuarioDAO>();
 		
 		for (Usuario usuario : listaUsuarios) {
 			if (TipoUsuario.FORNECEDOR.equals(usuario.getTipo())) {
-				fornecedores.add(usuario);
+				fornecedores.add(usuario.toDAO());
 			}
 		}
 		
 		return fornecedores;
+	}
+
+	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
+		String senhaNova = form.getSenhaNova();
+		UsuarioValidador.validaSenha(senhaNova);
+		String senhaAntiga = form.getSenhaAtiga();
+		
+		if(senhaNova.equals(senhaAntiga)) {
+			throw new Exception("A senha atual tem que ser diferente da nova!");
+		}
+		
+		if(!usuario.getSenha().equals(senhaAntiga)) {
+			throw new Exception("A senha atual informada esta incorreta!");
+		}
+		
+		usuario.setSenha(senhaNova);
+		usuarioRepository.saveAndFlush(usuario);
+		
+	}
+	
+	public void atualizarNome(Usuario usuario, String nomeCompleto) throws Exception {
+		if(UsuarioValidador.validaNome(nomeCompleto.trim())) {
+			usuario.setNomeCompleto(nomeCompleto.trim().toLowerCase());
+			usuarioRepository.saveAndFlush(usuario);
+		}
+		
+	}
+	
+	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) {
+		usuario.setFotoPerfil(fotoPerfil);
+		usuarioRepository.saveAndFlush(usuario);
 	}
 }

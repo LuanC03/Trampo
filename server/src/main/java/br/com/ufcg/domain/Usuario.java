@@ -6,7 +6,7 @@ import javax.validation.constraints.Email;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-
+import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.enums.TipoUsuario;
 
 @Entity
@@ -152,4 +152,6 @@ public abstract class Usuario {
 	public TipoUsuario getTipo() {
 		return tipo;
 	}
+	
+	public abstract UsuarioDAO toDAO();
 }

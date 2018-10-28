@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,10 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.vo.LoginForm;
+import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -90,7 +93,55 @@ public class UsuarioController {
     	
     	try {
     		Usuario user = (Usuario) request.getAttribute("user");
-    		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user);
+    		response = new Response("Usuario encontrado!", HttpStatus.OK.value(), user.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PostMapping(value ="/api/usuarios/atualizarSenha", consumes = "application/json")
+    public @ResponseBody ResponseEntity<Response> atualizarSenha(HttpServletRequest request, @RequestBody NovaSenhaForm form) {
+    	Response response;
+    	
+    	try {
+    		Usuario userLogado = (Usuario) request.getAttribute("user");
+    		Usuario usuario = usuarioService.getByLogin(userLogado.getLogin());
+    		usuarioService.atualizarSenha(usuario, form);
+    		response = new Response("Senha atualizada com sucesso!", HttpStatus.OK.value());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PostMapping(value ="/api/usuarios/atualizarNome", consumes = "application/json")
+    public @ResponseBody ResponseEntity<Response> atualizarNome(HttpServletRequest request, @RequestBody String novoNome) {
+    	Response response;
+    	
+    	try {
+    		Usuario userLogado = (Usuario) request.getAttribute("user");
+    		Usuario usuario = usuarioService.getByLogin(userLogado.getLogin());
+    		usuarioService.atualizarNome(usuario, novoNome);
+    		response = new Response("Nome atualizado com sucesso!", HttpStatus.OK.value());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PostMapping(value ="/api/usuarios/atualizarFotoDoPerfil", consumes = "application/json")
+    public @ResponseBody ResponseEntity<Response> atualizarFoto(HttpServletRequest request, @RequestBody String novaFoto) {
+    	Response response;
+    	
+    	try {
+    		Usuario userLogado = (Usuario) request.getAttribute("user");
+    		Usuario usuario = usuarioService.getByLogin(userLogado.getLogin());
+    		usuarioService.atualizarFotoDoPerfil(usuario, novaFoto);
+    		response = new Response("Foto do perfil atualizada com sucesso!", HttpStatus.OK.value());
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
@@ -102,7 +153,7 @@ public class UsuarioController {
 	@GetMapping(value = "/api/cliente", produces="application/json")
 	public @ResponseBody ResponseEntity<Response> listaClientes(){
 		Response response;
-		List<Usuario> clientesCadastrados =  usuarioService.getClientes();
+		List<UsuarioDAO> clientesCadastrados =  usuarioService.getClientes();
 		response = new Response("Clientes cadastrados no sistema", HttpStatus.OK.value(), clientesCadastrados);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
@@ -110,7 +161,7 @@ public class UsuarioController {
 	@GetMapping(value = "/api/fornecedor", produces="application/json")
 	public @ResponseBody ResponseEntity<Response> listaFornecedores(){
 		Response response;
-		List<Usuario> fornecedoresCadastrados =  usuarioService.getFornecedores();
+		List<UsuarioDAO> fornecedoresCadastrados =  usuarioService.getFornecedores();
 		response = new Response("Fornecedores cadastrados no sistema", HttpStatus.OK.value(), fornecedoresCadastrados);
 		return new ResponseEntity<>(response, HttpStatus.OK);
 	}
