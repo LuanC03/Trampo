@@ -20,6 +20,7 @@ public final class ServicoDAO {
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "kk:mm")
 	private LocalTime horario;
+	
 	private BigDecimal valor;
 	private Endereco endereco;
 	private UsuarioDAO cliente;
