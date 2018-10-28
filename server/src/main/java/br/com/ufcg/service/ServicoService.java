@@ -124,6 +124,7 @@ public class ServicoService {
 	public Servico cancelarServicoCliente(Servico servico) {
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.CANCELADO);
+		servicoAtualizado.setFornecedor(null);
 		return servicoRepository.saveAndFlush(servicoAtualizado);
 		
 	}		
