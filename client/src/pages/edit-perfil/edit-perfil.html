@@ -1,26 +1,27 @@
 
-<ion-header>
-
+<ion-header class="editar-header">
   <ion-navbar>
-    <ion-title>Editar Dados</ion-title>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <h5>Editar Dados</h5>
   </ion-navbar>
-
 </ion-header>
 
-
-<ion-content class="perfil-content">
+<ion-content class="editar-content">
   <div padding>
     <ion-list>
 
       <form name="dadosClienteForm">
         <ion-avatar item-start>
-       		<ion-card-content>
-       			<h5> {{dadosUsuario.tipo}} </h5>
-       			<ion-thumbnail item-start>
-					<img src="assets/imgs/default-avatar.png">
-				</ion-thumbnail>	
-			</ion-card-content>
+          <ion-card-content>
+            <h5> {{ dadosUsuario.tipo }}</h5>
+            <ion-thumbnail item-start>
+               <img src="assets/imgs/default-avatar.png">
+            </ion-thumbnail>  
+           </ion-card-content>
         </ion-avatar>
+
         <ion-item>
           <ion-label floating >Login</ion-label>
           <ion-input name="login" value="{{dadosUsuario.login}}" [(ngModel)]="dadosUsuario.login"></ion-input>
@@ -36,9 +37,7 @@
       </form>
         <ion-item>
           <button class="salvar" ion-button round full color="pink" (click)="salvar()">
-  			    <ion-icon ios="ios-create" md="md-create"></ion-icon>
-            &nbsp; <!-- non-breaking space -->  
-        	   Salvar
+  			    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Salvar
           </button>
         </ion-item>
       

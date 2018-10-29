@@ -14,7 +14,7 @@ Pré-requisitos para rodar os projetos
 - Client
   * Node e NPM (https://nodejs.org/en/download/)
   * Ionic 3 (https://ionicframework.com/getting-started#cli)
-  * Após as instalações acima, no diretório *client* executar o comando **_ionic serve_**
+  * Após as instalações acima, no diretório *client* executar o comando **_npm install_**, e em seguida, **_ionic serve_**
   
 - Server
   * JDK 8 (http://www.oracle.com/technetwork/pt/java/javase/downloads/jdk8-downloads-2133151.html)

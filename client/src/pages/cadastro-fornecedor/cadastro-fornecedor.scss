@@ -5,8 +5,8 @@ page-cadastro-fornecedor {
         font-weight: bold;  
 
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
 
         color:  black;
         background: #EFEEF4;
@@ -14,14 +14,15 @@ page-cadastro-fornecedor {
 
     ion-content.cadastro-fornecedor-content {        
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
     }
 
     div {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
+        background: transparent !important;
     }
 
     p {
@@ -31,7 +32,20 @@ page-cadastro-fornecedor {
     h5 {
         font-weight: bold;  
     }
+
+    button.inserir {
+        font-weight: bold;
+    }
     
+    button.cadastrar {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    ion-icon {
+        padding-right: 10px;
+    }
+
     .item.error-message {
         color: red;
     }

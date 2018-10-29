@@ -20,18 +20,18 @@ page-listagem {
 
     div {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
         background: transparent !important;
-    }
-
-    h5 {
-        font-weight: bold;  
     }
 
     p {
         font-size: 1em;
         align-items: left;
+    }
+
+    h5 {
+        font-weight: bold;  
     }
 
     button.view {
@@ -42,6 +42,8 @@ page-listagem {
         font-weight: bold;
     }
 
+    ion-icon {
+        padding-right: 10px;
+    }
+
 }
-
-

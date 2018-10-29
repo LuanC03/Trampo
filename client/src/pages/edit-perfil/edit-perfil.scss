@@ -1,0 +1,45 @@
+page-editar {
+     font-family: Dessau-Light;
+
+     ion-header.editar-header {
+        font-weight: bold;  
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        color:  black;
+        background: #EFEEF4;
+    }
+
+    ion-content.editar-content {        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: transparent !important;
+    }
+
+    p {
+        font-size: 1em;
+    }
+
+    h5 {
+        font-weight: bold;  
+    }
+
+    button.salvar {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    ion-icon {
+        padding-right: 10px;
+    }
+
+}
