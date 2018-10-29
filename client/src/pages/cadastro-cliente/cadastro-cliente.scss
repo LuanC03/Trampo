@@ -28,11 +28,11 @@ page-cadastro-cliente {
         font-weight: bold;  
     }
 
-    .item.error-message {
+    .error-message {
         color: red;
-    }
-
-    p {
-        font-size: 1em;
+        margin-top: 0.3rem;
+        font-size: 85%;
+        align-items: stretch;
+        padding-left: 16px;
     }
 }

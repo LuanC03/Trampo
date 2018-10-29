@@ -7,7 +7,7 @@
 <ion-content class="cadastro-cliente-content">
   <div padding>
     <ion-list>
-      <form name="dadosFornecedorForm">
+      <form [formGroup]="clienteForm" (ngSubmit)="cadastrar()">
         <ion-avatar item-start>
           <ion-row>
             <ion-col col-5>
@@ -21,44 +21,32 @@
         </ion-avatar>
         <ion-item class="item">
           <ion-label floating>Nome Completo</ion-label>
-          <ion-input type="text" name="nome" pattern=".{6,}" [(ngModel)]="dados_cliente.nomeCompleto" required #name="ngModel"
-            [class.invalid]="name.errors && name.dirty"></ion-input>
+          <ion-input type="text" formControlName="nomeCompleto"></ion-input>
         </ion-item>
-        <ion-item class="error-message" *ngIf="name.errors?.required && name.dirty">
-          Informe o seu nome completo
-        </ion-item>
+        <div class="error-message" *ngIf="clienteForm.controls.nomeCompleto.dirty && clienteForm.controls.nomeCompleto.errors">Informe o seu nome completo</div>
         <ion-item>
           <ion-label floating>Nome de Usuário</ion-label>
-          <ion-input type="text" name="nomeusuario" pattern=".{4,}" [(ngModel)]="dados_cliente.login" required
-            #username="ngModel" [class.invalid]="username.errors && username.dirty"></ion-input>
+          <ion-input type="text" formControlName="login"></ion-input>
         </ion-item>
-        <ion-item class="error-message" *ngIf="username.errors?.required && username.dirty">
-          Informe o nome do usuário
-        </ion-item>
+        <div class="error-message" *ngIf="clienteForm.controls.login.dirty && clienteForm.controls.login.errors">Informe o nome do usuário</div>
         <ion-item>
           <ion-label floating> Email</ion-label>
-          <ion-input type="email" name="email" [(ngModel)]="dados_cliente.email" required email #email="ngModel"
-            [class.invalid]="email.errors && email.dirty"></ion-input>
+          <ion-input type="email" formControlName="email"></ion-input>
         </ion-item>
-        <ion-item class="error-message" *ngIf="email.errors?.email && email.dirty">
-          Email inválido
-        </ion-item>
+        <div class="error-message" *ngIf="clienteForm.controls.email.dirty && clienteForm.controls.email.errors">Email inválido</div>
         <ion-item>
           <ion-label floating>Senha</ion-label>
-          <ion-input type="password" name="password" pattern=".{4,}" [(ngModel)]="dados_cliente.senha" required
-            #password="ngModel" [class.invalid]="password.errors && password.dirty"></ion-input>
+          <ion-input type="password" formControlName="senha"></ion-input>
         </ion-item>
-        <ion-item class="error-message" *ngIf="password.errors?.required && password.dirty">
-          Informe a senha
-        </ion-item>
+        <div class="error-message" *ngIf="clienteForm.controls.senha.dirty && clienteForm.controls.senha.errors">Informe a senha</div>
         <ion-item>
           <ion-label floating>Confirme sua Senha</ion-label>
-          <ion-input type="password" value="" pattern=".{6,}" name="repassword" [(ngModel)]="dados_cliente.conf_senha"></ion-input>
+          <ion-input type="password" formControlName="conf_senha"></ion-input>
+        </ion-item>
+        <ion-item>
+          <button type="submit" ion-button round full color="pink">Cadastrar</button>
         </ion-item>
       </form>
-      <ion-item>
-        <button class="cadastrar" ion-button round full color="pink" (click)="cadastrar()">Cadastrar</button>
-      </ion-item>
     </ion-list>
   </div>
 </ion-content>

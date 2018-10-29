@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, AlertController } from 'ionic-angular';
-import { FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+import { Cliente } from '../../models/cliente.model';
 
 @IonicPage()
 @Component({
@@ -11,13 +12,7 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 })
 export class CadastroClientePage {
 
-  clienteForm = this.formBuilder.group({
-    nome: ['', Validators.required, Validators.minLength(6)],
-    nomeusuario: ['', Validators.required, Validators.minLength(4)],
-    email: ['', Validators.required, Validators.minLength(6)],
-    password: [],
-    repassword: []
-  })
+  clienteForm: FormGroup;
 
   dados_cliente: DadosUsuarioDTO = {
     id: null,
@@ -35,49 +30,28 @@ export class CadastroClientePage {
     public alertCtrl: AlertController,
     public cadastro: CadastroUsuarioService,
     private formBuilder: FormBuilder) {
-  }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CadastroClientePage');
+      this.clienteForm = this.formBuilder.group({
+        nomeCompleto: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.minLength(6)
+        ])),
+        login: new FormControl('', Validators.compose([
+          Validators.required,
+          Validators.minLength(4)
+        ])),
+        email: new FormControl('', Validators.compose([
+          Validators.required, Validators.minLength(6), Validators.email
+        ])),
+        senha: new FormControl('', Validators.required),
+        conf_senha: new FormControl('', Validators.required)
+      });
   }
 
   cadastrar() {
-    let alert: boolean = false;
-    let myMessage: string = "";
+    console.log(this.clienteForm.value);
 
-    if (this.dados_cliente.nomeCompleto.length == 0) {
-      alert = true;
-      myMessage += "*Nome inválido\n";
-    }
-
-    if (this.dados_cliente.login.length < 4) {
-      alert = true;
-      myMessage += "*Username inválido\n"
-    }
-
-    if (this.dados_cliente.email.length < 3 && !this.dados_cliente.email.includes("@")) {
-      alert = true;
-      myMessage += "*Email inválido\n";
-    }
-
-    if (this.dados_cliente.senha.length < 4 || this.dados_cliente.senha != this.dados_cliente.conf_senha) {
-      alert = true;
-      myMessage += "*Senha inválida\n";
-    }
-
-    if (alert) {
-      let alertMessage = this.alertCtrl.create({
-        title: "Problemas no cadastro",
-        message: myMessage,
-        buttons: [{
-          text: 'Ok'
-        }]
-      });
-      alertMessage.present();
-      return;
-    }
-
-    this.cadastro.cadastrar_cliente(this.dados_cliente).subscribe(response => {
+    this.cadastro.cadastrar_cliente(Cliente.parseFromCliente(this.clienteForm.value)).subscribe(response => {
       console.log(response.headers.get('Authorization'));
       let alertMessage = this.alertCtrl.create({
         title: "Cadastro efetuado com sucesso",
