@@ -8,7 +8,7 @@ import { StorageService } from '../../services/storage.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-edit-perfil',
+  selector: 'page-editar',
   templateUrl: 'edit-perfil.html',
 })
 export class EditPerfilPage {

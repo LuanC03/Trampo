@@ -20,13 +20,9 @@ page-detalhes {
 
     div {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
         background: transparent !important;
-    }
-
-    h5 {
-        font-weight: bold;  
     }
 
     p {
@@ -34,9 +30,17 @@ page-detalhes {
         align-items: left;
     }
 
-    button.voltar, .cancelar, .confirmar {
+    h5 {
+        font-weight: bold;  
+    }
+
+    button.voltar, .confirmar {
         font-size: 25px;
         font-weight: bold;
+    }
+
+    ion-icon {
+        padding-right: 10px;
     }
 
     ion-note.note {

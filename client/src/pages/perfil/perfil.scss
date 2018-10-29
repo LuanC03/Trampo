@@ -20,15 +20,26 @@ page-perfil {
 
     div {
         display: flex;
-        flex-direction: column;
         align-items: center;
+        flex-direction: column;
+        background: transparent !important;
+    }
+
+    p {
+        font-size: 1em;
     }
 
     h5 {
         font-weight: bold;  
     }
 
-    p {
-        font-size: 1em;
+    button.editar {
+        font-size: 25px;
+        font-weight: bold;
     }
+
+    ion-icon {
+        padding-right: 10px;
+    }
+
 }

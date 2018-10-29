@@ -98,15 +98,11 @@
       </form>
 
       <ion-item>      
-          <button class="voltar" *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
-              Confirmar
-                  &nbsp; <!-- non-breaking space -->  
-              <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-            </button>
+        <button class="confirmar" *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
+          <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Confirmar
+        </button>
         <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
-          Voltar
-              &nbsp; <!-- non-breaking space -->  
-          <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
+          <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>Voltar
         </button>
       </ion-item>
 
