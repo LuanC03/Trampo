@@ -23,6 +23,9 @@ public class Servico {
 
     @Column(name="CD_TIPO", nullable = false)
     private String tipo;
+    
+    @Column(name="DC_DESCRICAO", nullable = false)
+    private String descricao;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @Column(name = "DT_DATA", nullable = false)
@@ -54,8 +57,9 @@ public class Servico {
     public Servico() {
     }
 
-    public Servico(String tipo, LocalDate data, LocalTime horario, BigDecimal valor, Endereco endereco) {
+    public Servico(String tipo, String descricao, LocalDate data, LocalTime horario, BigDecimal valor, Endereco endereco) {
         this.tipo = tipo;
+        this.descricao = descricao;
         this.data = data;
         this.horario = horario;
         this.valor = valor;
@@ -68,6 +72,14 @@ public class Servico {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
+    }
+    
+    public String getDescricao() {
+    	return this.descricao;
+    }
+    
+    public void setDescricao(String descricao) {
+    	this.descricao = descricao;
     }
 
     public LocalDate getData() {
@@ -152,7 +164,7 @@ public class Servico {
     }
     
     public ServicoDAO toDAO() {
-    	return new ServicoDAO(this.id, this.tipo, this.data, this.horario, this.valor, this.endereco, this.cliente, this.fornecedor, this.status);
+    	return new ServicoDAO(this.id, this.tipo, this.descricao, this.data, this.horario, this.valor, this.endereco, this.cliente, this.fornecedor, this.status);
     }
 
 }

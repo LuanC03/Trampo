@@ -16,18 +16,28 @@ public class ServicoValidador {
 
     private static final String HORA_OBRIGATORIA = "A hora do serviço deve ser informada.";
     private static final String DATA_OBRIGATORIA = "A data do serviço deve ser informada.";
+	private static final String DESCRICAO_OBRIGATORIA = "Uma descrição do serviço é obrigatória";
 
     public static void valida(Servico servico) throws Exception {
         validaValor(servico.getValor());
         validaData(servico.getData());
         validaHorario(servico.getHorario());
+        validaDescricao(servico.getDescricao());
         UtilCampos.validaTamanhoCampo(servico.getTipo(), 5, 20, "Tipo Serviço");
         UtilCampos.validaTamanhoCampo(servico.getEndereco().getBairro(), 2, 50, "Bairro");
         UtilCampos.validaTamanhoCampo(servico.getEndereco().getRua(), 2, 50, "Rua");
         UtilCampos.validaTamanhoCampo(servico.getEndereco().getNumero(), 0, 5, "Número da Residência");
+        UtilCampos.validaTamanhoCampo(servico.getDescricao(), 8, 35, "Descrição do serviço");
     }
 
-    private static void validaData(LocalDate data) throws Exception {
+    private static void validaDescricao(String descricao) throws Exception {
+		if(descricao == null) {
+			throw new Exception(DESCRICAO_OBRIGATORIA);
+		}
+		
+	}
+
+	private static void validaData(LocalDate data) throws Exception {
 
         if(data == null) {
             throw new Exception(DATA_OBRIGATORIA);

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.service.EspecialidadeService;
+import br.com.ufcg.util.response.Response;
 
 @RestController
 public class EspecialidadeController {
@@ -23,14 +24,18 @@ public class EspecialidadeController {
 	EspecialidadeService especialidadeService;
 	
 	@RequestMapping(value = "api/especialidade", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<Especialidade> cadastraEspecialidade(@RequestBody Especialidade especialidade) throws Exception {
-		Especialidade retorno = especialidadeService.criarEspecialidade(especialidade);
+	public ResponseEntity<Response> cadastraEspecialidade(@RequestBody Especialidade especialidade) throws Exception {
+		Response response;
+		try {
+			Especialidade retorno = especialidadeService.criarEspecialidade(especialidade);
 	    	
-	    if(retorno != null) {
-	    	return new ResponseEntity<>(retorno, HttpStatus.CREATED);
-	    } 
+			response = new Response("Especialidade Criada", HttpStatus.OK.value(), retorno);
 	    
-	    return new ResponseEntity<>(retorno, HttpStatus.EXPECTATION_FAILED);
+			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch(Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
 	}
 	
 	@GetMapping(value = "/api/especialidade", produces="application/json")

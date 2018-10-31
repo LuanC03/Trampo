@@ -12,7 +12,9 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
+import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.repository.UsuarioRepository;
+import br.com.ufcg.util.validadores.SenhaFormValidador;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 
 @Service
@@ -159,29 +161,37 @@ public class UsuarioService {
 		usuario.setFotoPerfil(fotoPerfil);
 		usuarioRepository.saveAndFlush(usuario);
 	}
+	
+	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
+		SenhaFormValidador.valida(usuario, form);
+		Usuario usuarioAtualizado = usuario;
+		usuarioAtualizado.setSenha(form.getSenhaNova());
+		usuarioRepository.saveAndFlush(usuarioAtualizado);
+	}
 
-	public void atualizaDados(Usuario usuario, AlterarDadosForm form) throws Exception {
-		if(/*form.getNovoLogin() != null*/!form.getNovoLogin().equals("")) {
+	public void atualizarDados(Usuario usuario, AlterarDadosForm form) throws Exception {
+		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null && form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
+			throw new Exception("Problemas no formulario! Preencha corretamente.");
+		}
+		
+		if(!form.getNovoLogin().trim().equalsIgnoreCase(usuario.getLogin())) {
 			atualizarLogin(usuario, form.getNovoLogin());
 		}
 		
-		if(/*form.getNovaSenha() != null*/ !form.getNovaSenha().equals("")) {
-			atualizarSenha(usuario, form.getNovaSenha());
-		}
-		
-		if(/*form.getNovoNomeCompleto() != null*/ !form.getNovoNomeCompleto().equals("")) {
+		if(!form.getNovoNomeCompleto().equalsIgnoreCase(usuario.getNomeCompleto())) {
 			atualizarNome(usuario, form.getNovoNomeCompleto());
 		}
 		
-		if(/*form.getNovaEspecialidades() != null*/ form.getNovaEspecialidades().size() != 0) {
-			atualizarEspecialidades(usuario, form.getNovaEspecialidades());
+		if(usuario instanceof Fornecedor) {
+				atualizarEspecialidades(usuario, form.getNovaEspecialidades());
+			
 		}
 		
-		if(/*form.getNovoEmail() != null */ !form.getNovoEmail().equals("")) {
+		if(!form.getNovoEmail().equalsIgnoreCase(usuario.getEmail())) {
 			atualizarEmail(usuario, form.getNovoEmail());
 		}
 		
-		if(/*form.getNovaFotoPerfil() != null*/  !form.getNovaFotoPerfil().equals("")) {
+		if(!form.getNovaFotoPerfil().equals(usuario.getFotoPerfil())) {
 			atualizarFotoDoPerfil(usuario, form.getNovaFotoPerfil());
 		}
 		

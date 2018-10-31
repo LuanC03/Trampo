@@ -24,6 +24,7 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.LoginForm;
+import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -105,7 +106,24 @@ public class UsuarioController {
     	try {
     		Usuario userLogado = (Usuario) request.getAttribute("user");
     		Usuario usuario = usuarioService.getByLogin(userLogado.getLogin());
-    		usuarioService.atualizaDados(usuario, form);
+    		usuarioService.atualizarDados(usuario, form);
+    		response = new Response("Usuario atualizado com sucesso!", HttpStatus.OK.value(), usuario.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    		
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PostMapping(value = "/api/usuarios/senha", consumes = "application/json")
+    public @ResponseBody ResponseEntity<Response> atualizarSenha(HttpServletRequest request, @RequestBody NovaSenhaForm form) {
+    	Response response;
+    	
+    	try {
+    		Usuario userLogado = (Usuario) request.getAttribute("user");
+    		Usuario usuario = usuarioService.getByLogin(userLogado.getLogin());
+    		usuarioService.atualizarSenha(usuario, form);
     		response = new Response("Usuario atualizado com sucesso!", HttpStatus.OK.value(), usuario.toDAO());
     		return new ResponseEntity<>(response, HttpStatus.OK);
     		
