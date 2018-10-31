@@ -14,6 +14,7 @@ import br.com.ufcg.domain.enums.TipoStatus;
 public final class ServicoDAO {
 	private Long id;
 	private String tipo;
+	private String descricao;
 	
 	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	private LocalDate data;
@@ -27,9 +28,10 @@ public final class ServicoDAO {
 	private UsuarioDAO fornecedor;
 	private TipoStatus tipoStatus;
 	
-	public ServicoDAO(Long id, String tipo, LocalDate data, LocalTime horario, BigDecimal valor, Endereco endereco, Cliente cliente, Fornecedor fornecedor, TipoStatus tipoStatus) {
+	public ServicoDAO(Long id, String tipo, String descricao, LocalDate data, LocalTime horario, BigDecimal valor, Endereco endereco, Cliente cliente, Fornecedor fornecedor, TipoStatus tipoStatus) {
 		this.id = id;
 		this.tipo = tipo;
+		this.descricao = descricao;
 		this.data = data;
 		this.horario = horario;
 		this.valor = valor;
@@ -60,6 +62,14 @@ public final class ServicoDAO {
 
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+	
+	public String getDescricao() {
+		return this.descricao;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
 	}
 
 	public LocalDate getData() {
