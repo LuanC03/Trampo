@@ -15,7 +15,7 @@ export class CadastroFornecedorPage {
   
   dados_fornecedor : DadosUsuarioDTO = {
     id: null,
-    tipo: "",
+    tipo: "FORNECEDOR",
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",

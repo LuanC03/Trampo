@@ -12,7 +12,7 @@ export class CadastroClientePage {
 
   dados_cliente : DadosUsuarioDTO = {
     id: null,
-    tipo: "",
+    tipo: "CLIENTE",
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
