@@ -17,7 +17,8 @@ export class PerfilPage {
       fotoPerfil : "",
       nomeCompleto : "",
       login : "",
-      email : ""
+      email : "",
+      listaEspecialidades: null,
     };
 
   constructor(public navCtrl: NavController, 
