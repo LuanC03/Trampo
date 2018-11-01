@@ -57,8 +57,13 @@ export class EditPerfilPage {
       });
   }
 
-  salvar() {
-    console.log(this.dadosAtualizados);
+  salvar(dadosAtualizados : DadosAtualizadosDTO) {
+    this.usuarioService.atualizaDados(dadosAtualizados).subscribe(
+      response => {
+        console.log(response);
+      }, error => {
+        console.log(error);
+      });
     this.navCtrl.pop();
   }
 
