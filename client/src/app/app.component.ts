@@ -2,6 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Platform, Nav, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { AutenticacaoService } from '../services/autenticacao.service';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,8 @@ export class MyApp {
   constructor(platform: Platform, 
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    events: Events) {
+    events: Events,
+    public autenticacaoService : AutenticacaoService) {
     platform.ready().then(() => {
       statusBar.styleDefault();
       splashScreen.hide();
@@ -43,6 +45,11 @@ export class MyApp {
 
   openPage(page) {
     this.nav.setRoot(page.component);
+  }
+
+  logout(){
+    this.autenticacaoService.logout();
+    this.nav.setRoot('LoginPage');
   }
 }
 
