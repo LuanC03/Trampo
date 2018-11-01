@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { StorageService } from '../../services/storage.service';
@@ -34,7 +34,8 @@ export class EditPerfilPage {
     novaEspecialidades : []
   }
   
-  constructor(public navCtrl: NavController, 
+  constructor(public navCtrl: NavController,
+    public modalCtrl: ModalController, 
     public navParams: NavParams,
     public usuarioService: UsuarioService,
     public storageService: StorageService,
@@ -67,6 +68,11 @@ export class EditPerfilPage {
         this.especialidades.push(response.body[key]['nome']);    
       }
     });      
+  }
+
+  atualizarSenha(){
+    let senhaModal = this.modalCtrl.create('AtualizaSenhaPage');
+    senhaModal.present();
   }
 
 }
