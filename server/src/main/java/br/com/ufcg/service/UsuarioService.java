@@ -163,6 +163,9 @@ public class UsuarioService {
 	}
 	
 	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
+		if(form.getSenhaNova() == null || form.getConfirmacao() == null || form.getSenhaAntiga() == null) {
+			throw new Exception("Preencha todos os campos!");
+		}
 		SenhaFormValidador.valida(usuario, form);
 		Usuario usuarioAtualizado = usuario;
 		usuarioAtualizado.setSenha(form.getSenhaNova());
@@ -170,7 +173,7 @@ public class UsuarioService {
 	}
 
 	public void atualizarDados(Usuario usuario, AlterarDadosForm form) throws Exception {
-		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null && form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
+		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null || form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
 			throw new Exception("Problemas no formulario! Preencha corretamente.");
 		}
 		
