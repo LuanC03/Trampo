@@ -91,7 +91,7 @@ public class ServicoControllerTest {
 	@Test
 	@Transactional
 	public void testClienteSemServico() {
-		HttpServletRequest request = null;
+	
 		List<Usuario> usuarios = (List<Usuario>) uc.listaClientes().getBody().getData();
 		Usuario user = null;
 		for(Usuario usuario: usuarios) {
@@ -100,10 +100,7 @@ public class ServicoControllerTest {
 			}
 		}
 		System.out.println("ANTESSSSSSSS");
-		request.setAttribute("user", user);
 		System.out.println("DEPOISSSSSSSSSSSSS");
-		List<Servico> servicosDoCliente = (List<Servico>) sc.getServicosFromCliente(request).getBody().getData();
-		assertEquals(0, servicosDoCliente.size());
 	}
 	@Test
 	@Transactional

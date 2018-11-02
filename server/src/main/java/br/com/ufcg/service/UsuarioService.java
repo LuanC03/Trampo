@@ -200,6 +200,7 @@ public class UsuarioService {
 	private void atualizarEmail(Usuario usuario, String novoEmail) throws Exception {
 		String emailAntigo = usuario.getEmail();
 		Usuario usuarioEmail = usuarioRepository.findByEmail(novoEmail);
+		UsuarioValidador.validaEmail(novoEmail.toLowerCase());
 		
 		if(emailAntigo.equalsIgnoreCase(novoEmail)) {
 			throw new Exception(EMAIL_ATUAL_IGUAL_NOVO);
