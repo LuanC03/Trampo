@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
 import { UsuarioService } from '../../services/usuario.service';
 import { StorageService } from '../../services/storage.service';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
@@ -17,10 +17,12 @@ export class PerfilPage {
       fotoPerfil : "",
       nomeCompleto : "",
       login : "",
-      email : ""
+      email : "",
+      listaEspecialidades: null,
     };
 
   constructor(public navCtrl: NavController, 
+    public modalCtrl: ModalController,
     public navParams: NavParams,
     public usuarioService: UsuarioService,
     public storageService: StorageService) {
