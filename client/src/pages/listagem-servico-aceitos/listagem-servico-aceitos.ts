@@ -12,7 +12,7 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
-  selector: 'page-listagem-servico-aceitos',
+  selector: 'page-listagem',
   templateUrl: 'listagem-servico-aceitos.html',
 })
 export class ListagemServicoAceitosPage {

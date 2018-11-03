@@ -1,3 +1,4 @@
+
 <ion-header class="listagem-header">
   <ion-navbar>
     <button ion-button menuToggle>
@@ -8,7 +9,6 @@
 </ion-header>
 
 <ion-content class="listagem-content">
-
   <div padding>
     <ion-list>
 
@@ -23,7 +23,7 @@
         </button>
 
         <ion-item-options side="right">
-          <button ion-button color="dark" (click)="cancel(servico)">
+          <button class="desistir" ion-button color="dark" (click)="cancel(servico)">
               <ion-icon name="ios-close-outline"></ion-icon>Desistir
           </button>
         </ion-item-options>
@@ -32,5 +32,4 @@
 
     </ion-list>
   </div>
-
 </ion-content>
