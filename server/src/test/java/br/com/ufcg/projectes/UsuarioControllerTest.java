@@ -470,4 +470,30 @@ public class UsuarioControllerTest {
 		}
 		
 	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarFotoInvalida() throws Exception {
+		Usuario usuario = usuarioService.getByLogin("vitor");
+		
+		// Foto vazia
+		AlterarDadosForm form1 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidades1, "");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form1);
+			
+		} catch(Exception e) {
+			assertEquals("É obrigatório uma foto para o perfil!", e.getMessage());
+		}
+		
+		// Foto nula
+		AlterarDadosForm form2 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidades1, null);
+		
+		try {
+			usuarioService.atualizarDados(usuario, form2);
+			
+		} catch(Exception e) {
+			assertEquals("Problemas no formulario! Preencha corretamente.", e.getMessage());
+		}
+	}
 }

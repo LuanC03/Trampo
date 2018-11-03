@@ -203,10 +203,8 @@ public class ServicoController {
 
         try {
             Cliente cliente = (Cliente) request.getAttribute("user");
-            servico.setCliente(cliente);
-            servico.setStatus(TipoStatus.EM_ABERTO);
-
-            Servico servicoCadastrado = servicoService.criarServico(servico);
+        
+            Servico servicoCadastrado = servicoService.criarServico(cliente, servico);
 
             response = new Response("Serviço cadastrado com sucesso !", HttpStatus.OK.value(), servicoCadastrado.toDAO());
             return new ResponseEntity<>(response, HttpStatus.CREATED);

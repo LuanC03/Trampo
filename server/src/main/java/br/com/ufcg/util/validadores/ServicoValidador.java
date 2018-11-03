@@ -1,14 +1,20 @@
 package br.com.ufcg.util.validadores;
 
 import br.com.ufcg.domain.Servico;
+import br.com.ufcg.service.EspecialidadeService;
 import br.com.ufcg.util.UtilCampos;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 
 public class ServicoValidador {
 
+
+	
     private static final String VALOR_INVALIDO = "Valor do Serviço não pode ser menor ou igual a zero.";
     private static final String DATA_PASSADA = "Data do serviço não pode ser uma data passada.";
     private static final String DATA_INVALIDA = "Data do serviço inválida, só pode cadastrar serviços com 3 meses de diferença.";
@@ -18,11 +24,14 @@ public class ServicoValidador {
     private static final String DATA_OBRIGATORIA = "A data do serviço deve ser informada.";
 	private static final String DESCRICAO_OBRIGATORIA = "Uma descrição do serviço é obrigatória";
 
+	
+
     public static void valida(Servico servico) throws Exception {
         validaValor(servico.getValor());
         validaData(servico.getData());
         validaHorario(servico.getHorario());
         validaDescricao(servico.getDescricao());
+     
         UtilCampos.validaTamanhoCampo(servico.getTipo(), 5, 20, "Tipo Serviço");
         UtilCampos.validaTamanhoCampo(servico.getEndereco().getBairro(), 2, 50, "Bairro");
         UtilCampos.validaTamanhoCampo(servico.getEndereco().getRua(), 2, 50, "Rua");
@@ -70,5 +79,6 @@ public class ServicoValidador {
             throw new Exception(VALOR_INVALIDO);
         }
     }
+    
 
 }

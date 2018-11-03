@@ -5,6 +5,7 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Servico;
+import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
 import br.com.ufcg.repository.ServicoRepository;
 import br.com.ufcg.util.validadores.ServicoValidador;
@@ -25,7 +26,13 @@ public class ServicoService {
 	@Autowired
     ServicoRepository servicoRepository;
 
-    public Servico criarServico(Servico servico) throws Exception {
+    public Servico criarServico(Usuario cliente, Servico servico) throws Exception {
+    	if(!(cliente instanceof Cliente)) {
+    		throw new Exception("Apenas clientes podem criar serviços!");
+    	}
+    	
+    	servico.setCliente((Cliente) cliente);
+    	servico.setStatus(TipoStatus.EM_ABERTO);
         ServicoValidador.valida(servico);
         servico.setFornecedor(null);
         servico.setTipo(servico.getTipo().toLowerCase());
@@ -34,6 +41,7 @@ public class ServicoService {
 		if (hasServico != null) {
             throw new Exception("Serviço já cadastrado no banco de dados.");
         }
+		
 		Servico servicoCriado = servicoRepository.save(servico);
 		return servicoCriado;
     }

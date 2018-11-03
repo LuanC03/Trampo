@@ -157,7 +157,11 @@ public class UsuarioService {
 		
 	}
 	
-	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) {
+	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) throws Exception {
+		if(fotoPerfil.contains(" ") || fotoPerfil.equals("")) {
+			throw new Exception("É obrigatório uma foto para o perfil!");
+		}
+		
 		usuario.setFotoPerfil(fotoPerfil);
 		usuarioRepository.saveAndFlush(usuario);
 	}
