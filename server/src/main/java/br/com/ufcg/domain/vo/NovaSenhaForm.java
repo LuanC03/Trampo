@@ -1,21 +1,22 @@
 package br.com.ufcg.domain.vo;
 
 public class NovaSenhaForm {
-	
-	private String senhaAtiga;
+	private String senhaAntiga;
 	private String senhaNova;
+	private String confirmacao;
 	
-	public NovaSenhaForm(String senhaAntiga, String senhaNova) {
-		this.senhaAtiga = senhaAntiga;
+	public NovaSenhaForm(String senhaAntiga, String senhaNova, String confirmacao) {
+		this.senhaAntiga = senhaAntiga;
 		this.senhaNova = senhaNova;
+		this.confirmacao = confirmacao;
 	}
 
-	public String getSenhaAtiga() {
-		return senhaAtiga;
+	public String getSenhaAntiga() {
+		return senhaAntiga;
 	}
 
-	public void setSenhaAtiga(String senhaAtiga) {
-		this.senhaAtiga = senhaAtiga;
+	public void setSenhaAntiga(String senhaAntiga) {
+		this.senhaAntiga = senhaAntiga;
 	}
 
 	public String getSenhaNova() {
@@ -25,6 +26,12 @@ public class NovaSenhaForm {
 	public void setSenhaNova(String senhaNova) {
 		this.senhaNova = senhaNova;
 	}
-	
-	
+
+	public String getConfirmacao() {
+		return confirmacao;
+	}
+
+	public void setConfirmacao(String confirmacao) {
+		this.confirmacao = confirmacao;
+	}
 }

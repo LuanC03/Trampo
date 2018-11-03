@@ -24,17 +24,28 @@
 
         <ion-item>
           <ion-label floating >Login</ion-label>
-          <ion-input name="login" value="{{dadosUsuario.login}}" [(ngModel)]="dadosUsuario.login"></ion-input>
+          <ion-input name="login" value="{{dadosAtualizados.novoLogin}}" [(ngModel)]="dadosAtualizados.novoLogin"></ion-input>
         </ion-item>  
         <ion-item>
           <ion-label floating >Nome</ion-label>
-          <ion-input name="nomeCompleto" value="{{dadosUsuario.nomeCompleto}}" [(ngModel)]="dadosUsuario.nomeCompleto"></ion-input>
+          <ion-input name="nomeCompleto" value="{{dadosAtualizados.novoNomeCompleto}}" [(ngModel)]="dadosAtualizados.novoNomeCompleto"></ion-input>
         </ion-item>
         <ion-item>
           <ion-label floating>Email</ion-label>
-          <ion-input name="email" value="{{dadosUsuario.email}}" [(ngModel)]="dadosUsuario.email"></ion-input>
+          <ion-input name="email" value="{{dadosAtualizados.novoEmail}}" [(ngModel)]="dadosAtualizados.novoEmail"></ion-input>
+        </ion-item>
+        <ion-item *ngIf="dadosUsuario.tipo == 'FORNECEDOR'">
+          <ion-label>Especialidades</ion-label>
+          <ion-select name="specs" [(ngModel)]="dadosAtualizados.novaEspecialidades" multiple="true">
+            <ion-option *ngFor="let especialidade of especialidades">{{especialidade}}</ion-option>
+          </ion-select>
         </ion-item>
       </form>
+        <ion-item>
+          <button class="atualizarSenha" ion-button round full color="dark" (click)="atualizarSenha(dadosAtualizados)">
+  			    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>atualizarSenha
+          </button>
+        </ion-item>
         <ion-item>
           <button class="salvar" ion-button round full color="pink" (click)="salvar()">
   			    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Salvar

@@ -11,8 +11,10 @@ import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
+import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.repository.UsuarioRepository;
+import br.com.ufcg.util.validadores.SenhaFormValidador;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 
 @Service
@@ -24,7 +26,9 @@ public class UsuarioService {
 	private static final String USUARIO_NAO_ENCONTRADO_EXCEPTION = "Usuario nao encontrado";
 	private static final String EMAIL_LOGIN_JA_EXISTENTE_EXCEPTION = "Email e/ou login já estão sendo usados. Tente outros, por favor.";
 	private static final String FORNECEDOR_SEM_ESPECIALIDADE = "O fornecedor tem que ter ao menos 1 especialidade";
-	
+	private static final String SENHA_ATUAL_IGUAL_NOVA = "A nova senha tem que ser diferente do antigo!";
+	private static final String EMAIL_ATUAL_IGUAL_NOVO = "O novo email tem que ser diferente do antigo!";
+	private static final String LOGIN_ATUAL_IGUAL_NOVO = "O novo login tem que ser diferente do antigo!";
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
@@ -131,17 +135,13 @@ public class UsuarioService {
 		return fornecedores;
 	}
 
-	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
-		String senhaNova = form.getSenhaNova();
+	public void atualizarSenha(Usuario usuario, String senha) throws Exception {
+		String senhaNova = senha;
 		UsuarioValidador.validaSenha(senhaNova);
-		String senhaAntiga = form.getSenhaAtiga();
+		String senhaAntiga = usuario.getSenha();
 		
 		if(senhaNova.equals(senhaAntiga)) {
-			throw new Exception("A senha atual tem que ser diferente da nova!");
-		}
-		
-		if(!usuario.getSenha().equals(senhaAntiga)) {
-			throw new Exception("A senha atual informada esta incorreta!");
+			throw new Exception(SENHA_ATUAL_IGUAL_NOVA);
 		}
 		
 		usuario.setSenha(senhaNova);
@@ -160,5 +160,91 @@ public class UsuarioService {
 	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) {
 		usuario.setFotoPerfil(fotoPerfil);
 		usuarioRepository.saveAndFlush(usuario);
+	}
+	
+	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
+		SenhaFormValidador.valida(usuario, form);
+		Usuario usuarioAtualizado = usuario;
+		usuarioAtualizado.setSenha(form.getSenhaNova());
+		usuarioRepository.saveAndFlush(usuarioAtualizado);
+	}
+
+	public void atualizarDados(Usuario usuario, AlterarDadosForm form) throws Exception {
+		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null && form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
+			throw new Exception("Problemas no formulario! Preencha corretamente.");
+		}
+		
+		if(!form.getNovoLogin().trim().equalsIgnoreCase(usuario.getLogin())) {
+			atualizarLogin(usuario, form.getNovoLogin());
+		}
+		
+		if(!form.getNovoNomeCompleto().equalsIgnoreCase(usuario.getNomeCompleto())) {
+			atualizarNome(usuario, form.getNovoNomeCompleto());
+		}
+		
+		if(usuario instanceof Fornecedor) {
+				atualizarEspecialidades(usuario, form.getNovaEspecialidades());
+			
+		}
+		
+		if(!form.getNovoEmail().equalsIgnoreCase(usuario.getEmail())) {
+			atualizarEmail(usuario, form.getNovoEmail());
+		}
+		
+		if(!form.getNovaFotoPerfil().equals(usuario.getFotoPerfil())) {
+			atualizarFotoDoPerfil(usuario, form.getNovaFotoPerfil());
+		}
+		
+	}
+
+	private void atualizarEmail(Usuario usuario, String novoEmail) throws Exception {
+		String emailAntigo = usuario.getEmail();
+		Usuario usuarioEmail = usuarioRepository.findByEmail(novoEmail);
+		
+		if(emailAntigo.equalsIgnoreCase(novoEmail)) {
+			throw new Exception(EMAIL_ATUAL_IGUAL_NOVO);
+		}
+		
+		if(usuarioEmail != null) {
+			throw new Exception(EMAIL_LOGIN_JA_EXISTENTE_EXCEPTION);
+		}
+		
+		usuario.setEmail(novoEmail.toLowerCase());
+		usuarioRepository.saveAndFlush(usuario);
+	}
+
+	private void atualizarEspecialidades(Usuario usuario, List<Especialidade> novaEspecialidades) throws Exception {
+		if(usuario.getTipo().equals(TipoUsuario.FORNECEDOR)) {
+			List<Especialidade> especialidades = especialidadeService.getEspecialidadesValidas(novaEspecialidades);
+			if(especialidades.size() > 0) {
+				((Fornecedor) usuario).setListaEspecialidades(especialidades);
+			} else {
+				throw new Exception("Forneca ao menos uma especialidade valida!");
+			}
+			
+		} else {
+			throw new Exception("Apenas fornecedores podem atualizar as especialidades!");
+		}
+		
+	}
+
+	private void atualizarLogin(Usuario usuario, String novoLogin) throws Exception {
+		String loginAntigo = usuario.getLogin();
+		UsuarioValidador.validaLogin(novoLogin);
+		Usuario usuarioLogin = usuarioRepository.findByLogin(novoLogin);
+		
+		if(loginAntigo.equals(novoLogin)) {
+			throw new Exception(LOGIN_ATUAL_IGUAL_NOVO);
+		}
+		
+		if(usuarioLogin != null) {
+			throw new Exception(EMAIL_LOGIN_JA_EXISTENTE_EXCEPTION);
+		}
+		
+		
+		
+		usuario.setLogin(novoLogin.toLowerCase());
+		usuarioRepository.saveAndFlush(usuario);
+		
 	}
 }
