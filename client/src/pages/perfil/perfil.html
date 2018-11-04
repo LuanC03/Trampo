@@ -22,7 +22,7 @@
         </ion-avatar>
 
         <ion-item>
-          <ion-label>Nome: {{ dadosUsuario.nomeCompleto }} </ion-label>
+          <ion-label>Nome Completo: {{ dadosUsuario.nomeCompleto }} </ion-label>
         </ion-item>
         <ion-item>
           <ion-label>Nome de Usuário: {{ dadosUsuario.login }} </ion-label>
@@ -31,24 +31,22 @@
           <ion-label>Email cadastrado: {{ dadosUsuario.email }} </ion-label>
         </ion-item>   
       </form>
-    </ion-list>
 
-    <ion-list *ngIf="dadosUsuario.tipo == 'FORNECEDOR'">
-      <ion-item >
-        <ion-label>Especialidades: </ion-label>
-      </ion-item>
-      <ion-item *ngFor="let especialidade of dadosUsuario.listaEspecialidades">
-        <ion-label> * {{ especialidade.nome }} </ion-label>
-      </ion-item>
-    </ion-list>
-  
-      
+      <ion-list *ngIf="dadosUsuario.tipo == 'FORNECEDOR'">
+        <ion-item >
+          <ion-label>Especialidades: </ion-label>
+        </ion-item>
+        <ion-item *ngFor="let especialidade of dadosUsuario.listaEspecialidades">
+          <ion-label> * {{ especialidade.nome }} </ion-label>
+        </ion-item>
+      </ion-list> 
+
       <ion-item>
         <button class="editar" ion-button round full color="pink" (click)="editar()">
           <ion-icon ios="ios-create" md="md-create"></ion-icon>Editar
         </button>
       </ion-item>
-      
-  </div>
 
+    </ion-list>
+  </div>
 </ion-content>
