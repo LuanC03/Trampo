@@ -33,7 +33,7 @@ page-cadastro-cliente {
         font-weight: bold;  
     }
 
-    button.inserir {
+    button.inserir, .confirmar {
         font-weight: bold;
     }
     
@@ -44,6 +44,13 @@ page-cadastro-cliente {
 
     ion-icon {
         padding-right: 10px;
+    }
+
+    img.avatar {
+        width: 100px;
+        height: 100px;
+        border-radius: 100%;
+        margin: 25px auto 0 auto;
     }
 
     .item.error-message {

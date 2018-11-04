@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController, ModalController } from 'ionic-angular';
 import { CadastroUsuarioService } from '../../services/cadastro-usuario.service';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+
+import * as $ from 'jquery';
 
 @IonicPage()
 @Component({
@@ -9,6 +11,11 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
   templateUrl: 'cadastro-cliente.html',
 })
 export class CadastroClientePage {
+
+  buttonClicked = false;
+  hasPicture = false;
+  urlDefault = "assets/imgs/default-avatar.png";
+  urlInserted = "";
 
   dados_cliente : DadosUsuarioDTO = {
     id: null,
@@ -21,9 +28,12 @@ export class CadastroClientePage {
     conf_senha : ""
   };
 
-  constructor(public navCtrl: NavController, 
+  constructor(
+    public navCtrl: NavController, 
+    public modalCtrl: ModalController, 
     public alertCtrl: AlertController,
     public cadastro: CadastroUsuarioService) {
+
   }
 
   ionViewDidLoad() {
@@ -49,6 +59,7 @@ export class CadastroClientePage {
       alert = true;
       myMessage += "*Senha inválida\n";
     }
+
     if (alert){
       let alertMessage = this.alertCtrl.create({
         title: "Problemas no cadastro",
@@ -86,6 +97,40 @@ export class CadastroClientePage {
     }
       
     );
+  }
+
+  buttonChange() {
+    this.buttonClicked = !this.buttonClicked;
+  }
+
+  confirmar(fotoPerfil) {
+    this.hasPicture = false;
+    this.dados_cliente.fotoPerfil = this.urlDefault;
+    var self = this;
+
+    let myMessage : string = "*URL quebrada! Imagem inexístente ou não disponível\n";   
+    let alertMessage = this.alertCtrl.create({
+      title: "Problemas na Imagem",
+      message: myMessage,
+      buttons: [{
+        text: 'Ok'
+      }]
+    }); 
+    
+    $.ajax({
+      url: fotoPerfil,
+      type:'HEAD',
+      error:  function(){
+        self.buttonChange();
+        alertMessage.present();
+      },
+      success: function(){ 
+        self.dados_cliente.fotoPerfil = fotoPerfil;
+        self.hasPicture = true;
+        self.buttonChange();
+      }
+    });
+
   }
 
 }

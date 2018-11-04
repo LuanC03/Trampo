@@ -4,7 +4,22 @@
     <h5>Cadastro de Cliente</h5>
   </ion-navbar>
 </ion-header>
+<script language="Javascript">
+alert('<?php echo "O CODE VEM AQUI";?>');
 
+  <?php
+    function url_exists($url) {
+
+      $ch = curl_init($url);
+      curl_setopt($ch, CURLOPT_NOBODY, true);
+      curl_exec($ch);
+      $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+      curl_close($ch);
+
+      return ($code == 200); // verifica se recebe "status OK"
+    }
+  ?>
+</script>
 <ion-content class="cadastro-cliente-content">
 
   <div padding>
@@ -13,13 +28,19 @@
         <ion-avatar item-start>
           <ion-row>
             <ion-col col-5>
-              <img src="assets/imgs/default-avatar.png">
+              <img class="avatar" *ngIf="!hasPicture" [src]="urlDefault">
+              <img class="avatar" *ngIf="hasPicture" [src]="dados_cliente.fotoPerfil">
             </ion-col>
             <ion-col col-5>
               <p color="dark">Escolha seu avatar</p>
-              <button class="inserir" ion-button color="pink" round small>
+              <button *ngIf="!buttonClicked" class="inserir" ion-button color="pink" round small (click)="buttonChange()">
                 <ion-icon ios="ios-add" md="md-add"></ion-icon>Inserir
               </button>
+              <button *ngIf="buttonClicked" class="confirmar" ion-button color="pink" round small (click)="confirmar(urlInserted)">
+                <ion-icon ios="ios-add" md="md-add"></ion-icon>Confirmar
+              </button>
+              <input *ngIf="buttonClicked" type="url" name="url" placeholder="https://example.com"
+               pattern="https://.*" required [(ngModel)]="urlInserted"/>
             </ion-col>
           </ion-row>
         </ion-avatar>
