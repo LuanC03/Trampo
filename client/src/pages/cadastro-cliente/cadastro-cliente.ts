@@ -104,11 +104,15 @@ export class CadastroClientePage {
   }
 
   confirmar(fotoPerfil) {
+    if(fotoPerfil=="") {
+      this.buttonChange();
+      return;
+    }
     this.hasPicture = false;
     this.dados_cliente.fotoPerfil = this.urlDefault;
     var self = this;
 
-    let myMessage : string = "*URL quebrada! Imagem inexístente ou não disponível\n";   
+    let myMessage : string = "*URL quebrada! Imagem inexístente ou não disponível para cadastro\n";   
     let alertMessage = this.alertCtrl.create({
       title: "Problemas na Imagem",
       message: myMessage,

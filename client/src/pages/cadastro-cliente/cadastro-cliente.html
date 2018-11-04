@@ -4,22 +4,7 @@
     <h5>Cadastro de Cliente</h5>
   </ion-navbar>
 </ion-header>
-<script language="Javascript">
-alert('<?php echo "O CODE VEM AQUI";?>');
 
-  <?php
-    function url_exists($url) {
-
-      $ch = curl_init($url);
-      curl_setopt($ch, CURLOPT_NOBODY, true);
-      curl_exec($ch);
-      $code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-      curl_close($ch);
-
-      return ($code == 200); // verifica se recebe "status OK"
-    }
-  ?>
-</script>
 <ion-content class="cadastro-cliente-content">
 
   <div padding>
@@ -37,10 +22,9 @@ alert('<?php echo "O CODE VEM AQUI";?>');
                 <ion-icon ios="ios-add" md="md-add"></ion-icon>Inserir
               </button>
               <button *ngIf="buttonClicked" class="confirmar" ion-button color="pink" round small (click)="confirmar(urlInserted)">
-                <ion-icon ios="ios-add" md="md-add"></ion-icon>Confirmar
+                  <ion-icon ios="ios-checkbox" md="md-checkbox"></ion-icon>Confirmar
               </button>
-              <input *ngIf="buttonClicked" type="url" name="url" placeholder="https://example.com"
-               pattern="https://.*" required [(ngModel)]="urlInserted"/>
+              <input *ngIf="buttonClicked" type="url" name="url" placeholder="https://.../id_da_imagem" pattern="https://.*" required [(ngModel)]="urlInserted"/>
             </ion-col>
           </ion-row>
         </ion-avatar>
