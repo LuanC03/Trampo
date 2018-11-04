@@ -25,6 +25,7 @@ import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.Usuario;
+import br.com.ufcg.domain.enums.TipoStatus;
 import br.com.ufcg.service.ServicoService;
 import br.com.ufcg.service.UsuarioService;
 
@@ -223,6 +224,119 @@ public class ServicoControllerTest {
 		} catch(Exception e) {
 			assertEquals("A hora do serviço deve ser informada.", e.getMessage());
 		}
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorVisualizaServicosDisponiveis() throws Exception {
+		Usuario fornecedor = us.getByLogin("jthiago");
+		Usuario cliente1 = us.getByLogin(this.cliente1.getLogin());
+		Usuario cliente2 = us.getByLogin(this.cliente2.getLogin());
+		
+		/* Um servico que o fornecedor nao possui disponibilidade,
+		 *  pois eh de uma especialidade que ele nao possui.
+		 */
+		Servico servico3 = new Servico("cozinheiro", "fazer um almoco", data1, time1, BigDecimal.valueOf(200), endereco2);
+		
+		Servico servicoCadastrado1 = ss.criarServico(cliente1, servico1);
+		Servico servicoCadastrado2 = ss.criarServico(cliente2, servico2);
+		Servico servicoCadastrado3 = ss.criarServico(cliente2, servico3);
+		
+		try {
+			List<Servico> servicosDisponiveis = ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor);
+			assertEquals(2, servicosDisponiveis.size());
+			assertTrue(servicosDisponiveis.contains(servicoCadastrado1));
+			assertTrue(servicosDisponiveis.contains(servicoCadastrado2));
+			assertFalse(servicosDisponiveis.contains(servicoCadastrado3));
+			
+		} catch(Exception e) {
+			assertEquals(null, e);
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorAceitaServicoValido() throws Exception {
+		Usuario fornecedor = us.getByLogin(fornecedor1.getLogin());
+		
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Servico servicoCadastrado = ss.criarServico(cliente, servico1);
+		
+		assertEquals(1, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, (Fornecedor) fornecedor);
+		
+		// Apos aceitar o unico servico disponivel, nao resta nenhum outro para esse fornecedor.
+		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		
+		// Verifica se o servico aceito esta nos servicos do fornecedor
+		assertTrue(ss.getServicosDoFornecedor((Fornecedor) fornecedor).contains(servicoAceito));
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorTentaAceitarServicoInvalido() throws Exception {
+		Usuario fornecedor = us.getByLogin(fornecedor2.getLogin());
+		Usuario cliente = us.getByLogin(this.cliente2.getLogin());
+		
+		/* Um servico que o fornecedor nao possui disponibilidade,
+		 *  pois eh de uma especialidade que ele nao possui.
+		 */
+		Servico servico = new Servico("cozinheiro", "fazer um almoco", data1, time1, BigDecimal.valueOf(200), endereco2);
+		
+		Servico servicoCadastrado = ss.criarServico(cliente, servico);
+		
+		// O fornecedor nao pode aceitar o servico porque ele nao possui a especialidade.
+		assertFalse(ss.servicoEhValidoParaFornecedor(servicoCadastrado, (Fornecedor) fornecedor));
+		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+	}
+	
+	@Test
+	@Transactional
+	public void testClienteTentaAceitarServico() throws Exception {
+		Usuario cliente1 = us.getByLogin(this.cliente2.getLogin());
+		Usuario cliente2 = us.getByLogin(this.cliente2.getLogin());
+		
+		Servico servicoCadastrado = ss.criarServico(cliente1, servico1);
+		try {
+			ss.setServicoParaFornecedor(servicoCadastrado, cliente2);
+		} catch(Exception e) {
+			assertEquals("Apenas fornecedores podem aceitar serviços!", e.getMessage());
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorConcluiServicoValido() throws Exception {
+		Usuario fornecedor = us.getByLogin(fornecedor1.getLogin());
+		
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Servico servicoCadastrado = ss.criarServico(cliente, servico1);
+		assertEquals(1, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
+		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		assertTrue(ss.getServicosDoFornecedor((Fornecedor) fornecedor).contains(servicoAceito));
+		Servico servicoConcluido = ss.concluirServico(servicoAceito);
+		
+		assertEquals(TipoStatus.CONCLUIDO, servicoConcluido.getStatus());
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorTentaConcluirServicoInvalido() throws Exception {
+		Usuario fornecedor1 = us.getByLogin(this.fornecedor1.getLogin());
+		Usuario fornecedor2 =  us.getByLogin(this.fornecedor2.getLogin());
+		
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Servico servicoCadastrado = ss.criarServico(cliente, servico1);
+		
+		// O fornecedor 2 aceita o servico
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor2);
+		
+		// O fornecedor 1 tenta concluir o servico do fornecedor 2
+		assertFalse(ss.checarFornecedor(servicoAceito, (Fornecedor) fornecedor1));
+		assertEquals(TipoStatus.ACEITO, servicoAceito.getStatus());
 	}
 	
 	

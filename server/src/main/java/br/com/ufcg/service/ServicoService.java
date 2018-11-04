@@ -46,7 +46,7 @@ public class ServicoService {
 		return servicoCriado;
     }
    
-	public List<Servico> getServicosFornecedor(Fornecedor fornecedor){
+	public List<Servico> getServicosDisponiveisFornecedor(Fornecedor fornecedor){
     	
     	List<Servico> servicosDisponiveisFornecedor = new ArrayList<>();
     	List<Servico> servicos = this.getAll();
@@ -104,10 +104,14 @@ public class ServicoService {
 		return setServicosToDAO(servicosOrdenados);
 	}
 	
-	public Servico setServicoParaFornecedor(Servico servico, Fornecedor fornecedor) {
+	public Servico setServicoParaFornecedor(Servico servico, Usuario fornecedor) throws Exception {
+		if(!(fornecedor instanceof Fornecedor)) {
+			throw new Exception("Apenas fornecedores podem aceitar serviços!");
+		}
+		
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.ACEITO);
-		servicoAtualizado.setFornecedor(fornecedor);
+		servicoAtualizado.setFornecedor((Fornecedor) fornecedor);
 		
 		return servicoRepository.saveAndFlush(servicoAtualizado);
 		

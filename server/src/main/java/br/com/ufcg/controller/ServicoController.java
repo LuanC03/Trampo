@@ -223,7 +223,7 @@ public class ServicoController {
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
-    		List<Servico> servicosDoFornecedor = servicoService.getServicosFornecedor(fornecedor);
+    		List<Servico> servicosDoFornecedor = servicoService.getServicosDisponiveisFornecedor(fornecedor);
     			
     		if(!servicosDoFornecedor.isEmpty()) {
     			List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoFornecedor);
