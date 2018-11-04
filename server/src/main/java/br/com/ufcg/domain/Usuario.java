@@ -75,7 +75,6 @@ public abstract class Usuario {
 	@Column(name = "CD_FOTO_PERFIL", nullable = false)
 	private String fotoPerfil;
 	
-	@Email(message = "Insira um email valido.")
 	@Column(name = "TX_EMAIL", nullable = false)
 	private String email;
 

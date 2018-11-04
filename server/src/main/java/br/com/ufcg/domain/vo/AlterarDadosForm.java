@@ -1,14 +1,12 @@
 package br.com.ufcg.domain.vo;
 import java.util.List;
 
-import javax.validation.constraints.Email;
 
 import br.com.ufcg.domain.*;
 
 public class AlterarDadosForm {
 	
 	private String novoNomeCompleto;
-	@Email(message = "Formato de email invalido!")
 	private String novoEmail;
 	private String novoLogin;
 	private List<Especialidade> novaEspecialidades;

@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,22 +20,75 @@ import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
+import br.com.ufcg.domain.vo.AlterarDadosForm;
+import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.repository.UsuarioRepository;
+import br.com.ufcg.service.EspecialidadeService;
 import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.util.validadores.UsuarioValidador;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class UsuarioControllerTest {
 
-	@Autowired
-	UsuarioRepository usuarioRepository;
 
 	@Autowired
 	UsuarioController usuarioController;
 
 	@Autowired
 	UsuarioService usuarioService;
-
+	
+	@Autowired
+	EspecialidadeService especialidadeService;
+	
+	private Usuario cliente1;
+	private Usuario cliente2;
+	private Usuario fornecedor1;
+	private Usuario fornecedor2;
+	private List<Especialidade> especialidades1;
+	private List<Especialidade> especialidades2;
+	private Especialidade especialidade1;
+	private Especialidade especialidade2;
+	private Especialidade especialidade3;
+	private Especialidade especialidade4;
+	
+	
+	
+	@Before
+	@Transactional
+	public void setUp() {
+		especialidade1 = new Especialidade("encanador");
+		especialidade2 = new Especialidade("pintor");
+		especialidade3 = new Especialidade("pedreiro");
+		especialidade4 = new Especialidade("motorista");
+		especialidades1 = new ArrayList<>();
+		especialidades2 = new ArrayList<>();
+		especialidades1.add(especialidade1);
+		especialidades1.add(especialidade2);
+		especialidades1.add(especialidade4);
+		especialidades2.add(especialidade3);
+		especialidades2.add(especialidade1);
+		try {
+			especialidadeService.criarEspecialidade(especialidade1);
+			especialidadeService.criarEspecialidade(especialidade2);
+			especialidadeService.criarEspecialidade(especialidade3);
+			especialidadeService.criarEspecialidade(especialidade4);
+		} catch(Exception e) {
+			
+		}
+		cliente1 = new Cliente("Joao Da Silva", "joao", "foto.png", "joao@gmail.com", "123456789");
+		cliente2 = new Cliente("Paulo Cesar", "pauloc","minha.png", "paulo@gmail.com", "abcdefgh");
+		fornecedor1 = new Fornecedor("Vitor Hugo", "vitor", "afoto.png", "vivi@gmail.com", "vitor123456", especialidades1);
+		fornecedor2 = new Fornecedor("Caio Otavio", "caio", "fotinha.png", "caio@gmail.com", "abc123456", especialidades2);
+		
+		usuarioController.cadastrarCliente((Cliente) cliente1);
+		usuarioController.cadastrarCliente((Cliente) cliente2);
+		usuarioController.cadastrarFornecedor((Fornecedor) fornecedor1);
+		usuarioController.cadastrarFornecedor((Fornecedor) fornecedor2);
+		
+	}
+	
+	
 	@Test
 	@Transactional
 	public void testCriarClienteValido() {
@@ -144,5 +198,302 @@ public class UsuarioControllerTest {
 		}
 		assertTrue(foundByLogin.getNomeCompleto().equals(fornecedor1.getNomeCompleto()));
 		assertEquals(3, ((Fornecedor) foundByLogin).getListaEspecialidades().size());
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarCamposValidos() throws Exception  {
+		Usuario copia = new Cliente("Joao Da Silva", "joao", "foto.png", "joao@gmail.com", "123456789");
+		Usuario usuarioAntes = usuarioService.getByLogin("joao");
+		
+		AlterarDadosForm form = new AlterarDadosForm("Yuri Silva", "yuri", "yuri@gmail.com", null, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(usuarioAntes, form);
+			Usuario usuarioAtualizado = usuarioService.getByLogin("yuri");
+			assertNotEquals(copia.getNomeCompleto(), usuarioAtualizado.getNomeCompleto());
+			assertEquals(usuarioAntes, usuarioAtualizado);
+			assertEquals(usuarioAntes.getId(), usuarioAtualizado.getId());
+		} catch(Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarNomeInvalido() throws Exception {
+	
+		Usuario fornecedor = usuarioService.getByLogin(fornecedor1.getLogin());
+		AlterarDadosForm form = new AlterarDadosForm("a", "vitor", "vivi@gmail.com", especialidades1, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form);
+		} catch(Exception e) {
+			
+			assertEquals(UsuarioValidador.TAMANHO_MINIMO_NOME_EXCEPTION, e.getMessage());
+		}
+		
+		AlterarDadosForm form2 = new AlterarDadosForm("UM NOME MUITO GRANDE PARA ISSO DAR PROBLEMA ABCSDEFUHGFIUGFUYSGFUYWGYFGSUGFQDQIHDQ  Z", "vitor", "vivi@gmail.com", especialidades1, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form2);
+		} catch(Exception e) {
+			assertEquals(UsuarioValidador.TAMANHO_MAXIMO_NOME_EXCEPTION, e.getMessage());
+		}
+		
+	}
+	
+	
+	@Test
+	@Transactional
+	public void testAtualizarEmailInvalido() throws Exception {
+		Usuario cliente = usuarioService.getByLogin("pauloc");		
+		
+		// Formado de email invalido
+		AlterarDadosForm form = new AlterarDadosForm("Paulo Cesar", "pauloc", "email.png", null, "minha.png");
+		
+		// Email de um usuario ja cadastrado
+		AlterarDadosForm form2 = new AlterarDadosForm("Paulo Cesar", "pauloc", "caio@gmail.com", null, "minha.png");
+		
+		// Email vazio
+		AlterarDadosForm form3 = new AlterarDadosForm("Paulo Cesar", "pauloc", "", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(cliente, form);
+		} catch(Exception e) {
+			assertEquals(UsuarioValidador.FORMATO_EMAIL_INVALIDO, e.getMessage());
+			
+		}
+		
+		try {
+			usuarioService.atualizarDados(cliente, form2);
+		} catch(Exception e) {
+			assertEquals("Email e/ou login já estão sendo usados. Tente outros, por favor.", e.getMessage());
+			
+		}
+		
+		try {
+			usuarioService.atualizarDados(cliente, form3);
+		} catch(Exception e) {
+			assertEquals(UsuarioValidador.FORMATO_EMAIL_INVALIDO, e.getMessage());
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarSenhaValida() throws Exception {
+		String senhaAntiga = "123456789";
+		Usuario usuario = usuarioService.getByLogin("joao");
+		String senhaNova = "testando123456";
+		NovaSenhaForm form = new NovaSenhaForm(usuario.getSenha(), senhaNova, senhaNova );
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form);
+			assertNotEquals(senhaAntiga, usuario.getSenha());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarSenhaInvalida() throws Exception {
+		Usuario usuario = usuarioService.getByLogin("vitor");
+		String senhaAntiga = usuario.getSenha();
+		// A senha atual fornecida nao eh a do cadastro.
+		NovaSenhaForm form1 = new NovaSenhaForm("uma senha ai", "123456789", "123456789");
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form1);
+		} catch(Exception e) {
+			assertEquals("A senha informada esta incorreta!", e.getMessage());
+		}
+		
+		// As novas senhas estao diferentes
+		NovaSenhaForm form2 = new NovaSenhaForm(senhaAntiga, "1234567411", "abcdefghhi");
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form2);
+		} catch(Exception e) {
+			assertEquals("A nova senha e a confimacao devem ser identicas!", e.getMessage());
+		}
+		
+		// A nova senha eh igual a antiga
+		NovaSenhaForm form3 = new NovaSenhaForm(senhaAntiga, senhaAntiga, senhaAntiga);
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form3);
+		} catch(Exception e) {
+			assertEquals("A nova senha tem que ser diferente da antiga!", e.getMessage());
+		}
+		
+		// A nova senha eh muito pequena
+		NovaSenhaForm form4 = new NovaSenhaForm(senhaAntiga, "123", "123");
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form4);
+		} catch(Exception e) {
+			assertEquals("A senha deve ter no minimo 8 digitos", e.getMessage());
+		}
+		
+		// A nova senha eh muito grande
+		NovaSenhaForm form5 = new NovaSenhaForm(senhaAntiga, "uma senha muuuuuitoooo grandeeeeee", "uma senha muuuuuitoooo grandeeeeee");
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form5);
+		} catch(Exception e) {
+			assertEquals("A senha deve ter no maximo 20 digitos", e.getMessage());
+		}
+		
+		// Nenhuma senha foi informada
+		NovaSenhaForm form6 = new NovaSenhaForm(senhaAntiga, null, null);
+		
+		try {
+			usuarioService.atualizarSenha(usuario, form6);
+		} catch(Exception e) {
+			assertEquals("Preencha todos os campos!", e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarEspecialidadesValidas() throws Exception {
+		Fornecedor fornecedor = (Fornecedor) usuarioService.getByLogin("caio");
+		int numEspecialidadesAntiga = fornecedor.getListaEspecialidades().size();
+		List<Especialidade> novaEspecialidades = new ArrayList<>();
+		novaEspecialidades.add(especialidade1);
+		AlterarDadosForm form = new AlterarDadosForm("Caio O", "caio", "caio@gmail.com", novaEspecialidades,"fotinha.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form);
+			assertEquals(1, fornecedor.getListaEspecialidades().size());
+			assertNotEquals(numEspecialidadesAntiga, fornecedor.getListaEspecialidades().size());
+		} catch(Exception e) {
+			
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarEspecialidadesInvalidas() throws Exception {
+		Fornecedor fornecedor = (Fornecedor) usuarioService.getByLogin("vitor");
+		List<Especialidade> especialidadesVazia = new ArrayList<>();
+		List<Especialidade> especialidadesInvalida = new ArrayList<>();
+		Especialidade espInvalida = new Especialidade("Invalida");
+		especialidadesInvalida.add(espInvalida);
+		
+		// Nenhuma especialidade fornecida
+		AlterarDadosForm form1 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", null, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form1);
+			
+		} catch(Exception e) {
+			assertEquals("Problemas no formulario! Preencha corretamente.", e.getMessage());
+		}
+		
+		// Especiadades vazia
+		AlterarDadosForm form2 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidadesVazia, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form2);
+		} catch(Exception e) {
+			assertEquals("Forneca ao menos uma especialidade valida!", e.getMessage());
+		}
+		
+		AlterarDadosForm form3 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidadesInvalida, "afoto.png");
+		
+		try {
+			usuarioService.atualizarDados(fornecedor, form3);
+		} catch(Exception e) {
+			assertEquals("Forneca ao menos uma especialidade valida!", e.getMessage());
+		}
+	} 
+	
+	@Test
+	@Transactional
+	public void testAtualizarLoginInvalido() throws Exception {
+		Usuario usuario = usuarioService.getByLogin("pauloc");
+		
+		String loginNulo = null;
+		String loginVazio = "";
+		String loginPequeno = "ab";
+		String loginGrande = "umloginmuitograndeparaissonaofuncionar!!!!!!!";
+		String loginRepetido = "joao";
+		String loginAntigo = "pauloc";
+	
+		// Login vazio
+		AlterarDadosForm form1 = new AlterarDadosForm("Paulo Cesar", loginVazio, "paulo@gmail.com", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form1);
+		} catch(Exception e) {
+			assertEquals("O login deve ter no minimo 4 digitos e nao pode conter espaco", e.getMessage());
+		}
+		
+		// Login com menos de 4 digitos
+		AlterarDadosForm form2 = new AlterarDadosForm("Paulo Cesar", loginPequeno, "paulo@gmail.com", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form2);
+		} catch(Exception e) {
+			assertEquals("O login deve ter no minimo 4 digitos e nao pode conter espaco", e.getMessage());
+		}
+		
+		//Login com mais de 15 digitos
+		AlterarDadosForm form3 = new AlterarDadosForm("Paulo Cesar", loginGrande, "paulo@gmail.com", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form3);
+		} catch(Exception e) {
+			assertEquals("O login deve ter no maximo 15 digitos", e.getMessage());
+		}
+		
+		// Login que ja possui cadastro no sistema
+		AlterarDadosForm form4 = new AlterarDadosForm("Paulo Cesar", loginRepetido, "paulo@gmail.com", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form4);
+		} catch(Exception e) {
+			assertEquals("Email e/ou login já estão sendo usados. Tente outros, por favor.", e.getMessage());
+		}
+		
+		// Login nao informado no formulario
+		AlterarDadosForm form5 = new AlterarDadosForm("Paulo Cesar", loginNulo, "paulo@gmail.com", null, "minha.png");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form5);
+		} catch(Exception e) {
+			assertEquals("Problemas no formulario! Preencha corretamente.", e.getMessage());
+		}
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testAtualizarFotoInvalida() throws Exception {
+		Usuario usuario = usuarioService.getByLogin("vitor");
+		
+		// Foto vazia
+		AlterarDadosForm form1 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidades1, "");
+		
+		try {
+			usuarioService.atualizarDados(usuario, form1);
+			
+		} catch(Exception e) {
+			assertEquals("É obrigatório uma foto para o perfil!", e.getMessage());
+		}
+		
+		// Foto nula
+		AlterarDadosForm form2 = new AlterarDadosForm("Vitor Hugo", "vitor", "vivi@gmail.com", especialidades1, null);
+		
+		try {
+			usuarioService.atualizarDados(usuario, form2);
+			
+		} catch(Exception e) {
+			assertEquals("Problemas no formulario! Preencha corretamente.", e.getMessage());
+		}
 	}
 }

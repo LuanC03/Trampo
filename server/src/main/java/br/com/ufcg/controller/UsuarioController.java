@@ -168,7 +168,7 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/api/fornecedor", consumes = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-	public ResponseEntity<Response> cadastrarFornecedor(@RequestBody Fornecedor fornecedor) throws Exception {
+	public ResponseEntity<Response> cadastrarFornecedor(@RequestBody Fornecedor fornecedor) {
 
 		Response response;
 		try {

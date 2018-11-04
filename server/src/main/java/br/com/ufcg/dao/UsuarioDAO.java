@@ -101,5 +101,10 @@ public abstract class UsuarioDAO {
 		return true;
 	}
 	
+	@Override
+	public String toString() {
+		return "Usuario " + this.id + " - Login: " + this.login + ", Nome: " + this.nomeCompleto + ", Email: " + this.email + "." + System.lineSeparator();
+	}
+	
 	
 }

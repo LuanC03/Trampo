@@ -157,12 +157,19 @@ public class UsuarioService {
 		
 	}
 	
-	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) {
+	public void atualizarFotoDoPerfil(Usuario usuario, String fotoPerfil) throws Exception {
+		if(fotoPerfil.contains(" ") || fotoPerfil.equals("")) {
+			throw new Exception("É obrigatório uma foto para o perfil!");
+		}
+		
 		usuario.setFotoPerfil(fotoPerfil);
 		usuarioRepository.saveAndFlush(usuario);
 	}
 	
 	public void atualizarSenha(Usuario usuario, NovaSenhaForm form) throws Exception {
+		if(form.getSenhaNova() == null || form.getConfirmacao() == null || form.getSenhaAntiga() == null) {
+			throw new Exception("Preencha todos os campos!");
+		}
 		SenhaFormValidador.valida(usuario, form);
 		Usuario usuarioAtualizado = usuario;
 		usuarioAtualizado.setSenha(form.getSenhaNova());
@@ -170,7 +177,7 @@ public class UsuarioService {
 	}
 
 	public void atualizarDados(Usuario usuario, AlterarDadosForm form) throws Exception {
-		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null && form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
+		if(form.getNovaFotoPerfil() == null || form.getNovoEmail() == null || form.getNovoLogin() == null || form.getNovoNomeCompleto() == null || (usuario instanceof Fornecedor && form.getNovaEspecialidades() == null)) {
 			throw new Exception("Problemas no formulario! Preencha corretamente.");
 		}
 		
@@ -200,6 +207,7 @@ public class UsuarioService {
 	private void atualizarEmail(Usuario usuario, String novoEmail) throws Exception {
 		String emailAntigo = usuario.getEmail();
 		Usuario usuarioEmail = usuarioRepository.findByEmail(novoEmail);
+		UsuarioValidador.validaEmail(novoEmail.toLowerCase());
 		
 		if(emailAntigo.equalsIgnoreCase(novoEmail)) {
 			throw new Exception(EMAIL_ATUAL_IGUAL_NOVO);
