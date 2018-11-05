@@ -287,6 +287,13 @@ public class ServicoControllerTest {
 		Servico servicoCadastrado = ss.criarServico(cliente, servico);
 		
 		// O fornecedor nao pode aceitar o servico porque ele nao possui a especialidade.
+		try {
+			ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
+		} catch(Exception e) {
+			assertEquals("Você não possui a especialidade requerida para o serviço", e.getMessage());
+		}
+		
+		// O fornecedor nao pode aceitar o servico porque ele nao possui a especialidade.
 		assertFalse(ss.servicoEhValidoParaFornecedor(servicoCadastrado, (Fornecedor) fornecedor));
 		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
 	}
@@ -316,7 +323,7 @@ public class ServicoControllerTest {
 		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
 		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
 		assertTrue(ss.getServicosDoFornecedor((Fornecedor) fornecedor).contains(servicoAceito));
-		Servico servicoConcluido = ss.concluirServico(servicoAceito);
+		Servico servicoConcluido = ss.concluirServico(servicoAceito, (Fornecedor) fornecedor);
 		
 		assertEquals(TipoStatus.CONCLUIDO, servicoConcluido.getStatus());
 		
@@ -335,8 +342,77 @@ public class ServicoControllerTest {
 		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor2);
 		
 		// O fornecedor 1 tenta concluir o servico do fornecedor 2
+		try {
+			ss.concluirServico(servicoAceito, (Fornecedor) fornecedor1);
+		} catch(Exception e) {
+			assertEquals("Você só pode concluir serviços que você mesmo aceitou!", e.getMessage());
+		}
+		
+		// O fornecedor 1 tenta concluir o servico do fornecedor 2
 		assertFalse(ss.checarFornecedor(servicoAceito, (Fornecedor) fornecedor1));
 		assertEquals(TipoStatus.ACEITO, servicoAceito.getStatus());
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorTentaConcluirServicoConcluido() throws Exception {
+		Usuario fornecedor =  us.getByLogin(this.fornecedor2.getLogin());
+		
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Servico servicoCadastrado = ss.criarServico(cliente, servico1);
+		
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
+		Servico servicoConcluido = ss.concluirServico(servicoAceito, (Fornecedor) fornecedor);
+		
+		// Fornecedor tenta concluir um servico que ja foi concluido
+		try {
+			ss.concluirServico(servicoConcluido, (Fornecedor) fornecedor);
+		} catch(Exception e) {
+			assertEquals("Só é possível concluir serviços que possuem status ACEITO!", e.getMessage());
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testClienteCancelaServicoValido() throws Exception {
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Servico servicoCadastrado = ss.criarServico(cliente, servico2);
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado.getStatus());
+		Servico servicoCancelado = ss.cancelarServicoCliente(servicoCadastrado, (Cliente) cliente);
+		assertEquals(TipoStatus.CANCELADO, servicoCancelado.getStatus());
+	}
+	
+	@Test
+	@Transactional
+	public void testClienteCancelaServicosInvalidos() throws Exception {
+		Usuario cliente1 = us.getByLogin(this.cliente1.getLogin());
+		Usuario cliente2 = us.getByLogin(this.cliente2.getLogin());
+		Usuario fornecedor = us.getByLogin(this.fornecedor2.getLogin());
+		
+		Servico servicoCadastrado = ss.criarServico(cliente2, servico1);
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado.getStatus());
+		
+		// Cliente tenta cancelar um servico que nao eh dele.
+		try {
+			ss.cancelarServicoCliente(servicoCadastrado, (Cliente) cliente1);
+		} catch(Exception e) {
+			assertEquals("Você só pode cancelar serviços que foram solicitados por você!", e.getMessage());
+		}
+		
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado.getStatus());
+		
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
+		Servico servicoConcluido = ss.concluirServico(servicoAceito, (Fornecedor) fornecedor);
+		assertEquals(TipoStatus.CONCLUIDO, servicoConcluido.getStatus());
+		
+		// Cliente tenta cancelar um servico que ja foi concluido
+		try {
+			ss.cancelarServicoCliente(servicoConcluido, (Cliente) cliente2);
+		} catch(Exception e) {
+			assertEquals("Não é possivel cancelar esse serviço, pois ele já foi cancelado ou concluido!", e.getMessage());
+		}
+		
+		assertEquals(TipoStatus.CONCLUIDO, servicoConcluido.getStatus());
 	}
 	
 	
