@@ -36,18 +36,12 @@ public class ServicoController {
     		
     		Servico servicoEncontrado = servicoService.getServicoByID(servico.getId());
     		
-    		if(servicoService.checarServicoFornecedor(servicoEncontrado, fornecedor)) {
-    			
-    			Servico servicoAtualizado = servicoService.cancelarServicoFornecedor(servicoEncontrado);
-    			
-    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
-    			return new ResponseEntity<>(response, HttpStatus.OK);
-    			
-    		} else {
-    			response = new Response("Esse servico nao pertence a voce!", HttpStatus.BAD_REQUEST.value(), servico);
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    		}
     		
+    		Servico servicoAtualizado = servicoService.cancelarServicoFornecedor(servicoEncontrado, fornecedor);
+    			
+    		response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    			
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -55,29 +49,17 @@ public class ServicoController {
     }
     
     @RequestMapping(value = "/api/servicos/fornecedor/concluir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
-    public ResponseEntity<Response> concluirServico(HttpServletRequest request, @RequestBody Servico servico) {
+    public ResponseEntity<Response> concluirServicoFornecedor(HttpServletRequest request, @RequestBody Servico servico) {
     	Response response;
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
     		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
-    		
-    		if(servicoService.checarFornecedor(servicoAtualizado, fornecedor)) {
-    			if(!servicoService.checarStatus(servicoAtualizado)){
-    				response = new Response("Não é possivel concluir esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado);
-        			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
-    			}
+    		servicoAtualizado = servicoService.concluirServico(servicoAtualizado, fornecedor);
     			
-    			servicoAtualizado = servicoService.concluirServico(servicoAtualizado);
-    			
-    			response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
-    			return new ResponseEntity<>(response, HttpStatus.OK);
-    			
-    		} else {
-    			response = new Response("Esse servico nao foi aceito por voce!.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    		}
-    		
+    		response = new Response("Servico concluido com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    				
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
@@ -93,23 +75,10 @@ public class ServicoController {
     	try {
     		Cliente cliente = (Cliente) request.getAttribute("user");
     		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
-    		
-    		if(servicoService.checarCliente(servicoAtualizado, cliente)) {
+    		servicoAtualizado = servicoService.cancelarServicoCliente(servico, cliente);
     			
-    			if(!servicoService.checarStatus(servicoAtualizado)){
-    				response = new Response("Não é possivel cancelar esse serviço pois ele já foi cancelado ou concluido", HttpStatus.BAD_REQUEST.value(), servicoAtualizado.toDAO());
-        			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);	
-    			}
-    			
-    			servicoAtualizado = servicoService.cancelarServicoCliente(servico);
-    			
-    			response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
-    			return new ResponseEntity<>(response, HttpStatus.OK);
-    			
-    		} else {
-    			response = new Response("Esse servico nao foi requerido por voce!.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    		}
+    		response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
     		
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
@@ -124,18 +93,12 @@ public class ServicoController {
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
     		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
-    		if(servicoService.servicoEhValidoParaFornecedor(servicoAtualizado, fornecedor)) {
-    			
-    			servicoAtualizado = servicoService.setServicoParaFornecedor(servicoAtualizado, fornecedor);
-    			
-    			response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
-    			return new ResponseEntity<>(response, HttpStatus.OK);
-    			
-    		} else {
-    			response = new Response("Esse servico nao esta disponivel para voce.", HttpStatus.BAD_REQUEST.value(), servico.toDAO());
-                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
-    		}
     		
+    		servicoAtualizado = servicoService.setServicoParaFornecedor(servicoAtualizado, fornecedor);
+    			
+    		response = new Response("Servico designado para voce com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    				
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
             return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
