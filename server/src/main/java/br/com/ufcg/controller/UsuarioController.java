@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import br.com.ufcg.dao.AvaliacaoDTO;
 import br.com.ufcg.dao.UsuarioDAO;
+import br.com.ufcg.domain.Avaliacao;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
@@ -83,6 +86,36 @@ public class UsuarioController {
         response.setData(new LoginResponse(token));
         response.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+    
+    @PostMapping(value = "/api/avaliar", consumes = "application/json")
+    public @ResponseBody ResponseEntity<Response> avaliarUsuario(@RequestBody AvaliacaoDTO avaliacao) {
+    	Response response;
+    	
+    	try {
+    		Usuario user = usuarioService.getByLogin(avaliacao.getUsuario().getLogin());
+    		Avaliacao avaliacaoDada = usuarioService.addAvaliacao(user, avaliacao.getAvaliacao());
+    		response = new Response("O usuario " + user.getNomeCompleto() + "foi avaliado com sucesso!", HttpStatus.OK.value(), avaliacaoDada);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
+    }
+    
+    @PostMapping(value = "/api/avaliar/get", produces = "application/json")
+    public @ResponseBody ResponseEntity<Response> getAvaliacao(@RequestBody Cliente usuario) {
+    	Response response;
+    	
+    	try {
+    		Usuario user = usuarioService.getByLogin(usuario.getLogin());
+    		List<Avaliacao> avaliacoes = usuarioService.getAvaliacoes(user);
+    		response = new Response("Avaliacoes!", HttpStatus.OK.value(), avaliacoes);
+    		return new ResponseEntity<>(response, HttpStatus.OK);
+    	} catch(Exception e) {
+    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+    		return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    	}
     }
     
     @GetMapping(value ="/api/usuarios/me", produces = "application/json")
