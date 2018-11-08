@@ -94,9 +94,9 @@ public abstract class Usuario {
     //@NamedQuery(name = "obterUsuarioPorUsuarioSenha", query = "select a from USUARIO_AVALIACOES a where a.usuario_id =: id_u")
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@Fetch(FetchMode.SUBSELECT)
-	@JoinTable(name = "USUARIO_HAS_ESPECIALIDADE", 
-	joinColumns = { @JoinColumn(name="USUARIO_ID", referencedColumnName="ID_USUARIO")  }, 
-	inverseJoinColumns = { @JoinColumn(name="AVALIACAO_ID", referencedColumnName="ID_AVALIACAO") })
+	@JoinTable(name = "USUARIO_AVALIACAO",
+	joinColumns = { @JoinColumn(name="USUARIO_ID")  },
+	inverseJoinColumns = { @JoinColumn(name="AVALIACAO_ID") })
 	private List<Avaliacao> avaliacoes;
 
 	

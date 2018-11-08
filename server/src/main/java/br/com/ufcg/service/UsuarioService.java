@@ -262,10 +262,12 @@ public class UsuarioService {
 	}
 	
 	public Avaliacao addAvaliacao(Usuario usuario, Avaliacao avaliacao) throws Exception {
-		
+
 		Avaliacao avaliacaoCriada = avaliacaoService.addAvaliacao(avaliacao);
-		
+
 		usuario.addAvaliacao(avaliacaoCriada);
+
+		usuarioRepository.save(usuario);
 		return avaliacaoCriada;
 	}
 	
