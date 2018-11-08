@@ -1,9 +1,13 @@
 package br.com.ufcg.domain;
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import javax.persistence.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.ufcg.dao.UsuarioDAO;
@@ -84,7 +88,16 @@ public abstract class Usuario {
 	@Column(name = "CD_TIPO", nullable = false, updatable = false)
 	@Enumerated
 	private TipoUsuario tipo;
+	
+    //@NamedQuery(name = "obterUsuarioPorUsuarioSenha", query = "select a from USUARIO_AVALIACOES a where a.usuario_id =: id_u")
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
+	@JoinTable(name = "USUARIO_AVALIACAO",
+	joinColumns = { @JoinColumn(name="USUARIO_ID")  },
+	inverseJoinColumns = { @JoinColumn(name="AVALIACAO_ID") })
+	private List<Avaliacao> avaliacoes;
 
+	
 	public Usuario(String nomeCompleto, String login, String fotoPerfil, 
 			String email, String senha, TipoUsuario tipo) {
 		super();
@@ -94,18 +107,34 @@ public abstract class Usuario {
 		this.email = email;
 		this.senha = senha;
 		this.tipo = tipo;
+		this.avaliacoes = new ArrayList<>();
 	}
 
-	public Usuario() {
+	
+ 	public Usuario() {
 		super();
 	}
-
+ 	
 	public Long getId() {
 		return id;
 	}
 
 	public void setId(Long id) {
 		this.id = id;
+	}
+	
+	
+	
+	public List<Avaliacao> getAvaliacoes() {
+		return this.avaliacoes;
+	}
+	
+	public void addAvaliacao(Avaliacao avaliacao) {
+		this.avaliacoes.add(avaliacao);
+	}
+	
+	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+		this.avaliacoes = avaliacoes;
 	}
 
 	public String getNomeCompleto() {

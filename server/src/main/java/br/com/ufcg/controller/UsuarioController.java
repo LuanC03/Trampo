@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
 import br.com.ufcg.dao.UsuarioDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Fornecedor;
@@ -84,6 +85,8 @@ public class UsuarioController {
         response.setStatus(HttpStatus.OK.value());
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    
+   
     
     @GetMapping(value ="/api/usuarios/me", produces = "application/json")
     public @ResponseBody ResponseEntity<Response> getUsuario(HttpServletRequest request) {

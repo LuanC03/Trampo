@@ -36,6 +36,9 @@ public class UsuarioService {
 	@Autowired
 	EspecialidadeService especialidadeService;
 	
+	@Autowired
+	AvaliacaoService avaliacaoService;
+	
 
 	
 	public Usuario getByLogin(String login) throws Exception {
@@ -255,4 +258,16 @@ public class UsuarioService {
 		usuarioRepository.saveAndFlush(usuario);
 		
 	}
+	
+	
+	
+	public Usuario atualizarUsuario(Usuario usuario) throws Exception {
+		if(usuarioRepository.findById(usuario.getId()) == null) {
+			throw new Exception("Usuário não cadastrado no sistema.");
+		}
+		
+		return usuarioRepository.save(usuario);
+	}
+
+	
 }
