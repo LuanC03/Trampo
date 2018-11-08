@@ -19,6 +19,7 @@ export class RequisicaoServicoPage {
 
   dados_servico : ServicoDTO  = {
     id: null,
+    descricao: "",
     data: "",
     horario: "",
     valor: "",

@@ -17,6 +17,10 @@
 
           <h5>Serviço</h5>
           <ion-list>
+              <ion-item>
+                <ion-label>Descrição:</ion-label>
+                <ion-input type="text" name="descricao" [(ngModel)]="dados_servico.descricao"></ion-input>            
+              </ion-item>
             <ion-item>
               <ion-label floating> Tipo do Serviço: </ion-label>
               <ion-select name="specs" [(ngModel)]="dados_servico.tipo">
