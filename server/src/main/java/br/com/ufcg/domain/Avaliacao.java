@@ -23,7 +23,7 @@ public class Avaliacao {
 	private Double nota;
 	
 	
-	public Avaliacao(Double nota, Usuario avaliado) {
+	public Avaliacao(Double nota) {
 		this.nota = nota;
 		
 	}

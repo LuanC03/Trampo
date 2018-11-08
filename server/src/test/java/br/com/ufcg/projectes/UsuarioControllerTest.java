@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -22,6 +23,7 @@ import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
+import br.com.ufcg.repository.EspecialidadeRepository;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.service.EspecialidadeService;
 import br.com.ufcg.service.UsuarioService;
@@ -40,6 +42,12 @@ public class UsuarioControllerTest {
 	
 	@Autowired
 	EspecialidadeService especialidadeService;
+	
+	@Autowired
+	EspecialidadeRepository er;
+	
+	@Autowired
+	UsuarioRepository ur;
 	
 	private Usuario cliente1;
 	private Usuario cliente2;
@@ -88,6 +96,13 @@ public class UsuarioControllerTest {
 		
 	}
 	
+	@After
+	@Transactional
+	public void limpeza() {
+		ur.deleteAll();
+		er.deleteAll();
+	}
+	
 	
 	@Test
 	@Transactional
@@ -113,14 +128,7 @@ public class UsuarioControllerTest {
 		assertEquals("tiberio.gomes@ccc.ufcg.edu.br", us1.getEmail());
 		assertEquals(TipoUsuario.CLIENTE, us1.getTipo());
 
-		Cliente cliente2 = new Cliente("Yuri Kelvin", "yurikelvin", "/imgs/foto.png", "yuri.kelvin@ccc.ufcg.edu.br",
-				"123456789");
-
-		try {
-			usuarioController.cadastrarCliente(cliente2);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		
 	}
 
 	@Test
