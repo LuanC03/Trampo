@@ -12,6 +12,10 @@ public class AlterarDadosForm {
 	private List<Especialidade> novaEspecialidades;
 	private String novaFotoPerfil;
 	
+	public AlterarDadosForm() {
+		
+	}
+	
 	public AlterarDadosForm(String novoNomeCompleto, String novoLogin, String novoEmail, List<Especialidade> novaEspecialidades, String fotoPerfil) {
 		this.novoNomeCompleto = novoNomeCompleto;
 		this.novoLogin = novoLogin;

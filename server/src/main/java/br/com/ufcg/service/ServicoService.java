@@ -246,4 +246,9 @@ public class ServicoService {
 		return servicoRepository.saveAndFlush(servicoCancelado);
 	}
 
+	public Servico atualizarServico(Servico servico) {
+		return servicoRepository.save(servico);
+		
+	}
+
 }

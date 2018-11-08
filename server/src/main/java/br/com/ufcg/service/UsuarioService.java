@@ -7,14 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.ufcg.dao.UsuarioDAO;
-import br.com.ufcg.domain.Avaliacao;
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
-import br.com.ufcg.repository.AvaliacaoRepository;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.util.validadores.SenhaFormValidador;
 import br.com.ufcg.util.validadores.UsuarioValidador;
@@ -261,17 +259,15 @@ public class UsuarioService {
 		
 	}
 	
-	public Avaliacao addAvaliacao(Usuario usuario, Avaliacao avaliacao) throws Exception {
-
-		Avaliacao avaliacaoCriada = avaliacaoService.addAvaliacao(avaliacao);
-
-		usuario.addAvaliacao(avaliacaoCriada);
-
-		usuarioRepository.save(usuario);
-		return avaliacaoCriada;
-	}
 	
-	public List<Avaliacao> getAvaliacoes(Usuario usuario) {
-		return usuario.getAvaliacoes();
+	
+	public Usuario atualizarUsuario(Usuario usuario) throws Exception {
+		if(usuarioRepository.findById(usuario.getId()) == null) {
+			throw new Exception("Usuário não cadastrado no sistema.");
+		}
+		
+		return usuarioRepository.save(usuario);
 	}
+
+	
 }
