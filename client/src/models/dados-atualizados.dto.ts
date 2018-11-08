@@ -1,5 +1,5 @@
 export interface DadosAtualizadosDTO {
-    novafotoPerfil : string;
+    novaFotoPerfil : string;
     novoNomeCompleto : string;
     novoLogin : string;
     novoEmail : string;
