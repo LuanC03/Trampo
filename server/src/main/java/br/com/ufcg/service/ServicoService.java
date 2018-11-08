@@ -251,4 +251,8 @@ public class ServicoService {
 		
 	}
 
+	public List<Servico> getServicosEvolvidosFornecedor(Fornecedor fornecedor){
+		return servicoRepository.findServicosFornecedor(fornecedor);
+	}
+
 }

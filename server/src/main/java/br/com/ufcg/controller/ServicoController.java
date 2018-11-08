@@ -26,6 +26,62 @@ public class ServicoController {
     @Autowired
     private ServicoService servicoService;
     
+    
+    @RequestMapping(value = "/api/servicos/fornecedor/historico", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> historicoServicoFornecedor(HttpServletRequest request){
+    	
+    	Response response;
+    	
+    	try {
+			Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
+			
+			List<Servico> servicosParticipados = servicoService.getServicosEvolvidosFornecedor(fornecedor);
+			
+			if(servicosParticipados.isEmpty()) {
+				response = new Response("Voce ainda nao participou de nenhum servico", HttpStatus.OK.value());
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			
+			
+			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicosParticipados);
+			return new ResponseEntity<>(response,HttpStatus.OK);
+    		
+		} catch (Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+    }
+    
+    @RequestMapping(value = "/api/servicos/cliente/historico", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public ResponseEntity<Response> historicoServicoCliente(HttpServletRequest request){
+    	
+    	Response response;
+    	
+    	try {
+			Cliente cliente = (Cliente) request.getAttribute("user");
+			
+			List<Servico> servicosParticipados = servicoService.getServicosCliente(cliente);
+			
+			if(servicosParticipados.isEmpty()) {
+				response = new Response("Voce ainda nao participou de nenhum servico", HttpStatus.OK.value());
+    			return new ResponseEntity<>(response, HttpStatus.OK);
+			}
+			
+			
+			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicosParticipados);
+			return new ResponseEntity<>(response,HttpStatus.OK);
+    		
+		} catch (Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+    }
+    
+    
+    
+    
+    
+    
     @RequestMapping(value = "/api/servicos/fornecedor/cancelar", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public ResponseEntity<Response> cancelarServicoFornecedor(HttpServletRequest request, @RequestBody Servico servico) {
     	
