@@ -60,7 +60,7 @@ export class ListagemServicoAceitosPage {
           }]
         });
         alertMessage.present();
-        this.ionViewDidLoad();
+        this.navCtrl.setRoot("HomePage");
       }, error => {
         let alertMessage = this.alertCtrl.create({
           message: error.error['message'],
@@ -69,7 +69,7 @@ export class ListagemServicoAceitosPage {
           }]
         });
         alertMessage.present();
-        this.ionViewDidLoad();
+        this.navCtrl.setRoot("HomePage");
       }
     )
   }

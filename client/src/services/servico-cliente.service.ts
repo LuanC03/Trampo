@@ -27,6 +27,14 @@ export class ServicoClienteService {
         });
     }
 
+    getHistorico(){
+        return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/cliente/historico`,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
+
     cancelaServico(servico: ServicoDTO){
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/cliente/cancelar`,
         servico,

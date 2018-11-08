@@ -4,7 +4,7 @@
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <h5>Serviços</h5>
+    <h5>Histórico</h5>
   </ion-navbar>
 </ion-header>
 
@@ -19,12 +19,6 @@
           <h2> <b>{{ servico.descricao}}</b> do tipo {{ servico.tipo }}</h2>
           <p>Status: {{ servico.tipoStatus }} • Data: {{ servico.data }}</p>
         </button>
-
-        <ion-item-options *ngIf="user.tipo == 'CLIENTE' && servico.tipoStatus == 'EM_ABERTO'" side="right">
-          <button class="cancelar" ion-button color="danger" (click)="cancel(servico)">
-              <ion-icon name="ios-close-outline"></ion-icon>Cancelar
-          </button>
-        </ion-item-options>
 
       </ion-item-sliding>
 

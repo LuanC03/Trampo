@@ -17,6 +17,14 @@ export class ServicoFornecedorService {
         });
     }
 
+    getHistorico(){
+        return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/historico`,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
+
     getServicosAceitos(){
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/aceitos`,
         {

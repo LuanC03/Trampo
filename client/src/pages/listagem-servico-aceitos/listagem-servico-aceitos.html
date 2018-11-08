@@ -15,11 +15,8 @@
       <ion-item-sliding *ngFor="let servico of servicos" #item>
 
         <button ion-item (click)="openDetalhes(servico)">
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/default-avatar2.png">
-          </ion-thumbnail>
-          <h2>Solicitação: {{ servico.tipo }}</h2>
-          <p>Status: {{ servico.status }} • Data: {{ servico.data }}</p>
+          <h2> <b>{{ servico.descricao}}</b> do tipo {{ servico.tipo }}</h2>
+          <p>Status: {{ servico.tipoStatus }} • Data: {{ servico.data }}</p>
         </button>
 
         <ion-item-options side="right">
