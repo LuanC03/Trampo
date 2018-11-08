@@ -247,7 +247,7 @@ public class ServicoService {
 	}
 
 	public Servico atualizarServico(Servico servico) {
-		return servicoRepository.save(servico);
+		return servicoRepository.saveAndFlush(servico);
 		
 	}
 

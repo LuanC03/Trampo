@@ -8,6 +8,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,6 +27,9 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
+import br.com.ufcg.repository.EspecialidadeRepository;
+import br.com.ufcg.repository.ServicoRepository;
+import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.service.ServicoService;
 import br.com.ufcg.service.UsuarioService;
 
@@ -47,6 +51,15 @@ public class ServicoControllerTest {
 	
 	@Autowired
 	UsuarioService us;
+	
+	@Autowired
+	EspecialidadeRepository er;
+	
+	@Autowired
+	UsuarioRepository ur;
+	
+	@Autowired
+	ServicoRepository sr;
 	
 	private Especialidade especialidade1;
 	private Especialidade especialidade2;
@@ -132,6 +145,16 @@ public class ServicoControllerTest {
 		
 		
 	}
+	
+	@After
+	@Transactional
+	public void limpeza() {
+		sr.deleteAll();
+		ur.deleteAll();
+		er.deleteAll();
+		
+	}
+	
 	
 	@Test
 	@Transactional

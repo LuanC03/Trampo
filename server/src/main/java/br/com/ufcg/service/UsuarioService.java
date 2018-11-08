@@ -266,7 +266,7 @@ public class UsuarioService {
 			throw new Exception("Usuário não cadastrado no sistema.");
 		}
 		
-		return usuarioRepository.save(usuario);
+		return usuarioRepository.saveAndFlush(usuario);
 	}
 
 	
