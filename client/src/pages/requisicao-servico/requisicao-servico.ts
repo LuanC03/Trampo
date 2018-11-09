@@ -6,6 +6,7 @@ import { StorageService } from '../../services/storage.service';
 import { EspecialidadesService } from '../../services/especialidades.service';
 import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
+import { UsuarioService } from '../../services/usuario.service';
 
 @IonicPage()
 @Component({
@@ -38,7 +39,8 @@ export class RequisicaoServicoPage {
     public storageService: StorageService,
     public especialidadesService: EspecialidadesService,
     public cadastroServService: ServicoClienteService,
-    public alertCtrl: AlertController)     {
+    public alertCtrl: AlertController,
+    public usuarioService: UsuarioService)     {
       this.getEspecialidades();
   }
 
@@ -61,10 +63,10 @@ export class RequisicaoServicoPage {
     });      
   }
 
-  cadastrar(){
-    this.cadastroServService.cadastraServicoCliente(this.dados_servico).subscribe(
+  cadastrar(servico: ServicoDTO){
+    console.log(servico);
+    this.cadastroServService.cadastraServicoCliente(servico).subscribe(
       response => {
-        console.log()
         let alertMessage = this.alertCtrl.create({
           message: response.body['message'],
           buttons: [{
@@ -75,7 +77,6 @@ export class RequisicaoServicoPage {
         this.navCtrl.setRoot('HomePage');
       },
       error => {
-        console.log(error);
         let alertMessage = this.alertCtrl.create({
           message: error.error['message'],
           buttons: [{
