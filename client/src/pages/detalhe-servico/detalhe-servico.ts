@@ -21,6 +21,7 @@ export class DetalheServicoPage {
   user: DadosUsuarioDTO;
   servico: ServicoDTO = {
     id: null,
+    descricao: "",
     data: "",
     horario: "",
     valor: "",

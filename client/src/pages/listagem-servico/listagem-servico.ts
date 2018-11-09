@@ -71,6 +71,7 @@ export class ListagemServicoPage {
   }
 
   cancel(servico: ServicoDTO){
+    console.log(servico);
     this.servicoClienteService.cancelaServico(servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({

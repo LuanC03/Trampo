@@ -17,6 +17,10 @@
 
           <h5>Serviço</h5>
           <ion-list>
+              <ion-item>
+                <ion-label>Descrição:</ion-label>
+                <ion-input type="text" name="descricao" [(ngModel)]="dados_servico.descricao"></ion-input>            
+              </ion-item>
             <ion-item>
               <ion-label floating> Tipo do Serviço: </ion-label>
               <ion-select name="specs" [(ngModel)]="dados_servico.tipo">
@@ -59,7 +63,7 @@
       </form>
      
       <ion-item>
-        <button class="confirmar" ion-button round full color="pink" (click)="cadastrar()" [disabled]="!isEnabled()">
+        <button class="confirmar" ion-button round full color="pink" (click)="cadastrar(dados_servico)" [disabled]="!isEnabled()">
           <ion-icon ios="ios-checkmark" md="md-checkmark"></ion-icon>Confirmar Requisição
         </button>
       </ion-item>
