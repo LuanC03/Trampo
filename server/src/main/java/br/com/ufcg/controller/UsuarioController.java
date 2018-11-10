@@ -38,6 +38,7 @@ public class UsuarioController {
 	
 	// CONSTANTES NECESSÁRIAS AO CONTROLLER
     public static final String STRING_VAZIA = "";
+    public static final String FORM_INCOMPLETO = "Preencha todos os campos do formulário!";
     public static final String STRING_ESPACAMENTO = " ";
     public static final String USUARIO_NAO_EXISTENTE = "Usuario nao existe";
     public static final String SENHA_INCORRETA = "Senha incorreta";
@@ -52,7 +53,7 @@ public class UsuarioController {
         Response response = new Response();
 
         if (usuario.getLogin() == null || usuario.getSenha() == null) {
-            response.setMessage(STRING_VAZIA);
+            response.setMessage(FORM_INCOMPLETO);
             response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
             return new ResponseEntity<>(response, HttpStatus.NOT_ACCEPTABLE);
         }
