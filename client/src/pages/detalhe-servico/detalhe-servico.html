@@ -104,9 +104,12 @@
       </form>
 
       <ion-item>      
-        <button class="confirmar" *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="cadastrarServico()">
-          <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Confirmar
+        <button class="aceitar" *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'" ion-button round full color="primary" (click)="cadastrarServico(servico)">
+          <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Aceitar Serviço
         </button>
+        <button class="finalizar" *ngIf="servico.tipoStatus == 'ACEITO' && user.tipo == 'FORNECEDOR'" ion-button round full color="dark" (click)="concluirServico(servico)">
+            <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Concluir
+          </button>
         <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
           <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>Voltar
         </button>

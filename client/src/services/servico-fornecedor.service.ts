@@ -50,4 +50,13 @@ export class ServicoFornecedorService {
             responseType: 'json'
         });
     }
+
+    concluirServico(servico: ServicoDTO){
+        return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/concluir`,
+        servico,
+        {
+            observe: 'response',
+            responseType: 'json'
+        });
+    }
 }
