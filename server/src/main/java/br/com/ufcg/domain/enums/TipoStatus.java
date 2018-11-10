@@ -1,6 +1,7 @@
 package br.com.ufcg.domain.enums;
 
 public enum TipoStatus {
+	
     EM_ABERTO("Aberto"),
     ACEITO("Aceito"),
     CANCELADO("Cancelado"),

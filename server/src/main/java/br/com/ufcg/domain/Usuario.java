@@ -1,9 +1,17 @@
 package br.com.ufcg.domain;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.ufcg.dao.UsuarioDAO;
@@ -14,52 +22,6 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public abstract class Usuario {
-
-	
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Usuario other = (Usuario) obj;
-		if (email == null) {
-			if (other.email != null)
-				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (fotoPerfil == null) {
-			if (other.fotoPerfil != null)
-				return false;
-		} else if (!fotoPerfil.equals(other.fotoPerfil))
-			return false;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
-			return false;
-		if (nomeCompleto == null) {
-			if (other.nomeCompleto != null)
-				return false;
-		} else if (!nomeCompleto.equals(other.nomeCompleto))
-			return false;
-		if (senha == null) {
-			if (other.senha != null)
-				return false;
-		} else if (!senha.equals(other.senha))
-			return false;
-		if (tipo != other.tipo)
-			return false;
-		return true;
-	}
 
 	@Id
 	@GeneratedValue(strategy= GenerationType.AUTO)
@@ -154,4 +116,48 @@ public abstract class Usuario {
 	}
 	
 	public abstract UsuarioDAO toDAO();
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Usuario other = (Usuario) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
+		if (fotoPerfil == null) {
+			if (other.fotoPerfil != null)
+				return false;
+		} else if (!fotoPerfil.equals(other.fotoPerfil))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (login == null) {
+			if (other.login != null)
+				return false;
+		} else if (!login.equals(other.login))
+			return false;
+		if (nomeCompleto == null) {
+			if (other.nomeCompleto != null)
+				return false;
+		} else if (!nomeCompleto.equals(other.nomeCompleto))
+			return false;
+		if (senha == null) {
+			if (other.senha != null)
+				return false;
+		} else if (!senha.equals(other.senha))
+			return false;
+		if (tipo != other.tipo)
+			return false;
+		return true;
+	}
 }
