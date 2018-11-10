@@ -438,5 +438,58 @@ public class ServicoControllerTest {
 		assertEquals(TipoStatus.CONCLUIDO, servicoConcluido.getStatus());
 	}
 	
+	@Test
+	@Transactional
+	public void testFornecedorCancelaServicoValido() throws Exception {
+		Usuario cliente1 = us.getByLogin(this.cliente1.getLogin());
+		Usuario fornecedor = us.getByLogin(this.fornecedor2.getLogin());
+		
+		Servico servicoCadastrado = ss.criarServico(cliente1, servico1);
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado.getStatus());
+		
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor);
+		assertEquals(TipoStatus.ACEITO, servicoAceito.getStatus());
+		assertEquals(fornecedor, servicoAceito.getFornecedor());
+		
+		Servico servicoCanceladoPeloFornecedor = ss.cancelarServicoFornecedor(servicoAceito, (Fornecedor) fornecedor);
+		
+		assertEquals(null, servicoCanceladoPeloFornecedor.getFornecedor());
+		assertEquals(TipoStatus.EM_ABERTO, servicoCanceladoPeloFornecedor.getStatus());
+		
+	}
+	
+	@Test
+	@Transactional
+	public void testFornecedorCancelaServicoInvalido() throws Exception {
+		Usuario cliente = us.getByLogin(this.cliente1.getLogin());
+		Usuario cliente2 = us.getByLogin(this.cliente2.getLogin());
+		Usuario fornecedor1 = us.getByLogin(this.fornecedor1.getLogin());
+		Usuario fornecedor2 = us.getByLogin(this.fornecedor2.getLogin());
+		
+		
+		Servico servicoCadastrado = ss.criarServico(cliente, servico2);
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado.getStatus());
+		
+		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, fornecedor2);
+		assertEquals(TipoStatus.ACEITO, servicoAceito.getStatus());
+		assertEquals(fornecedor2, servicoAceito.getFornecedor());
+		
+		
+		Servico servicoCadastrado2 = ss.criarServico(cliente2, servico1);
+		assertEquals(TipoStatus.EM_ABERTO, servicoCadastrado2.getStatus());
+		
+		Servico servicoAceito2 = ss.setServicoParaFornecedor(servicoCadastrado2, fornecedor1);
+		assertEquals(TipoStatus.ACEITO, servicoAceito2.getStatus());
+		assertEquals(fornecedor1, servicoAceito2.getFornecedor());
+		
+		// Um fornecedor tenta cancelar um servico que nao eh dele
+		try {
+			ss.cancelarServicoFornecedor(servicoAceito, (Fornecedor) fornecedor1);
+		} catch(Exception e) {
+			assertEquals("Você só pode cancelar serviços aceitos por você!", e.getMessage());
+			assertEquals(fornecedor2, servicoAceito.getFornecedor());
+		}
+	}
+	
 	
 }
