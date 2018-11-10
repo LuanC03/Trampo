@@ -67,13 +67,13 @@ public abstract class UsuarioDAO {
 		this.tipo = tipoUsuario;
 	}
 
+	
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((email == null) ? 0 : email.hashCode());
-		result = prime * result + (int) (id ^ (id >>> 32));
-		result = prime * result + ((login == null) ? 0 : login.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -86,19 +86,17 @@ public abstract class UsuarioDAO {
 		if (getClass() != obj.getClass())
 			return false;
 		UsuarioDAO other = (UsuarioDAO) obj;
-		if (email == null) {
-			if (other.email != null)
+		if (id == null) {
+			if (other.id != null)
 				return false;
-		} else if (!email.equals(other.email))
-			return false;
-		if (id != other.id)
-			return false;
-		if (login == null) {
-			if (other.login != null)
-				return false;
-		} else if (!login.equals(other.login))
+		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Usuario " + this.id + " - Login: " + this.login + ", Nome: " + this.nomeCompleto + ", Email: " + this.email + "." + System.lineSeparator();
 	}
 	
 	

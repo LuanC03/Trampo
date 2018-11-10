@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ViewController, AlertController } from 'ionic-angular';
 import { senhaAtualizadaDTO } from '../../models/senha-atualizada.dto';
 import { UsuarioService } from '../../services/usuario.service';
 
@@ -19,7 +19,8 @@ export class AtualizaSenhaPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public viewCtrl: ViewController,
-    public usuarioService: UsuarioService) {
+    public usuarioService: UsuarioService,
+    public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -29,10 +30,22 @@ export class AtualizaSenhaPage {
   atualizar(dadosSenha : senhaAtualizadaDTO){
     this.usuarioService.atualizaSenha(dadosSenha).subscribe(
       response => {
-        console.log(response);
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
         this.viewCtrl.dismiss();
       }, error => {
-        console.log(error);
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
       });
   }
 

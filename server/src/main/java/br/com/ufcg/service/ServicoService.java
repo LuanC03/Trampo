@@ -5,6 +5,7 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Servico;
+import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
 import br.com.ufcg.repository.ServicoRepository;
 import br.com.ufcg.util.validadores.ServicoValidador;
@@ -25,7 +26,13 @@ public class ServicoService {
 	@Autowired
     ServicoRepository servicoRepository;
 
-    public Servico criarServico(Servico servico) throws Exception {
+    public Servico criarServico(Usuario cliente, Servico servico) throws Exception {
+    	if(!(cliente instanceof Cliente)) {
+    		throw new Exception("Apenas clientes podem criar serviços!");
+    	}
+    	
+    	servico.setCliente((Cliente) cliente);
+    	servico.setStatus(TipoStatus.EM_ABERTO);
         ServicoValidador.valida(servico);
         servico.setFornecedor(null);
         servico.setTipo(servico.getTipo().toLowerCase());
@@ -34,11 +41,12 @@ public class ServicoService {
 		if (hasServico != null) {
             throw new Exception("Serviço já cadastrado no banco de dados.");
         }
+		
 		Servico servicoCriado = servicoRepository.save(servico);
 		return servicoCriado;
     }
    
-	public List<Servico> getServicosFornecedor(Fornecedor fornecedor){
+	public List<Servico> getServicosDisponiveisFornecedor(Fornecedor fornecedor){
     	
     	List<Servico> servicosDisponiveisFornecedor = new ArrayList<>();
     	List<Servico> servicos = this.getAll();
@@ -96,18 +104,32 @@ public class ServicoService {
 		return setServicosToDAO(servicosOrdenados);
 	}
 	
-	public Servico setServicoParaFornecedor(Servico servico, Fornecedor fornecedor) {
+	public Servico setServicoParaFornecedor(Servico servico, Usuario fornecedor) throws Exception {
+		if(!(fornecedor instanceof Fornecedor)) {
+			throw new Exception("Apenas fornecedores podem aceitar serviços!");
+		}
+		
+		if(!servicoEhValidoParaFornecedor(servico, (Fornecedor) fornecedor)) {
+			throw new Exception("Você não possui a especialidade requerida para o serviço");
+		}
+		
+		if(!servico.getStatus().equals(TipoStatus.EM_ABERTO)) {
+			throw new Exception("Você só pode aceitar serviços que estão em aberto!");
+		}
+		
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.ACEITO);
-		servicoAtualizado.setFornecedor(fornecedor);
-		
+		servicoAtualizado.setFornecedor((Fornecedor) fornecedor);
+	
 		return servicoRepository.saveAndFlush(servicoAtualizado);
+		
 		
 	}
 	
 	public boolean checarCliente(Servico servico, Cliente cliente){
-		if(servico.getCliente().equals(cliente))
+		if(servico.getCliente().equals(cliente)) {
 			return true;
+		}
 		return false;
 }
 
@@ -121,7 +143,15 @@ public class ServicoService {
 		return false;
 }
 
-	public Servico cancelarServicoCliente(Servico servico) {
+	public Servico cancelarServicoCliente(Servico servico, Cliente cliente) throws Exception {
+		if(!checarCliente(servico, cliente)) {
+			throw new Exception("Você só pode cancelar serviços que foram solicitados por você!");
+		}
+		
+		if(!checarStatus(servico)) {
+			throw new Exception("Não é possivel cancelar esse serviço, pois ele já foi cancelado ou concluido!");
+		}
+		
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.CANCELADO);
 		servicoAtualizado.setFornecedor(null);
@@ -129,7 +159,14 @@ public class ServicoService {
 		
 	}		
 
-	public Servico concluirServico(Servico servico) {
+	public Servico concluirServico(Servico servico, Fornecedor fornecedor) throws Exception {
+		if(!checarFornecedor(servico, fornecedor)) {
+			throw new Exception("Você só pode concluir serviços que você mesmo aceitou!");
+		}
+		
+		if(!checarStatus(servico)) {
+			throw new Exception("Só é possível concluir serviços que possuem status ACEITO!");
+		}
 		Servico servicoAtualizado = servico;
 		servicoAtualizado.setStatus(TipoStatus.CONCLUIDO);
 		return servicoRepository.saveAndFlush(servicoAtualizado);
@@ -150,18 +187,16 @@ public class ServicoService {
 		return servico;
 	}
 
-	public boolean servicoEhValidoParaFornecedor(Servico servico, Fornecedor fornecedor) {
-		boolean ehValido = false;
+	public boolean servicoEhValidoParaFornecedor(Servico servico, Fornecedor fornecedor) throws Exception {
 		List<Especialidade> especialidadesDoFornecedor = fornecedor.getListaEspecialidades();
-		Servico foundServico = servicoRepository.findByID(servico.getId());
 		
 		for(Especialidade esp: especialidadesDoFornecedor) {
-			if(esp.getNome().equalsIgnoreCase(foundServico.getTipo()) && foundServico.getStatus().equals(TipoStatus.EM_ABERTO)) {
-				ehValido = true;
+			if(esp.getNome().equalsIgnoreCase(servico.getTipo())) {
+				return true;
 			}
 		}
 		
-		return ehValido;
+		return false;
 	}
 
 	public List<Servico> getServicosDoFornecedor(Fornecedor fornecedor) throws Exception {
@@ -200,12 +235,24 @@ public class ServicoService {
 		throw new Exception("Esse servico nao foi aceito!");
 	}
 
-	public Servico cancelarServicoFornecedor(Servico servico) {
+	public Servico cancelarServicoFornecedor(Servico servico, Fornecedor fornecedor) throws Exception {
+		if(!checarServicoFornecedor(servico, fornecedor)) {
+			throw new Exception("Você só pode cancelar serviços aceitos por você!");
+		}
 		Servico servicoCancelado = servico;
 		servicoCancelado.setStatus(TipoStatus.EM_ABERTO);
 		servicoCancelado.setFornecedor(null);
 		
 		return servicoRepository.saveAndFlush(servicoCancelado);
+	}
+
+	public Servico atualizarServico(Servico servico) {
+		return servicoRepository.saveAndFlush(servico);
+		
+	}
+
+	public List<Servico> getServicosEvolvidosFornecedor(Fornecedor fornecedor){
+		return servicoRepository.findServicosFornecedor(fornecedor);
 	}
 
 }

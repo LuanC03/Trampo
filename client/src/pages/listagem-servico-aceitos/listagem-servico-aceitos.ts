@@ -12,7 +12,7 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
-  selector: 'page-listagem-servico-aceitos',
+  selector: 'page-listagem',
   templateUrl: 'listagem-servico-aceitos.html',
 })
 export class ListagemServicoAceitosPage {
@@ -60,7 +60,7 @@ export class ListagemServicoAceitosPage {
           }]
         });
         alertMessage.present();
-        this.ionViewDidLoad();
+        this.navCtrl.setRoot("HomePage");
       }, error => {
         let alertMessage = this.alertCtrl.create({
           message: error.error['message'],
@@ -69,7 +69,7 @@ export class ListagemServicoAceitosPage {
           }]
         });
         alertMessage.present();
-        this.ionViewDidLoad();
+        this.navCtrl.setRoot("HomePage");
       }
     )
   }

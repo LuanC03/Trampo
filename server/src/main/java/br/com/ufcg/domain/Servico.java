@@ -2,6 +2,8 @@ package br.com.ufcg.domain;
 
 import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.enums.TipoStatus;
+import br.com.ufcg.domain.enums.TipoUsuario;
+
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -9,6 +11,8 @@ import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -53,6 +57,12 @@ public class Servico {
     @Enumerated
     @Column(name = "CD_STATUS")
     private TipoStatus status;
+    
+    @Column(name = "cliente_avaliou")
+    private boolean clienteAvaliou;
+    
+    @Column(name = "fornecedor_avaliou")
+    private boolean fornecedorAvaliou;
 
     public Servico() {
     }
@@ -64,6 +74,8 @@ public class Servico {
         this.horario = horario;
         this.valor = valor;
         this.endereco = endereco;
+        this.clienteAvaliou = false;
+        this.fornecedorAvaliou = false;
     }
 
     public String getTipo() {
@@ -145,8 +157,25 @@ public class Servico {
     public void setId(Long id) {
         this.id = id;
     }
+    
 
-    @Override
+    public boolean isClienteAvaliou() {
+		return clienteAvaliou;
+	}
+
+	public void setClienteAvaliou(boolean clienteAvaliou) {
+		this.clienteAvaliou = clienteAvaliou;
+	}
+
+	public boolean isFornecedorAvaliou() {
+		return fornecedorAvaliou;
+	}
+
+	public void setFornecedorAvaliou(boolean fornecedorAvaliou) {
+		this.fornecedorAvaliou = fornecedorAvaliou;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -166,6 +195,20 @@ public class Servico {
     public ServicoDAO toDAO() {
     	return new ServicoDAO(this.id, this.tipo, this.descricao, this.data, this.horario, this.valor, this.endereco, this.cliente, this.fornecedor, this.status);
     }
+
+	public List<TipoUsuario> getQuemAvaliou() {
+		List<TipoUsuario> usuariosQueAvaliaram = new ArrayList<>();
+		
+		if(clienteAvaliou) {
+			usuariosQueAvaliaram.add(TipoUsuario.CLIENTE);
+		}
+		
+		if(fornecedorAvaliou) {
+			usuariosQueAvaliaram.add(TipoUsuario.FORNECEDOR);
+		}
+		
+		return usuariosQueAvaliaram;
+	}
 
 }
 

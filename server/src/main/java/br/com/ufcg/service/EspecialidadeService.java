@@ -30,7 +30,7 @@ public class EspecialidadeService {
 	}
 	
 	private boolean especialidadeEhUnica(String nomeEspecialidade) throws Exception {
-		Especialidade especialidade = especialidadeRepository.findByNome(nomeEspecialidade);
+		Especialidade especialidade = especialidadeRepository.findByNome(nomeEspecialidade.toLowerCase());
 		
 		if (especialidade != null) {
 			throw new Exception("Ja existe uma especialidade com esse nome!");
@@ -41,7 +41,9 @@ public class EspecialidadeService {
 	
 	public Especialidade criarEspecialidade(Especialidade especialidade) throws Exception {
 		if (validarEspecialidade(especialidade)) {
-			return especialidadeRepository.save(especialidade);
+			Especialidade esp = especialidade;
+			esp.setNome(especialidade.getNome().toLowerCase());
+			return especialidadeRepository.save(esp);
 		}
 		
 		return null;

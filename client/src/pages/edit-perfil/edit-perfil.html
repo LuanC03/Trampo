@@ -1,9 +1,6 @@
 
 <ion-header class="editar-header">
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="menu"></ion-icon>
-    </button>
     <h5>Editar Dados</h5>
   </ion-navbar>
 </ion-header>
@@ -23,11 +20,11 @@
         </ion-avatar>
 
         <ion-item>
-          <ion-label floating >Login</ion-label>
+          <ion-label floating >Nome de Usuário</ion-label>
           <ion-input name="login" value="{{dadosAtualizados.novoLogin}}" [(ngModel)]="dadosAtualizados.novoLogin"></ion-input>
         </ion-item>  
         <ion-item>
-          <ion-label floating >Nome</ion-label>
+          <ion-label floating >Nome Completo</ion-label>
           <ion-input name="nomeCompleto" value="{{dadosAtualizados.novoNomeCompleto}}" [(ngModel)]="dadosAtualizados.novoNomeCompleto"></ion-input>
         </ion-item>
         <ion-item>
@@ -35,24 +32,24 @@
           <ion-input name="email" value="{{dadosAtualizados.novoEmail}}" [(ngModel)]="dadosAtualizados.novoEmail"></ion-input>
         </ion-item>
         <ion-item *ngIf="dadosUsuario.tipo == 'FORNECEDOR'">
-          <ion-label>Especialidades</ion-label>
+          <ion-label floating>Especialidades</ion-label>
           <ion-select name="specs" [(ngModel)]="dadosAtualizados.novaEspecialidades" multiple="true">
             <ion-option *ngFor="let especialidade of especialidades">{{especialidade}}</ion-option>
           </ion-select>
         </ion-item>
       </form>
-        <ion-item>
-          <button class="atualizarSenha" ion-button round full color="dark" (click)="atualizarSenha(dadosAtualizados)">
-  			    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>atualizarSenha
-          </button>
-        </ion-item>
-        <ion-item>
-          <button class="salvar" ion-button round full color="pink" (click)="salvar()">
-  			    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Salvar
-          </button>
-        </ion-item>
+      
+      <ion-item>
+        <button class="atualizarSenha" ion-button round full color="dark" (click)="atualizarSenha()">
+  		    <ion-icon ios="ios-create" md="md-create"></ion-icon>Redefinir Senha
+        </button>
+      </ion-item>
+      <ion-item>
+        <button class="salvar" ion-button round full color="pink" (click)="salvar(dadosAtualizados)">
+  		    <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Salvar
+        </button>
+      </ion-item>
       
     </ion-list> 
   </div>
-
 </ion-content>

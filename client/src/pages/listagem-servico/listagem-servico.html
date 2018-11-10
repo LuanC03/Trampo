@@ -1,29 +1,27 @@
+
 <ion-header class="listagem-header">
   <ion-navbar>
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <h5>Serviços</h5>
+    <h5>Meus Serviços</h5>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="listagem-content">
-
   <div padding>
     <ion-list>
 
       <ion-item-sliding *ngFor="let servico of servicos" #item>
 
         <button ion-item (click)="openDetalhes(servico)">
-          <ion-thumbnail item-start>
-            <img src="assets/imgs/default-avatar2.png">
-          </ion-thumbnail>
-          <h2>Solicitação: {{ servico.tipo }}</h2>
-          <p>Status: {{ servico.status }} • Data: {{ servico.data }}</p>
+          
+          <h2> <b>{{ servico.descricao}}</b> do tipo {{ servico.tipo }}</h2>
+          <p>Status: {{ servico.tipoStatus }} • Data: {{ servico.data }}</p>
         </button>
 
         <ion-item-options *ngIf="user.tipo == 'CLIENTE' && servico.tipoStatus == 'EM_ABERTO'" side="right">
-          <button ion-button color="danger" (click)="cancel(servico)">
+          <button class="cancelar" ion-button color="danger" (click)="cancel(servico)">
               <ion-icon name="ios-close-outline"></ion-icon>Cancelar
           </button>
         </ion-item-options>
@@ -32,5 +30,4 @@
 
     </ion-list>
   </div>
-
 </ion-content>

@@ -5,6 +5,10 @@ public class NovaSenhaForm {
 	private String senhaNova;
 	private String confirmacao;
 	
+	public NovaSenhaForm() {
+		
+	}
+	
 	public NovaSenhaForm(String senhaAntiga, String senhaNova, String confirmacao) {
 		this.senhaAntiga = senhaAntiga;
 		this.senhaNova = senhaNova;

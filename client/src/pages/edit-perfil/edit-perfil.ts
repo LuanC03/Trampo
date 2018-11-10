@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { StorageService } from '../../services/storage.service';
@@ -27,7 +27,7 @@ export class EditPerfilPage {
   };
 
   dadosAtualizados : DadosAtualizadosDTO = {
-    novafotoPerfil : "",
+    novaFotoPerfil : "",
     novoNomeCompleto : "",
     novoLogin : "",
     novoEmail : "",
@@ -39,7 +39,8 @@ export class EditPerfilPage {
     public navParams: NavParams,
     public usuarioService: UsuarioService,
     public storageService: StorageService,
-    public especialidadesService: EspecialidadesService) {
+    public especialidadesService: EspecialidadesService,
+    public alertCtrl: AlertController) {
   }
 
   ionViewDidLoad() {
@@ -48,7 +49,10 @@ export class EditPerfilPage {
       response => {
         this.dadosUsuario = response['data'];
         this.dadosAtualizados.novaEspecialidades = this.dadosUsuario.listaEspecialidades;
-        this.dadosAtualizados.novafotoPerfil = this.dadosUsuario.fotoPerfil;
+        if (this.dadosAtualizados.novaEspecialidades == undefined){
+          this.dadosAtualizados.novaEspecialidades = null;
+        }
+        this.dadosAtualizados.novaFotoPerfil = this.dadosUsuario.fotoPerfil;
         this.dadosAtualizados.novoNomeCompleto = this.dadosUsuario.nomeCompleto;
         this.dadosAtualizados.novoLogin = this.dadosUsuario.login;
         this.dadosAtualizados.novoEmail = this.dadosUsuario.email;
@@ -60,11 +64,23 @@ export class EditPerfilPage {
   salvar(dadosAtualizados : DadosAtualizadosDTO) {
     this.usuarioService.atualizaDados(dadosAtualizados).subscribe(
       response => {
-        console.log(response);
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.navCtrl.setRoot('HomePage');
       }, error => {
-        console.log(error);
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
       });
-    this.navCtrl.pop();
   }
 
   getEspecialidades(){
