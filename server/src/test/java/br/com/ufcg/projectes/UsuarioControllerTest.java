@@ -13,6 +13,7 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import br.com.ufcg.controller.UsuarioController;
@@ -22,11 +23,13 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
+import br.com.ufcg.domain.vo.LoginForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
 import br.com.ufcg.repository.EspecialidadeRepository;
 import br.com.ufcg.repository.UsuarioRepository;
 import br.com.ufcg.service.EspecialidadeService;
 import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.util.response.Response;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 
 @RunWith(SpringRunner.class)
@@ -127,6 +130,7 @@ public class UsuarioControllerTest {
 		assertEquals("tiberiogadelha", us1.getLogin());
 		assertEquals("tiberio.gomes@ccc.ufcg.edu.br", us1.getEmail());
 		assertEquals(TipoUsuario.CLIENTE, us1.getTipo());
+		assertTrue(usuarioService.getClientes().contains(us1.toDAO()));
 
 		
 	}
@@ -206,6 +210,7 @@ public class UsuarioControllerTest {
 		}
 		assertTrue(foundByLogin.getNomeCompleto().equals(fornecedor1.getNomeCompleto()));
 		assertEquals(3, ((Fornecedor) foundByLogin).getListaEspecialidades().size());
+		assertTrue(usuarioService.getFornecedores().contains(foundByLogin.toDAO()));
 	}
 	
 	@Test
@@ -502,6 +507,64 @@ public class UsuarioControllerTest {
 			
 		} catch(Exception e) {
 			assertEquals("Problemas no formulario! Preencha corretamente.", e.getMessage());
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testLoginValido() throws Exception {
+		Usuario user = usuarioService.getByLogin(cliente1.getLogin());
+		
+		LoginForm form = new LoginForm();
+		form.setLogin(user.getLogin());
+		form.setSenha(user.getSenha());
+		
+		try {
+			ResponseEntity<Response> response = usuarioController.login(form);
+			assertTrue(usuarioService.checkUser(form.getLogin(), form.getSenha()));
+			assertEquals("Login efetuado com sucesso !", response.getBody().getMessage());
+			assertNotEquals(null, response.getBody().getData());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	@Transactional
+	public void testLoginInvalido() {
+		
+		LoginForm formVazio = new LoginForm();
+		
+		try {
+			ResponseEntity<Response> response = usuarioController.login(formVazio);
+			assertEquals(UsuarioController.FORM_INCOMPLETO, response.getBody().getMessage());
+			assertEquals(null, response.getBody().getData());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		LoginForm formUsuarioInvalido = new LoginForm();
+		formUsuarioInvalido.setLogin("umlogininvalido");
+		formUsuarioInvalido.setSenha("umasenhaqualquer");
+		
+		try {
+			ResponseEntity<Response> response = usuarioController.login(formUsuarioInvalido);
+			assertEquals(UsuarioController.USUARIO_NAO_EXISTENTE, response.getBody().getMessage());
+			assertEquals(null, response.getBody().getData());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		LoginForm formSenhaIncorreta = new LoginForm();
+		formSenhaIncorreta.setLogin(cliente2.getLogin());
+		formSenhaIncorreta.setSenha("fuigwquysdgfuiyewgfew");
+		
+		try {
+			ResponseEntity<Response> response = usuarioController.login(formSenhaIncorreta);
+			assertEquals(UsuarioController.SENHA_INCORRETA, response.getBody().getMessage());
+			assertEquals(null, response.getBody().getData());
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 	}
 }

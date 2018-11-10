@@ -131,7 +131,7 @@ public class ServicoController {
     	try {
     		Cliente cliente = (Cliente) request.getAttribute("user");
     		Servico servicoAtualizado = servicoService.getServicoByID(servico.getId());
-    		servicoAtualizado = servicoService.cancelarServicoCliente(servico, cliente);
+    		servicoAtualizado = servicoService.cancelarServicoCliente(servicoAtualizado, cliente);
     			
     		response = new Response("Servico cancelado com sucesso!", HttpStatus.OK.value(), servicoAtualizado.toDAO());
     		return new ResponseEntity<>(response, HttpStatus.OK);
