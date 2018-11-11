@@ -65,8 +65,8 @@ export class DetalheServicoPage {
     this.navCtrl.pop();
   }
 
-  cadastrarServico(){
-    this.servicoFornecedorService.cadastrarServico(this.servico).subscribe(
+  cadastrarServico(servico: ServicoDTO){
+    this.servicoFornecedorService.cadastrarServico(servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({
           message: response.body['message'],
@@ -86,5 +86,26 @@ export class DetalheServicoPage {
         alertMessage.present();
       });
   }
-
+  
+  concluirServico(servico: ServicoDTO){
+    this.servicoFornecedorService.concluirServico(servico).subscribe(
+      response => {
+        let alertMessage = this.alertCtrl.create({
+          message: response.body['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+        this.navCtrl.setRoot('ListagemServicoPage');
+      },error => {
+        let alertMessage = this.alertCtrl.create({
+          message: error.error['message'],
+          buttons: [{
+            text: 'Ok'
+          }]
+        });
+        alertMessage.present();
+      });
+  }
 }
