@@ -57,11 +57,11 @@ public class Servico {
 	@JoinColumn(name = "ED_ENDERECO", referencedColumnName = "ID_ENDERECO", updatable = false)
 	private Endereco endereco;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Cliente.class)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Cliente.class)
 	@JoinColumn(name = "CLIENTE", referencedColumnName = "ID_USUARIO", updatable = false)
 	private Cliente cliente;
 
-	@ManyToOne(fetch = FetchType.LAZY, targetEntity = Fornecedor.class)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH }, fetch = FetchType.LAZY, targetEntity = Fornecedor.class)
 	@JoinColumn(name = "FORNECEDOR", referencedColumnName = "ID_USUARIO")
 	private Fornecedor fornecedor;
 

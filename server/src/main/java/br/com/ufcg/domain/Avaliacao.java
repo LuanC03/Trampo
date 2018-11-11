@@ -28,11 +28,11 @@ public class Avaliacao implements Serializable {
 	@Column(name = "VL_NOTA")
 	private Double nota;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "SERVICO_ID", referencedColumnName = "ID_SERVICO")
 	private Servico servico;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = { CascadeType.MERGE, CascadeType.PERSIST, CascadeType.DETACH, CascadeType.REFRESH }, fetch = FetchType.LAZY)
 	@JoinColumn(name = "USUARIO_ID", referencedColumnName = "ID_USUARIO", updatable = false)
 	private Usuario usuario;
 	
