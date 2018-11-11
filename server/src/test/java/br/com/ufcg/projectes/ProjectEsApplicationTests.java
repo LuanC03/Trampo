@@ -16,7 +16,7 @@ import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
-import br.com.ufcg.repository.UsuarioRepository;
+import br.com.ufcg.repositories.UsuarioRepository;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

@@ -1,13 +1,23 @@
 package br.com.ufcg.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import br.com.ufcg.dao.UsuarioDAO;
@@ -16,11 +26,13 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 @Entity
 @Table(name = "TAB_USUARIO", uniqueConstraints = @UniqueConstraint(columnNames = "TX_LOGIN", name = "login"))
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-public abstract class Usuario {
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+public abstract class Usuario implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy= GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "ID_USUARIO")
 	private Long id;
 
@@ -32,7 +44,7 @@ public abstract class Usuario {
 
 	@Column(name = "CD_FOTO_PERFIL", nullable = false)
 	private String fotoPerfil;
-	
+
 	@Column(name = "TX_EMAIL", nullable = false)
 	private String email;
 
@@ -42,18 +54,12 @@ public abstract class Usuario {
 	@Column(name = "CD_TIPO", nullable = false, updatable = false)
 	@Enumerated
 	private TipoUsuario tipo;
-	
-    //@NamedQuery(name = "obterUsuarioPorUsuarioSenha", query = "select a from USUARIO_AVALIACOES a where a.usuario_id =: id_u")
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SUBSELECT)
-	@JoinTable(name = "USUARIO_AVALIACAO",
-	joinColumns = { @JoinColumn(name="USUARIO_ID")  },
-	inverseJoinColumns = { @JoinColumn(name="AVALIACAO_ID") })
+
+	@JsonIgnore
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
 	private List<Avaliacao> avaliacoes;
 
-	
-	public Usuario(String nomeCompleto, String login, String fotoPerfil, 
-			String email, String senha, TipoUsuario tipo) {
+	public Usuario(String nomeCompleto, String login, String fotoPerfil, String email, String senha, TipoUsuario tipo) {
 		super();
 		this.nomeCompleto = nomeCompleto;
 		this.login = login;
@@ -64,11 +70,10 @@ public abstract class Usuario {
 		this.avaliacoes = new ArrayList<>();
 	}
 
-	
- 	public Usuario() {
+	public Usuario() {
 		super();
 	}
- 	
+
 	public Long getId() {
 		return id;
 	}
@@ -76,17 +81,15 @@ public abstract class Usuario {
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	
-	
+
 	public List<Avaliacao> getAvaliacoes() {
 		return this.avaliacoes;
 	}
-	
+
 	public void addAvaliacao(Avaliacao avaliacao) {
 		this.avaliacoes.add(avaliacao);
 	}
-	
+
 	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
@@ -122,7 +125,7 @@ public abstract class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getSenha() {
 		return senha;
 	}

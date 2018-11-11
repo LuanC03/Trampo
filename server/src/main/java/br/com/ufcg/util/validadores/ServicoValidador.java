@@ -1,7 +1,7 @@
 package br.com.ufcg.util.validadores;
 
 import br.com.ufcg.domain.Servico;
-import br.com.ufcg.service.EspecialidadeService;
+import br.com.ufcg.services.EspecialidadeService;
 import br.com.ufcg.util.UtilCampos;
 
 import java.math.BigDecimal;

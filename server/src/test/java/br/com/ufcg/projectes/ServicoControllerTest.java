@@ -17,9 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.ufcg.controller.EspecialidadeController;
-import br.com.ufcg.controller.ServicoController;
-import br.com.ufcg.controller.UsuarioController;
+import br.com.ufcg.controllers.EspecialidadeController;
+import br.com.ufcg.controllers.ServicoController;
+import br.com.ufcg.controllers.UsuarioController;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Endereco;
 import br.com.ufcg.domain.Especialidade;
@@ -27,11 +27,11 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
-import br.com.ufcg.repository.EspecialidadeRepository;
-import br.com.ufcg.repository.ServicoRepository;
-import br.com.ufcg.repository.UsuarioRepository;
-import br.com.ufcg.service.ServicoService;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.repositories.EspecialidadeRepository;
+import br.com.ufcg.repositories.ServicoRepository;
+import br.com.ufcg.repositories.UsuarioRepository;
+import br.com.ufcg.services.ServicoService;
+import br.com.ufcg.services.UsuarioService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest

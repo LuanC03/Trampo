@@ -12,11 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
+import br.com.ufcg.services.UsuarioService;
+
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import br.com.ufcg.service.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureException;
 

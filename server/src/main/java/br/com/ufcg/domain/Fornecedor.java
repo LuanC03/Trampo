@@ -52,20 +52,4 @@ public class Fornecedor extends Usuario {
 				this.getFotoPerfil(), this.getTipo(), this.getListaEspecialidades());
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (!super.equals(obj))
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Fornecedor other = (Fornecedor) obj;
-		if (listaEspecialidades == null) {
-			if (other.listaEspecialidades != null)
-				return false;
-		} else if (!listaEspecialidades.equals(other.listaEspecialidades))
-			return false;
-		return true;
-	}
 }

@@ -1,4 +1,4 @@
-package br.com.ufcg.service;
+package br.com.ufcg.services;
 
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
@@ -7,7 +7,7 @@ import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
-import br.com.ufcg.repository.ServicoRepository;
+import br.com.ufcg.repositories.ServicoRepository;
 import br.com.ufcg.util.validadores.ServicoValidador;
 
 import java.util.ArrayList;
