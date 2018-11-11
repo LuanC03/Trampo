@@ -29,7 +29,6 @@ export class MyApp {
         { title: 'Home', component: 'HomePage'},
         { title: 'Listagem de Serviço', component: 'ListagemServicoPage'},
         { title: 'Requisição de Serviço', component: 'RequisicaoServicoPage'},
-        { title: 'Histórico', component: 'HistoricoPage'},
         { title: 'Perfil', component: 'PerfilPage'}
       ];
     });
@@ -39,7 +38,6 @@ export class MyApp {
         { title: 'Home', component: 'HomePage'},
         { title: 'Serviços Disponíveis', component: 'ListagemServicoPage'},
         { title: 'Meus Serviços', component: 'ListagemServicoAceitosPage'},
-        { title: 'Histórico', component: 'HistoricoPage'},
         { title: 'Perfil', component: 'PerfilPage'}
       ];
     });

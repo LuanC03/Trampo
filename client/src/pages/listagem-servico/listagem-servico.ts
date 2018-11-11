@@ -81,9 +81,9 @@ export class ListagemServicoPage {
           }]
         });
         alertMessage.present();
-        this.ionViewDidLoad();
-        this.ionViewDidLoad();
+        this.navCtrl.setRoot("HomePage");
       },error => {
+        console.log(error);
         let alertMessage = this.alertCtrl.create({
           message: error.error['message'],
           buttons: [{
@@ -91,6 +91,7 @@ export class ListagemServicoPage {
           }]
         });
         alertMessage.present();
+        this.navCtrl.setRoot("HomePage");
       });
   }
 
