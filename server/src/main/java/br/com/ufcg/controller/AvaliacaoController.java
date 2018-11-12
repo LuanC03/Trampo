@@ -50,7 +50,7 @@ public class AvaliacaoController {
 	    	Response response;
 	    	
 	    	try {
-	    		Usuario user = usuarioService.getByLogin(login);
+	    		Usuario user = usuarioService.getByLogin(login.toLowerCase());
 	    		Double mediaAvaliacoes = avaliacaoService.calcularAvaliacaoMedia(user);
 	    		response = new Response("Média das avaliações calculada com sucesso!", HttpStatus.OK.value(), mediaAvaliacoes);
 	    		return new ResponseEntity<>(response, HttpStatus.OK);

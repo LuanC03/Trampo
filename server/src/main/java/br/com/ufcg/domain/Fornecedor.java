@@ -47,6 +47,6 @@ public class Fornecedor extends Usuario {
 
 	@Override
 	public UsuarioDAO toDAO() {
-		return new FornecedorDAO(this.getId(), this.getLogin(), this.getNomeCompleto(), this.getEmail(), this.getFotoPerfil(), this.getTipo(), this.getListaEspecialidades());
+		return new FornecedorDAO(this.getId(), this.getLogin(), this.getNomeCompleto(), this.getEmail(), this.getFotoPerfil(), this.getTipo(), this.getListaEspecialidades(), this.getAvaliacaoMedia());
 	}
 }

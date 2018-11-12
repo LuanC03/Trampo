@@ -16,6 +16,8 @@ import br.com.ufcg.repository.AvaliacaoRepository;
 @Service
 public class AvaliacaoService {
 	
+	public static final double MEDIA_INICIAL = 5.0;
+	
 	@Autowired
 	AvaliacaoRepository avaliacaoRepository;
 	
@@ -42,15 +44,15 @@ public class AvaliacaoService {
 		Double soma = 0.0;
 		int qtdAvaliacoes = avaliacoes.size();
 		
-		if(qtdAvaliacoes == 0) {
-			throw new Exception("O usuário nunca foi avaliado!");
+		if(qtdAvaliacoes > 0) {
+			for(Avaliacao avaliacao : avaliacoes) {
+				soma += avaliacao.getNota(); 
+			}
+			
+			return (soma/qtdAvaliacoes);
 		}
 		
-		for(Avaliacao avaliacao : avaliacoes) {
-			soma += avaliacao.getNota(); 
-		}
-		
-		return (soma/qtdAvaliacoes);
+		return MEDIA_INICIAL;
 	}
 	
 	public Avaliacao addAvaliacao(Usuario usuario, Avaliacao avaliacao) throws Exception {

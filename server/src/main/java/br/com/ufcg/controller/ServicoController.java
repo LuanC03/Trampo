@@ -34,8 +34,7 @@ public class ServicoController {
     	
     	try {
 			Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
-			
-			List<Servico> servicosParticipados = servicoService.getServicosEvolvidosFornecedor(fornecedor);
+			List<Servico> servicosParticipados = servicoService.getServicosDoFornecedor(fornecedor);
 			
 			if(servicosParticipados.isEmpty()) {
 				response = new Response("Voce ainda nao participou de nenhum servico", HttpStatus.OK.value());
@@ -43,7 +42,7 @@ public class ServicoController {
 			}
 			
 			
-			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicosParticipados);
+			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicoService.ordenaServicosPorData(servicosParticipados));
 			return new ResponseEntity<>(response,HttpStatus.OK);
     		
 		} catch (Exception e) {
@@ -68,7 +67,7 @@ public class ServicoController {
 			}
 			
 			
-			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicosParticipados);
+			response = new Response("Servicos que voce participou", HttpStatus.OK.value(), servicoService.ordenaServicosPorData(servicosParticipados));
 			return new ResponseEntity<>(response,HttpStatus.OK);
     		
 		} catch (Exception e) {
@@ -167,8 +166,9 @@ public class ServicoController {
     	
     	try {
     		Fornecedor fornecedor = (Fornecedor) request.getAttribute("user");
-    		List<Servico> servicosAceitos = servicoService.getServicosDoFornecedor(fornecedor);
-    		response = new Response("Servicos que o fornecedor aceitou!", HttpStatus.OK.value(), servicoService.setServicosToDAO(servicosAceitos));
+    		List<Servico> servicosAceitos = servicoService.getServicosAceitosDoFornecedor(fornecedor);
+    		List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosAceitos);
+    		response = new Response("Servicos que o fornecedor aceitou!", HttpStatus.OK.value(), servicosOrdenados);
     		return new ResponseEntity<>(response, HttpStatus.OK);
     	} catch(Exception e) {
     		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
