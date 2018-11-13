@@ -1,6 +1,6 @@
 package br.com.ufcg.services;
 
-import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,7 +42,7 @@ public class AvaliacaoService {
 		return avaliacaoRepository.find(id);
 	}
 
-	public Double calcularAvaliacaoMedia(List<Avaliacao> avaliacoes) throws Exception {
+	public Double calcularAvaliacaoMedia(Set<Avaliacao> avaliacoes) throws Exception {
 		Double soma = 0.0;
 		int qtdAvaliacoes = avaliacoes.size();
 		
@@ -57,7 +57,7 @@ public class AvaliacaoService {
 		return MEDIA_INICIAL;
 	}
 	
-	public List<Avaliacao> getAvaliacoes(Usuario usuario) {
+	public Set<Avaliacao> getAvaliacoes(Usuario usuario) {
 		return usuario.getAvaliacoes();
 	}
 

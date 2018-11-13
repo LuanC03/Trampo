@@ -7,6 +7,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import javax.transaction.Transactional;
 
@@ -174,8 +175,8 @@ public class AvaliacaoControllerTest {
 		// o cliente avalia o fornecedor
 		try {
 			avaliacaoService.avaliarUsuario(cliente, avaliacaoParaFornecedorDTO);
-			List<Avaliacao> avaliacoesDoFornecedor = fornecedor.getAvaliacoes();
-			assertTrue(avaliacoesDoFornecedor.get(0).getNota().equals(avaliacaoClienteParaFornecedor.getNota()));
+			Set<Avaliacao> avaliacoesDoFornecedor = fornecedor.getAvaliacoes();
+			assertTrue(avaliacoesDoFornecedor.iterator().next().getNota().equals(avaliacaoClienteParaFornecedor.getNota()));
 			assertEquals(3.5, avaliacaoService.calcularAvaliacaoMedia(fornecedor), 0.00000001);
 			assertTrue(servicoConcluido.isClienteAvaliou());
 			assertFalse(servicoConcluido.isFornecedorAvaliou());
@@ -186,8 +187,8 @@ public class AvaliacaoControllerTest {
 		// o fornecedor avalia o cliente
 		try {
 			avaliacaoService.avaliarUsuario(fornecedor, avaliacaoParaClienteDTO);
-			List<Avaliacao> avaliacoesDoCliente = cliente.getAvaliacoes();
-			assertTrue(avaliacoesDoCliente.get(0).getNota().equals(avaliacaoFornecedorParaCliente.getNota()));
+			Set<Avaliacao> avaliacoesDoCliente = cliente.getAvaliacoes();
+			assertTrue(avaliacoesDoCliente.iterator().next().getNota().equals(avaliacaoFornecedorParaCliente.getNota()));
 			assertEquals(2.0, avaliacaoService.calcularAvaliacaoMedia(cliente), 0.00000001);
 			assertTrue(servicoConcluido.isClienteAvaliou());
 			assertTrue(servicoConcluido.isFornecedorAvaliou());
@@ -289,8 +290,8 @@ public class AvaliacaoControllerTest {
 		// o cliente avalia o fornecedor
 		try {
 			avaliacaoService.avaliarUsuario(cliente, avaliacaoParaFornecedorDTO);
-			List<Avaliacao> avaliacoesDoFornecedor = fornecedor.getAvaliacoes();
-			assertTrue(avaliacoesDoFornecedor.get(0).getNota().equals(avaliacaoClienteParaFornecedor.getNota()));
+			Set<Avaliacao> avaliacoesDoFornecedor = fornecedor.getAvaliacoes();
+			assertTrue(avaliacoesDoFornecedor.iterator().next().getNota().equals(avaliacaoClienteParaFornecedor.getNota()));
 			assertEquals(3.5, avaliacaoService.calcularAvaliacaoMedia(fornecedor), 0.00000001);
 			assertTrue(servicoConcluido.isClienteAvaliou());
 			assertFalse(servicoConcluido.isFornecedorAvaliou());

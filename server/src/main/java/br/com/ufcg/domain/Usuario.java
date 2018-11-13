@@ -1,8 +1,8 @@
 package br.com.ufcg.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -60,8 +60,8 @@ public abstract class Usuario implements Serializable {
 
 	@JsonIgnore
 	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
-	@Fetch(FetchMode.SUBSELECT)
-	private List<Avaliacao> avaliacoes;
+	@Fetch(FetchMode.JOIN)
+	private Set<Avaliacao> avaliacoes;
 
 	public Usuario(String nomeCompleto, String login, String fotoPerfil, String email, String senha, TipoUsuario tipo) {
 		super();
@@ -71,7 +71,7 @@ public abstract class Usuario implements Serializable {
 		this.email = email;
 		this.senha = senha;
 		this.tipo = tipo;
-		this.avaliacoes = new ArrayList<>();
+		this.avaliacoes = new HashSet<>();
 	}
 
 	public Usuario() {
@@ -86,7 +86,7 @@ public abstract class Usuario implements Serializable {
 		this.id = id;
 	}
 
-	public List<Avaliacao> getAvaliacoes() {
+	public Set<Avaliacao> getAvaliacoes() {
 		return this.avaliacoes;
 	}
 
@@ -94,7 +94,7 @@ public abstract class Usuario implements Serializable {
 		this.avaliacoes.add(avaliacao);
 	}
 
-	public void setAvaliacoes(List<Avaliacao> avaliacoes) {
+	public void setAvaliacoes(Set<Avaliacao> avaliacoes) {
 		this.avaliacoes = avaliacoes;
 	}
 
