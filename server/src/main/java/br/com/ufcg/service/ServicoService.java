@@ -251,8 +251,17 @@ public class ServicoService {
 		
 	}
 
-	public List<Servico> getServicosEvolvidosFornecedor(Fornecedor fornecedor){
-		return servicoRepository.findServicosFornecedor(fornecedor);
+	
+	public List<Servico> getServicosAceitosDoFornecedor(Fornecedor fornecedor) throws Exception {
+		List<Servico> servicosAceitos = servicoRepository.findServicoFornecedorStatus(fornecedor, TipoStatus.ACEITO);
+
+		if(servicosAceitos.size() > 0) {
+			return servicosAceitos;
+		}
+		
+		throw new Exception("O fornecedor não possui nenhum serviço aceito!");
 	}
+
+	
 
 }
