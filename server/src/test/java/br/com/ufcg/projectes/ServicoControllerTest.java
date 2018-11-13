@@ -17,9 +17,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import br.com.ufcg.controller.EspecialidadeController;
-import br.com.ufcg.controller.ServicoController;
-import br.com.ufcg.controller.UsuarioController;
+import br.com.ufcg.controllers.EspecialidadeController;
+import br.com.ufcg.controllers.ServicoController;
+import br.com.ufcg.controllers.UsuarioController;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Endereco;
 import br.com.ufcg.domain.Especialidade;
@@ -27,11 +27,11 @@ import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Servico;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoStatus;
-import br.com.ufcg.repository.EspecialidadeRepository;
-import br.com.ufcg.repository.ServicoRepository;
-import br.com.ufcg.repository.UsuarioRepository;
-import br.com.ufcg.service.ServicoService;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.repositories.EspecialidadeRepository;
+import br.com.ufcg.repositories.ServicoRepository;
+import br.com.ufcg.repositories.UsuarioRepository;
+import br.com.ufcg.services.ServicoService;
+import br.com.ufcg.services.UsuarioService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -164,7 +164,6 @@ public class ServicoControllerTest {
 		Servico servico2 = this.servico2;
 		
 		try {
-			assertEquals(0, ss.getServicosCliente(cliente).size());
 			ss.criarServico(cliente, servico1);
 			assertEquals(1, ss.getServicosCliente(cliente).size());
 			ss.criarServico(cliente, servico2);
@@ -289,7 +288,11 @@ public class ServicoControllerTest {
 		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, (Fornecedor) fornecedor);
 		
 		// Apos aceitar o unico servico disponivel, nao resta nenhum outro para esse fornecedor.
-		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		try {
+			ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size();
+		} catch(Exception e) {
+			assertEquals("O usuário não possui nenhum serviço cadastrado!", e.getMessage());
+		}
 		
 		// Verifica se o servico aceito esta nos servicos do fornecedor
 		assertTrue(ss.getServicosDoFornecedor((Fornecedor) fornecedor).contains(servicoAceito));

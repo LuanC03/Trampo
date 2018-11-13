@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import br.com.ufcg.controller.UsuarioController;
+import br.com.ufcg.controllers.UsuarioController;
 import br.com.ufcg.domain.Cliente;
 import br.com.ufcg.domain.Especialidade;
 import br.com.ufcg.domain.Fornecedor;
@@ -25,10 +25,10 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.LoginForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
-import br.com.ufcg.repository.EspecialidadeRepository;
-import br.com.ufcg.repository.UsuarioRepository;
-import br.com.ufcg.service.EspecialidadeService;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.repositories.EspecialidadeRepository;
+import br.com.ufcg.repositories.UsuarioRepository;
+import br.com.ufcg.services.EspecialidadeService;
+import br.com.ufcg.services.UsuarioService;
 import br.com.ufcg.util.response.Response;
 import br.com.ufcg.util.validadores.UsuarioValidador;
 

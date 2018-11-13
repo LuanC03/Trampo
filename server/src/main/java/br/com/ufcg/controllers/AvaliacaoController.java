@@ -1,4 +1,4 @@
-package br.com.ufcg.controller;
+package br.com.ufcg.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.dto.AvaliacaoDTO;
-import br.com.ufcg.service.AvaliacaoService;
-import br.com.ufcg.service.ServicoService;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.services.AvaliacaoService;
+import br.com.ufcg.services.ServicoService;
+import br.com.ufcg.services.UsuarioService;
 import br.com.ufcg.util.response.Response;
 
 @RestController
@@ -36,7 +36,7 @@ public class AvaliacaoController {
 	    	try {
 	    		Usuario avaliador = (Usuario) request.getAttribute("user");
 	    		avaliacaoService.avaliarUsuario(avaliador, avaliacao);
-	    		response = new Response("O usuário foi avaliado com sucesso!", HttpStatus.OK.value(), avaliacao.getAvaliacao());
+	    		response = new Response("O usuário foi avaliado com sucesso!", HttpStatus.OK.value(), avaliacao.getAvaliacao().toDAO());
 	    		return new ResponseEntity<>(response, HttpStatus.OK);
 	    	} catch(Exception e) {
 	    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());

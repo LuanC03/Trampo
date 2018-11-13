@@ -1,5 +1,6 @@
 package br.com.ufcg.dto;
 
+import br.com.ufcg.dao.ServicoDAO;
 import br.com.ufcg.domain.Avaliacao;
 import br.com.ufcg.domain.Servico;
 
@@ -26,8 +27,11 @@ public class AvaliacaoDTO {
 		this.avaliacao = avaliacao;
 	}
 
-	public Servico getServico() {
-		return servico;
+	public ServicoDAO getServico() {
+		if(this.servico == null) {
+			return null;
+		}
+		return this.servico.toDAO();
 	}
 
 	public void setServico(Servico servico) {
@@ -35,3 +39,4 @@ public class AvaliacaoDTO {
 	}
 
 }
+

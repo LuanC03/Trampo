@@ -36,7 +36,12 @@ public final class ServicoDAO {
 		this.horario = horario;
 		this.valor = valor;
 		this.endereco = endereco;
-		this.cliente = cliente.toDAO();
+		
+		if(cliente == null) {
+			this.cliente = null;
+		} else {
+			this.cliente = cliente.toDAO();
+		}
 		
 		if(fornecedor == null) {
 			this.fornecedor = null;

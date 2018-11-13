@@ -1,4 +1,4 @@
-package br.com.ufcg.controller;
+package br.com.ufcg.controllers;
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +26,7 @@ import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.LoginForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.services.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 

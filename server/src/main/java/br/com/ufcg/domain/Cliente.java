@@ -16,6 +16,8 @@ import br.com.ufcg.domain.enums.TipoUsuario;
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class Cliente extends Usuario {
 
+	private static final long serialVersionUID = 1L;
+
 	public Cliente(String nomeCompleto, String login, String fotoPerfil, 
 			String email, String senha) {
 		super(nomeCompleto, login, fotoPerfil, email, senha, TipoUsuario.CLIENTE);
