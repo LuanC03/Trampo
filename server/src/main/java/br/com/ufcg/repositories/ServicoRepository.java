@@ -38,5 +38,8 @@ public interface ServicoRepository extends JpaRepository<Servico, Long> {
     
     @Query(value="SELECT s FROM Servico s WHERE s.fornecedor=:user and s.status=:tipostatus")
     List<Servico> findServicoFornecedorStatus(@Param("user") Fornecedor user, @Param("tipostatus") TipoStatus tipostatus);
+    
+    @Query(value="SELECT s FROM Servico s WHERE s.cliente=:user and s.status=:tipostatus")
+    List<Servico> findServicoClienteStatus(@Param("user") Cliente user, @Param("tipostatus") TipoStatus tipostatus);
 
 }

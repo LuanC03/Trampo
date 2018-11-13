@@ -259,6 +259,9 @@ public class AvaliacaoControllerTest {
 	public void testAvaliarServicoInvalido() throws Exception {
 		Fornecedor fornecedor = (Fornecedor) usuarioService.getByLogin(fornecedor1.getLogin());
 		servico2.setId((long) 2812);
+		servico2.setCliente((Cliente) cliente1);
+		servico2.setFornecedor(fornecedor);
+		
 		Avaliacao avaliacaoFornecedorParaCliente = new Avaliacao(2.4);
 		AvaliacaoDTO avaliacaoParaClienteDTO = new AvaliacaoDTO(avaliacaoFornecedorParaCliente, servico2);
 

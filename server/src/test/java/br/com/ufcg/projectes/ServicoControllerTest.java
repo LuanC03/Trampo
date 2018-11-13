@@ -164,7 +164,6 @@ public class ServicoControllerTest {
 		Servico servico2 = this.servico2;
 		
 		try {
-			assertEquals(0, ss.getServicosCliente(cliente).size());
 			ss.criarServico(cliente, servico1);
 			assertEquals(1, ss.getServicosCliente(cliente).size());
 			ss.criarServico(cliente, servico2);
@@ -289,7 +288,11 @@ public class ServicoControllerTest {
 		Servico servicoAceito = ss.setServicoParaFornecedor(servicoCadastrado, (Fornecedor) fornecedor);
 		
 		// Apos aceitar o unico servico disponivel, nao resta nenhum outro para esse fornecedor.
-		assertEquals(0, ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size());
+		try {
+			ss.getServicosDisponiveisFornecedor((Fornecedor) fornecedor).size();
+		} catch(Exception e) {
+			assertEquals("O usuário não possui nenhum serviço cadastrado!", e.getMessage());
+		}
 		
 		// Verifica se o servico aceito esta nos servicos do fornecedor
 		assertTrue(ss.getServicosDoFornecedor((Fornecedor) fornecedor).contains(servicoAceito));

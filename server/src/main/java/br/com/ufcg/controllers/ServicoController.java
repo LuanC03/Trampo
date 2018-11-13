@@ -198,7 +198,7 @@ public class ServicoController {
 
 		try {
 			Cliente cliente = (Cliente) request.getAttribute("user");
-			List<Servico> servicosDoCliente = servicoService.getServicosCliente(cliente);
+			List<Servico> servicosDoCliente = servicoService.getServicosClienteEmProgresso(cliente);
 			List<ServicoDAO> servicosOrdenados = servicoService.ordenaServicosPorData(servicosDoCliente);
 
 			response = new Response("Servicos em aberto do cliente", HttpStatus.ACCEPTED.value(), servicosOrdenados);

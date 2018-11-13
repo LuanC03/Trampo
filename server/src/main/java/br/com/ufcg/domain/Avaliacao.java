@@ -14,6 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import br.com.ufcg.dao.AvaliacaoDAO;
+
 @Entity
 @Table(name="TAB_AVALIACAO")
 public class Avaliacao implements Serializable {
@@ -75,5 +77,9 @@ public class Avaliacao implements Serializable {
 
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
+	}
+
+	public AvaliacaoDAO toDAO() {
+		return new AvaliacaoDAO(this.id, this.nota, this.servico, this.usuario);
 	}
 }

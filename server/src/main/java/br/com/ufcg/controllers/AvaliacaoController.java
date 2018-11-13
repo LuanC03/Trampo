@@ -36,7 +36,7 @@ public class AvaliacaoController {
 	    	try {
 	    		Usuario avaliador = (Usuario) request.getAttribute("user");
 	    		avaliacaoService.avaliarUsuario(avaliador, avaliacao);
-	    		response = new Response("O usuário foi avaliado com sucesso!", HttpStatus.OK.value(), avaliacao.getAvaliacao());
+	    		response = new Response("O usuário foi avaliado com sucesso!", HttpStatus.OK.value(), avaliacao.getAvaliacao().toDAO());
 	    		return new ResponseEntity<>(response, HttpStatus.OK);
 	    	} catch(Exception e) {
 	    		response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());

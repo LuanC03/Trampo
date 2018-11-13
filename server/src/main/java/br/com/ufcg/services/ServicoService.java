@@ -68,9 +68,24 @@ public class ServicoService {
 		return servicoRepository.findAll();
 	}
 
-	public List<Servico> getServicosCliente(Cliente cliente) {
+	public List<Servico> getServicosClienteEmProgresso(Cliente cliente) {
+		List<Servico> todosServicos = new ArrayList<>();
+		List<Servico> servicosEmAberto = servicoRepository.findServicoClienteStatus(cliente, TipoStatus.EM_ABERTO);
+		List<Servico> servicosAceitos = servicoRepository.findServicoClienteStatus(cliente, TipoStatus.ACEITO);
+		todosServicos.addAll(servicosAceitos);
+		todosServicos.addAll(servicosEmAberto);
 		
-		return servicoRepository.findServicosCliente(cliente);
+		return todosServicos;
+	}
+	
+	public List<Servico> getServicosCliente(Cliente cliente) throws Exception {
+		List<Servico> servicos = servicoRepository.findServicosCliente(cliente);
+		
+		if(servicos.size() == 0) {
+			throw new Exception("O usuário não possui nenhum serviço cadastrado!");
+		}
+		
+		return servicos;
 	}
 	
 	public List<ServicoDAO> setServicosToDAO(List<Servico> servicos) {
