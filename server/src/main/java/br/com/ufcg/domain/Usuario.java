@@ -138,6 +138,20 @@ public abstract class Usuario implements Serializable {
 		return tipo;
 	}
 	
+	protected double getAvaliacaoMedia() {
+		double soma  = 0.0;
+		int qtdAvaliacoes = this.avaliacoes.size();
+		
+		if(qtdAvaliacoes > 0) {
+			for(Avaliacao avl : this.avaliacoes) {
+				soma += avl.getNota();
+			}
+			
+			return (soma/qtdAvaliacoes);
+		}
+		
+		return 5.0;
+	}
 	@Override
 	public int hashCode() {
 		final int prime = 31;
