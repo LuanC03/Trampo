@@ -261,7 +261,4 @@ public class ServicoService {
 		
 		throw new Exception("O fornecedor não possui nenhum serviço aceito!");
 	}
-
-	
-
 }

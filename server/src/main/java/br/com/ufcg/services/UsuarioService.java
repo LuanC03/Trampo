@@ -34,6 +34,11 @@ public class UsuarioService {
 
 	@Autowired
 	EspecialidadeService especialidadeService;
+	
+	public Usuario getById(Long id) throws Exception {
+		return usuarioRepository.findById(id)
+				.orElseThrow(() -> new Exception(USUARIO_NAO_ENCONTRADO_EXCEPTION));
+	}
 
 	public Usuario getByLogin(String login) throws Exception {
 		Usuario usuario = usuarioRepository.findByLogin(login);

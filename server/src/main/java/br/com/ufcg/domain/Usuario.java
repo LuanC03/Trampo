@@ -17,6 +17,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -56,7 +59,8 @@ public abstract class Usuario implements Serializable {
 	private TipoUsuario tipo;
 
 	@JsonIgnore
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.EAGER)
+	@Fetch(FetchMode.SUBSELECT)
 	private List<Avaliacao> avaliacoes;
 
 	public Usuario(String nomeCompleto, String login, String fotoPerfil, String email, String senha, TipoUsuario tipo) {
@@ -140,14 +144,17 @@ public abstract class Usuario implements Serializable {
 	
 	protected double getAvaliacaoMedia() {
 		double soma  = 0.0;
-		int qtdAvaliacoes = this.avaliacoes.size();
 		
-		if(qtdAvaliacoes > 0) {
-			for(Avaliacao avl : this.avaliacoes) {
-				soma += avl.getNota();
-			}
+		if (this.avaliacoes != null) {
+			int qtdAvaliacoes = this.avaliacoes.size();
 			
-			return (soma/qtdAvaliacoes);
+			if(qtdAvaliacoes > 0) {
+				for(Avaliacao avl : this.avaliacoes) {
+					soma += avl.getNota();
+				}
+				
+				return (soma/qtdAvaliacoes);
+			}
 		}
 		
 		return 5.0;
