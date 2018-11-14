@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ModalController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -8,7 +8,6 @@ import { ServicoDTO } from '../../models/servico.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
-
 
 @IonicPage()
 @Component({
@@ -43,7 +42,9 @@ export class DetalheServicoPage {
     }
   };
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
+    public modalCtrl: ModalController, 
     public autenticacaoService: AutenticacaoService,
     public storageService: StorageService,
     public navParams: NavParams,
@@ -88,6 +89,8 @@ export class DetalheServicoPage {
   }
   
   concluirServico(servico: ServicoDTO){
+    this.avaliar(servico);
+    return;
     this.servicoFornecedorService.concluirServico(servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({
@@ -108,4 +111,10 @@ export class DetalheServicoPage {
         alertMessage.present();
       });
   }
+
+  private avaliar(servico: ServicoDTO) {
+    let avaliacaoModal = this.modalCtrl.create('AvaliacaoPage', {servico: servico});
+    avaliacaoModal.present();
+  }
+
 }
