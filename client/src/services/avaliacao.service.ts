@@ -8,7 +8,7 @@ import { ServicoDTO } from "../models/servico.dto";
 @Injectable()
 export class AvaliacaoService {
 
-    servico: any;
+    servico: ServicoDTO;
 
     constructor(public http: HttpClient){
     }

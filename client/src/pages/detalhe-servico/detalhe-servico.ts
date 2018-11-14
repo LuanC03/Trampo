@@ -90,7 +90,8 @@ export class DetalheServicoPage {
   
   concluirServico(servico: ServicoDTO){
     this.avaliar(servico);
-    return;
+    
+    /*
     this.servicoFornecedorService.concluirServico(servico).subscribe(
       response => {
         let alertMessage = this.alertCtrl.create({
@@ -110,6 +111,7 @@ export class DetalheServicoPage {
         });
         alertMessage.present();
       });
+      */
   }
 
   private avaliar(servico: ServicoDTO) {

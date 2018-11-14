@@ -16,6 +16,9 @@ import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
 
+
+import { AvaliacaoService } from '../services/avaliacao.service';
+
 @NgModule({
   declarations: [
     MyApp
@@ -42,7 +45,8 @@ import { ServicoFornecedorService } from '../services/servico-fornecedor.service
     ServicoClienteService,
     ServicoFornecedorService,
     UsuarioService,
-    ServicoFornecedorService
+    ServicoFornecedorService,
+    AvaliacaoService
   ]
 })
 export class AppModule {}
