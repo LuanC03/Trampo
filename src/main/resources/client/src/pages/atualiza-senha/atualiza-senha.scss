@@ -1,0 +1,37 @@
+page-atualiza-senha {
+     font-family: Dessau-Light;
+
+     ion-header.atualiza-header {
+        font-weight: bold;  
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        color:  black;
+        background: #EFEEF4;
+    }
+
+    ion-content.atualiza-content {        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    div {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        background: transparent !important;
+    }
+
+    button.cancelar, .atualizar {
+        font-size: 25px;
+        font-weight: bold;
+    }
+
+    ion-icon {
+        padding-right: 10px;
+    }
+
+}
