@@ -59,9 +59,10 @@ public class UsuarioService {
 	public Usuario criarUsuario(Usuario usuario) throws Exception {
 		if (UsuarioValidador.validaUsuario(usuario) && usuarioEhUnico(usuario)) {
 			if (usuario.getTipo().equals(TipoUsuario.FORNECEDOR)) {
-				usuario.setLogin(usuario.getLogin().toLowerCase());
+				
 				usuario = criarFornecedor(usuario, ((Fornecedor) usuario).getListaEspecialidades());
 			}
+			usuario.setLogin(usuario.getLogin().toLowerCase());
 			return usuarioRepository.save(usuario);
 		}
 
@@ -146,7 +147,7 @@ public class UsuarioService {
 
 	public void atualizarNome(Usuario usuario, String nomeCompleto) throws Exception {
 		if (UsuarioValidador.validaNome(nomeCompleto.trim())) {
-			usuario.setNomeCompleto(nomeCompleto.trim().toLowerCase());
+			usuario.setNomeCompleto(nomeCompleto.trim());
 			usuarioRepository.saveAndFlush(usuario);
 		}
 	}
