@@ -46,13 +46,4 @@ export class ServicoClienteService {
         });
     }
 
-    avaliacaoServico(avaliar : AvaliacaoDTO){
-        return this.http.post(
-            `${API_CONFIG.baseUrl}/api/usuarios/avaliacao/avaliar`,
-            avaliar,
-            {
-                observe: 'response',
-                responseType: 'json'
-            });
-    }
 }

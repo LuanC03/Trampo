@@ -10,10 +10,10 @@
   	<ion-list>
 
 	  <ion-item>
-	    <rating [(ngModel)]="rate" (rateChange)="onRate($event)"></rating>
+	    <rating [(ngModel)]="avaliar.avaliacao.nota"></rating>
 	  </ion-item>
       <ion-item>
-        <button class="confirmar" ion-button round full color="pink" (click)="confirmar(avaliacao)">
+        <button class="confirmar" ion-button round full color="pink" (click)="confirmarAvaliacao(avaliar)">
           <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Confirmar
       	</button>
 	  </ion-item>

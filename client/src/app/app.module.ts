@@ -15,8 +15,6 @@ import { AuthInterceptorProvider } from '../interceptors/auth-interceptor';
 import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
-
-
 import { AvaliacaoService } from '../services/avaliacao.service';
 
 @NgModule({
