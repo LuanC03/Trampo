@@ -1,4 +1,4 @@
-package br.com.ufcg.controller;
+package br.com.ufcg.controllers;
 
 import java.util.Date;
 import java.util.List;
@@ -26,7 +26,7 @@ import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.vo.AlterarDadosForm;
 import br.com.ufcg.domain.vo.LoginForm;
 import br.com.ufcg.domain.vo.NovaSenhaForm;
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.services.UsuarioService;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
@@ -61,7 +61,7 @@ public class UsuarioController {
         Usuario usuAutenticado;
 
         try {
-             usuAutenticado = usuarioService.getByLogin(usuario.getLogin());
+             usuAutenticado = usuarioService.getByLogin(usuario.getLogin().toLowerCase());
         }catch(Exception e) {
             response.setMessage(USUARIO_NAO_EXISTENTE);
             response.setStatus(HttpStatus.NOT_FOUND.value());
@@ -76,7 +76,7 @@ public class UsuarioController {
         }
         
         String token = Jwts.builder()
-				            .setSubject(new StringBuilder(usuario.getLogin()).append(STRING_ESPACAMENTO).append(usuario.getSenha()).toString())
+				            .setSubject(new StringBuilder(usuario.getLogin().toLowerCase()).append(STRING_ESPACAMENTO).append(usuario.getSenha()).toString())
 				            .signWith(SignatureAlgorithm.HS512, SECRET)
 				            .setExpiration(new Date(System.currentTimeMillis() + HORAS_NO_DIA * HORAS))
 				            .compact();

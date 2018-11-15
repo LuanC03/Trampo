@@ -33,6 +33,14 @@ page-cadastro-cliente {
         font-weight: bold;  
     }
 
+    .error-message {
+        color: red;
+        margin-top: 0.3rem;
+        font-size: 85%;
+        align-items: stretch;
+        padding-left: 16px;
+    }
+    
     button.inserir {
         font-weight: bold;
     }
@@ -45,9 +53,4 @@ page-cadastro-cliente {
     ion-icon {
         padding-right: 10px;
     }
-
-    .item.error-message {
-        color: red;
-    }
-
 }

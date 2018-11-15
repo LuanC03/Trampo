@@ -15,7 +15,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import org.springframework.web.filter.GenericFilterBean;
 
-import br.com.ufcg.service.UsuarioService;
+import br.com.ufcg.services.UsuarioService;
 import io.jsonwebtoken.SignatureException;
 
 public class ClienteFilter extends GenericFilterBean {
