@@ -3,6 +3,8 @@ import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
 import { ServicoDTO } from "../models/servico.dto";
 
+import { AvaliacaoDTO } from "../models/avaliacao-servico.dto";
+
 @Injectable()
 export class ServicoClienteService {
 
@@ -42,5 +44,15 @@ export class ServicoClienteService {
             observe: 'response',
             responseType: 'json'
         });
+    }
+
+    avaliacaoServico(avaliar : AvaliacaoDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/api/usuarios/avaliacao/avaliar`,
+            avaliar,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 }

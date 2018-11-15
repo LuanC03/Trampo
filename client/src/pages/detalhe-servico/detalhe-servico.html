@@ -109,8 +109,13 @@
         </button>
       </ion-item>
       <ion-item *ngIf="servico.tipoStatus == 'ACEITO' && user.tipo == 'FORNECEDOR'">      
-        <button class="finalizar" ion-button round full color="dark" (click)="concluirServico(servico)">
+        <button class="finalizar" ion-button round full color="dark" (click)="concluirServico(avaliar)">
             <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Concluir
+        </button>
+      </ion-item>
+      <ion-item *ngIf="servico.tipoStatus == 'CONCLUIDO' && user.tipo == 'FORNECEDOR'">      
+        <button class="avaliar" ion-button round full color="dark" (click)="avaliarServico(avaliar)">
+            <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Avaliar
         </button>
       </ion-item>
       <ion-item>      

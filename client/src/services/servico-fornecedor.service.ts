@@ -8,8 +8,7 @@ import { AvaliacaoDTO } from "../models/avaliacao-servico.dto";
 @Injectable()
 export class ServicoFornecedorService {
 
-    constructor(public http: HttpClient){
-    }
+    constructor(public http: HttpClient){}
 
     getServicos(){
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor`,
@@ -62,13 +61,14 @@ export class ServicoFornecedorService {
         });
     }
 
-    avaliacaoServico(avaliacao : AvaliacaoDTO){
+    avaliacaoServico(avaliar : AvaliacaoDTO){
         return this.http.post(
             `${API_CONFIG.baseUrl}/api/usuarios/avaliacao/avaliar`,
-            avaliacao,
+            avaliar,
             {
                 observe: 'response',
                 responseType: 'json'
             });
     }
+
 }

@@ -4,8 +4,13 @@ import { IonicPage, NavController, NavParams, ViewController, AlertController } 
 import { AvaliacaoDTO } from '../../models/avaliacao-servico.dto';
 import { AvaliacaoService } from '../../services/avaliacao.service';
 
+//import { ServicoDTO } from '../../models/servico.dto';
+
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
+import { ServicoClienteService } from '../../services/servico-cliente.service';
+
 import { UsuarioService } from '../../services/usuario.service';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 
 @IonicPage()
@@ -15,23 +20,57 @@ import { UsuarioService } from '../../services/usuario.service';
 })
 export class AvaliacaoPage {
   private rate: number = 0;
+  user: DadosUsuarioDTO;
 
-  avaliacao : AvaliacaoDTO = {
+  avaliar: AvaliacaoDTO = {
+    avaliacao: {
+        id: null,
+        nota: null
+    },  
+    servico: {
+      id: null
+    }
+  };
+  
+/*
+  avaliacao: AvaliacaoDTO = {
     id: null,
     nota: "",
-    servico: null
+    servico: {
+      id: null,
+      descricao: "",
+      data: "",
+      horario: "",
+      valor: "",
+      tipo: "",
+      endereco: {
+        rua: "",
+        bairro: "",
+        numero: ""
+      },
+      fornecedor: null,
+      status: "",
+      cliente: {
+        id: null,
+        login: "",
+        nomeCompleto: "",
+        tipo: "",
+        fotoPerfil: "",
+        email: "",
+      }
+    }
   };
-
-   constructor(
+*/
+  constructor(
     public usuarioService: UsuarioService,
     public servicoFornecedorService: ServicoFornecedorService,
-    public avaliacaoService: AvaliacaoService,
+    public servicoClienteService: ServicoClienteService,
 
+    public avaliacaoService: AvaliacaoService,
     public alertCtrl: AlertController,
     public viewCtrl: ViewController,
   	public navCtrl: NavController, 
   	public navParams: NavParams) {
-   	console.log(navParams.get('servico'));
   }
 
   ionViewDidLoad() {
@@ -39,18 +78,20 @@ export class AvaliacaoPage {
   }
 
   onRate(value) {
-    this.rate = value * 20;
+    this.rate = value;
   	this.setNota(this.rate);
   }
 
   private setNota(rate) {
-  	this.avaliacao.nota = rate + "";
+  	this.avaliar.avaliacao.nota = rate ;
   }
 
-  confirmar() {
-  	//window.alert(this.avaliacao.nota);
-    //this.servicoFornecedorService.avaliacaoServico(this.avaliacao).subscribe(
-	this.avaliacaoService.avaliacaoServico(this.avaliacao).subscribe(
+  confirmar(avaliar: AvaliacaoDTO) {
+  	//window.alert(avaliacao.id);
+    //this.servicoClienteService.avaliacaoServico(avaliacao).subscribe(
+    this.servicoFornecedorService.avaliacaoServico(avaliar).subscribe(
+	
+	//this.avaliacaoService.avaliacaoServico(avaliacao).subscribe(
       response => {
         this.viewCtrl.dismiss();
       }, error => {
@@ -63,6 +104,7 @@ export class AvaliacaoPage {
         alertMessage.present();
         this.viewCtrl.dismiss();
       });
+	
   }
 
 }
