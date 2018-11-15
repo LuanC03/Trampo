@@ -1,4 +1,3 @@
-import { ServicoDTO } from "./servico.dto";
 import { DadosUsuarioDTO } from "./dados-usuario.dto";
 
 export interface AvaliacaoDTO {
