@@ -58,7 +58,6 @@ export class AvaliacaoPage {
 
   confirmarAvaliacao(avaliar: AvaliacaoDTO) {
 	avaliar.servico = this.servico;
-	window.alert(avaliar.avaliacao.nota);
 
 	this.avaliacaoService.avaliacaoServico(avaliar).subscribe(
       response => {
