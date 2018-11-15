@@ -19,6 +19,7 @@ export class PerfilPage {
       login : "",
       email : "",
       listaEspecialidades: null,
+      avaliacao: null,
     };
 
   constructor(public navCtrl: NavController, 

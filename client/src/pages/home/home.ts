@@ -25,7 +25,8 @@ export class HomePage {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
-    email : ""
+    email : "",
+    avaliacao: null
   };
   servicos: ServicoDTO[];
 

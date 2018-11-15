@@ -8,4 +8,5 @@ export interface DadosUsuarioDTO {
     senha?: string;
     conf_senha?: string;
     listaEspecialidades? : string[];
+    avaliacao: number;
 }

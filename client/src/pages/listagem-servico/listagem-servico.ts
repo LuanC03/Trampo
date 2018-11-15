@@ -24,7 +24,8 @@ export class ListagemServicoPage {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
-    email : ""
+    email : "",
+    avaliacao: null,
   };
   servicos: ServicoDTO[];
   
