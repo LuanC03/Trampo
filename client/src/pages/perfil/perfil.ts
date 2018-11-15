@@ -21,6 +21,8 @@ export class PerfilPage {
       listaEspecialidades: null,
       avaliacao: null,
     };
+  
+    stars = [];
 
   constructor(public navCtrl: NavController, 
     public modalCtrl: ModalController,
@@ -34,10 +36,15 @@ export class PerfilPage {
     this.usuarioService.getMyUser().subscribe(
       response => {
         this.dadosUsuario = response['data'];
-        console.log(this.dadosUsuario);
+        for (let i= 0; i < this.dadosUsuario.avaliacao; i++){
+          this.stars.push(i);
+        }
       }, error => {
         console.log(error);
       });
+    
+    
+    console.log(this.stars);
   }
 
   editar() {

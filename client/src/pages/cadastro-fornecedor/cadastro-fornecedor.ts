@@ -22,6 +22,7 @@ export class CadastroFornecedorPage {
     email : "",
     senha : "",
     conf_senha : "",
+    avaliacao: null,
     listaEspecialidades : []
   };
 

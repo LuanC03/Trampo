@@ -31,7 +31,11 @@
           <ion-label><b>Email:</b> {{ dadosUsuario.email }} </ion-label>
         </ion-item>   
         <ion-item>
-          <ion-label><b>Avaliação:</b> {{ dadosUsuario.avaliacao }} </ion-label>
+          <ion-label><b>Avaliação:</b>
+            <ion-col *ngFor="let star of stars">
+              <ion-icon name="star"></ion-icon>
+            </ion-col>
+          </ion-label>
         </ion-item>   
       </form>
 
