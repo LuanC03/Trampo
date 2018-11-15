@@ -78,4 +78,7 @@ export class HomePage {
     this.navCtrl.push('DetalheServicoPage', servico)
   }
   
+  log(valor){
+    console.log(valor);
+  }
 }
