@@ -8,9 +8,9 @@ export interface ServicoDTO {
     valor: string,
     tipo: string,
     endereco: {
-    rua: string,
-    bairro: string,
-    numero: string
+        rua: string,
+        bairro: string,
+        numero: string
     },
     fornecedor?: string,
     status?: string,

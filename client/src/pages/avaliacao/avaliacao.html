@@ -1,0 +1,26 @@
+
+<ion-header class="avaliacao-header">
+  <ion-navbar>
+    <ion-title>Avaliação</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="avaliacao-content">
+  <div padding>
+  	<ion-list>
+
+	  <ion-item>
+	    <rating [(ngModel)]="avaliar.avaliacao.nota"></rating>
+	  </ion-item>
+      <ion-item>
+        <button class="confirmar" ion-button round full color="pink" (click)="confirmarAvaliacao(avaliar)">
+          <ion-icon ios="ios-heart" md="md-heart"></ion-icon>Confirmar
+      	</button>
+	  </ion-item>
+	  <ion-item>
+	    <h4>Avalie o serviço prestado!</h4>
+	  </ion-item>
+
+    </ion-list>
+  </div>
+</ion-content>

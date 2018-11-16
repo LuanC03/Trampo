@@ -1,21 +1,21 @@
-page-detalhes {
+page-avaliacao {
     font-family: Dessau-Light;
 
-    ion-header.detalhes-header {
+    ion-header.avaliacao-header {
         font-weight: bold;  
 
         display: flex;
-        align-items: center;
         flex-direction: column;
+        align-items: center;
 
         color:  black;
         background: #EFEEF4;
     }
 
-    ion-content.detalhes-content {      
+    ion-content.avaliacao-content {        
         display: flex;
-        align-items: center;
         flex-direction: column;
+        align-items: center;
     }
 
     div {
@@ -25,27 +25,13 @@ page-detalhes {
         background: transparent !important;
     }
 
-    p {
-        font-size: 1em;
-        align-items: left;
-    }
-
-    h5 {
-        font-weight: bold;  
-    }
-
-    button.voltar, .aceitar, .finalizar {
+    button.confirmar {
         font-size: 25px;
         font-weight: bold;
     }
 
     ion-icon {
         padding-right: 10px;
-    }
-
-    ion-note.note {
-        opacity: 0.6;
-        color: black;
     }
 
 }

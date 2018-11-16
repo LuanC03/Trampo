@@ -6,8 +6,7 @@ import { ServicoDTO } from "../models/servico.dto";
 @Injectable()
 export class ServicoFornecedorService {
 
-    constructor(public http: HttpClient){
-    }
+    constructor(public http: HttpClient){}
 
     getServicos(){
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor`,
@@ -59,4 +58,5 @@ export class ServicoFornecedorService {
             responseType: 'json'
         });
     }
+
 }

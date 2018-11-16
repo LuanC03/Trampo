@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, ViewController, ModalController, AlertController } from 'ionic-angular';
 
+import { NavParams } from 'ionic-angular/navigation/nav-params';
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
-import { NavParams } from 'ionic-angular/navigation/nav-params';
+
 import { ServicoDTO } from '../../models/servico.dto';
 import { UsuarioService } from '../../services/usuario.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
-
+import { AvaliacaoDTO } from '../../models/avaliacao-servico.dto';
+import { AvaliacaoService } from '../../services/avaliacao.service';
 
 @IonicPage()
 @Component({
@@ -19,6 +21,7 @@ export class DetalheServicoPage {
 
   nomeFornecedor: string;
   user: DadosUsuarioDTO;
+
   servico: ServicoDTO = {
     id: null,
     descricao: "",
@@ -27,9 +30,9 @@ export class DetalheServicoPage {
     valor: "",
     tipo: "",
     endereco: {
-    rua: "",
-    bairro: "",
-    numero: ""
+      rua: "",
+      bairro: "",
+      numero: ""
     },
     fornecedor: null,
     status: "",
@@ -43,14 +46,25 @@ export class DetalheServicoPage {
     }
   };
 
-  constructor(public navCtrl: NavController,
-    public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService,
+  avaliar: AvaliacaoDTO = {
+    avaliacao: {
+        id: null,
+        nota: null
+    },  
+    servico: this.servico
+  };
+
+  constructor(
+    public viewCtrl: ViewController,
+    public alertCtrl: AlertController,
     public navParams: NavParams,
+    public navCtrl: NavController,
+    public modalCtrl: ModalController, 
     public usuarioService: UsuarioService,
-    public servicoFornecedorService: ServicoFornecedorService,
-    public alertCtrl: AlertController )     {
-  }
+    public storageService: StorageService,
+    public avaliacaoService: AvaliacaoService,
+    public autenticacaoService: AutenticacaoService,
+    public servicoFornecedorService: ServicoFornecedorService) {}
 
   ionViewDidLoad() {
     this.usuarioService.getMyUser().subscribe(
@@ -86,7 +100,7 @@ export class DetalheServicoPage {
         alertMessage.present();
       });
   }
-  
+
   concluirServico(servico: ServicoDTO){
     this.servicoFornecedorService.concluirServico(servico).subscribe(
       response => {
@@ -97,6 +111,7 @@ export class DetalheServicoPage {
           }]
         });
         alertMessage.present();
+        this.avaliarServico();
         this.navCtrl.setRoot('ListagemServicoPage');
       },error => {
         let alertMessage = this.alertCtrl.create({
@@ -108,4 +123,10 @@ export class DetalheServicoPage {
         alertMessage.present();
       });
   }
+
+  avaliarServico() {
+    let avaliacaoModal = this.modalCtrl.create('AvaliacaoPage', { servico: this.servico});
+    avaliacaoModal.present();
+  }
+
 }
