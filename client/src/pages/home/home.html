@@ -1,4 +1,5 @@
 <ion-header class="home-header">
+
     <ion-navbar>
         <ion-grid>
             <ion-row>
@@ -11,30 +12,28 @@
             </ion-row>
         </ion-grid>
     </ion-navbar>
+
 </ion-header>
 
 <ion-content class="home-content">
 
     <div padding>
-        <h2>Este é seu Histórico</h2>
-        <ion-list class="form-logout">
-            <h3 *ngIf="servicos?.length == 0">Você ainda não tem nenhum serviço cadastrado</h3>
-            <ion-item-sliding *ngFor="let servico of servicos" #item>
-                <button ion-item (click)="openDetalhes(servico)">
-                    <h2> <b>{{ servico.descricao}}</b> do tipo {{ servico.tipo }}</h2>
-                    <p>Status: {{ servico.status }} • Data: {{ servico.data }}</p>
-                </button>
-            </ion-item-sliding>
-
-            <ion-item>
-                <button class="logout" ion-button round full color="pink" (click)="logout()">
-                    LOGOUT
-                    &nbsp;
-                    <!-- non-breaking space -->
-                    <ion-icon ios="ios-log-out" md="md-log-out"></ion-icon>
-                </button>
-            </ion-item>
-        </ion-list>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12>
+                    <h2>Este é seu Histórico</h2>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-list class="form-logout">
+                        <h3 *ngIf="servicos?.length == 0">Você ainda não tem nenhum serviço cadastrado</h3>
+                        <card-servico *ngFor="let servico of servicos" [servico]="servico">
+                        </card-servico>
+                    </ion-list>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
     </div>
 
 </ion-content>

@@ -16,6 +16,7 @@ import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
 import { AvaliacaoService } from '../services/avaliacao.service';
+import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { AvaliacaoService } from '../services/avaliacao.service';
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    HttpClientModule
+    HttpClientModule,
+    ComponentsModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

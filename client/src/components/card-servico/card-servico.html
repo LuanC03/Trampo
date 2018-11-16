@@ -1,0 +1,19 @@
+<div class="card-servico-container">
+    <ion-card>
+        <ion-card-header>
+            {{ servico.descricao}} do tipo {{ servico.tipo }}
+        </ion-card-header>
+        <ion-card-content>
+            <ion-grid>
+                <ion-row>
+                    <ion-col col-6>
+                        Status: {{ servico.status }}
+                    </ion-col>
+                    <ion-col col-6>
+                        Data: {{ servico.data }}
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+        </ion-card-content>
+    </ion-card>
+</div>
