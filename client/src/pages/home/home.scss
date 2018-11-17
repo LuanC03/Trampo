@@ -7,15 +7,28 @@ page-home {
         font-weight: bold;
 
         .title-header {
+            display: table;
             font-size: 1.15em;
             font-weight: bold;
-            position: absolute;
-            top: 25%;
             width: 100%;
+
+            button {
+                float: left;
+            }
+
+            .title-text {
+                align-items: center; 
+                height: 32px;
+
+                span {
+                    display: inline-block;
+                    padding: 5px 0;
+                }
+            }
         }
 
         .toolbar-md {
-            padding: 0 4px;
+            height: 56px;
         }
     }
 
@@ -25,12 +38,12 @@ page-home {
         flex-direction: column;
     }
 
-    div {
+    /*div {
         display: flex;
         flex-direction: column;
         align-items: center;
         background: transparent !important;
-    }
+    }*/
 
     h5 {
         font-weight: bold;  
