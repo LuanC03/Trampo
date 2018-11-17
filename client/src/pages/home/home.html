@@ -29,11 +29,15 @@
                 <ion-col col-12>
                     <ion-list class="form-logout">
                         <h3 *ngIf="servicos?.length == 0">Você ainda não tem nenhum serviço cadastrado</h3>
-                        <item-list-servico *ngFor="let servico of servicos" [servico]="servico"></item-list-servico>
-                        <!--<card-servico *ngFor="let servico of servicos" [servico]="servico"></card-servico>-->
+                        <item-list-servico *ngFor="let servico of servicos" [servico]="servico" (click)="openDetalhes(servico)"></item-list-servico>
                     </ion-list>
                 </ion-col>
             </ion-row>
         </ion-grid>
     </div>
+    <ion-fab right bottom *ngIf="tipoUsuario == 'CLIENTE'">
+        <button ion-fab color="pink" (click)="openAddService()">
+            <ion-icon name="add"></ion-icon>
+        </button>
+    </ion-fab>
 </ion-content>

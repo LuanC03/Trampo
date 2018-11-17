@@ -1,12 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, Events, NavParams } from 'ionic-angular';
+
 import { LoginPage } from '../login/login';
+import { RequisicaoServicoPage } from '../requisicao-servico/requisicao-servico';
+
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoClienteService } from '../../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
+
+import { ServicoDTO } from '../../models/servico.dto';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
@@ -17,7 +21,7 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 export class HomePage {
 
     user: string;
-    tipo_usuario: string;
+    tipoUsuario: string;
     dados_user: DadosUsuarioDTO = {
         id: null,
         tipo: "",
@@ -41,21 +45,15 @@ export class HomePage {
 
     ionViewDidLoad() {
         let localUser = this.storageService.getLocalUser();
-        
+
         if (localUser && localUser.username) {
             this.user = localUser.username;
         }
-        
-        this.tipo_usuario = this.navParams.get("tipo");
-        this.usuarioService.getMyUser().subscribe(
-            response => {
-                this.dados_user = response['data'];
-            }
-        )
 
         this.usuarioService.getMyUser().subscribe(
             response => {
-                if (response['data']['tipo'] == 'CLIENTE') {
+                this.tipoUsuario = response['data']['tipo'];
+                if (this.tipoUsuario == 'CLIENTE') {
                     this.servicoClienteService.getHistorico().subscribe(
                         response => {
                             this.servicos = response.body['data'];
@@ -77,5 +75,9 @@ export class HomePage {
 
     openDetalhes(servico: ServicoDTO) {
         this.navCtrl.push('DetalheServicoPage', servico)
+    }
+
+    openAddService() {
+        this.navCtrl.push('RequisicaoServicoPage');
     }
 }
