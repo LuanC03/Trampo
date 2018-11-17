@@ -34,7 +34,7 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    black,
+  primary:    #212121,
   secondary:  gray,
   danger:     #f53d3d,
   light:      #f4f4f4,
@@ -44,6 +44,8 @@ $colors: (
   pink:       #DE3C58
 
 );
+
+$toolbar-background: color($colors, primary, base);
 
 $text-input-md-highlight-color-valid: 1px #dedede;
 

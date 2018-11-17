@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
+import { NgModule } from '@angular/core';
+
 import { IonRatingComponent } from './ion-rating';
 
 @NgModule({

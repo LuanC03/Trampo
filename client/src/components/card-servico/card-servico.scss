@@ -1,9 +1,9 @@
 .card-servico-container {
-    .card-ios {
-        background-color: #FAFAFA;
+    ion-card {
+        background-color: white;
     }
 
-    .card-header-ios {
+    ion-card-header {
         font-weight: bolder;
     }
 }

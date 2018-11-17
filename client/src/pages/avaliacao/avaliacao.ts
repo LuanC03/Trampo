@@ -24,7 +24,7 @@ export class AvaliacaoPage {
             numero: ""
         },
         fornecedor: null,
-        status: "",
+        tipoStatus: "",
         cliente: {
             id: null,
             login: "",

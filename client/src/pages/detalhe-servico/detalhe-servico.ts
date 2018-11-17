@@ -35,7 +35,7 @@ export class DetalheServicoPage {
       numero: ""
     },
     fornecedor: null,
-    status: "",
+    tipoStatus: "",
     cliente: {
       id: null,
       login: "",

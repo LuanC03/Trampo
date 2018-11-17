@@ -13,6 +13,6 @@ export interface ServicoDTO {
         numero: string
     },
     fornecedor?: string,
-    status?: string,
+    tipoStatus?: string,
     cliente?: DadosUsuarioDTO
 }

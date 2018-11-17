@@ -16,37 +16,35 @@ import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
 import { AvaliacaoService } from '../services/avaliacao.service';
-import { ComponentsModule } from '../components/components.module';
 
 @NgModule({
-  declarations: [
-    MyApp
-  ],
-  imports: [
-    BrowserModule,
-    IonicModule.forRoot(MyApp),
-    HttpClientModule,
-    ComponentsModule
-  ],
-  bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp
-  ],
-  providers: [
-    StatusBar,
-    SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
-    //{provide: LocationStrategy, useClass: PathLocationStrategy},  //Ativar essa função na SPRINT 4
-    CadastroUsuarioService,
-    AutenticacaoService,
-    StorageService,
-    EspecialidadesService,
-    AuthInterceptorProvider,
-    ServicoClienteService,
-    ServicoFornecedorService,
-    UsuarioService,
-    ServicoFornecedorService,
-    AvaliacaoService
-  ]
+    declarations: [
+        MyApp
+    ],
+    imports: [
+        BrowserModule,
+        IonicModule.forRoot(MyApp),
+        HttpClientModule,
+    ],
+    bootstrap: [IonicApp],
+    entryComponents: [
+        MyApp
+    ],
+    providers: [
+        StatusBar,
+        SplashScreen,
+        { provide: ErrorHandler, useClass: IonicErrorHandler },
+        //{provide: LocationStrategy, useClass: PathLocationStrategy},  //Ativar essa função na SPRINT 4
+        CadastroUsuarioService,
+        AutenticacaoService,
+        StorageService,
+        EspecialidadesService,
+        AuthInterceptorProvider,
+        ServicoClienteService,
+        ServicoFornecedorService,
+        UsuarioService,
+        ServicoFornecedorService,
+        AvaliacaoService
+    ]
 })
-export class AppModule {}
+export class AppModule { }
