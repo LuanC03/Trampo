@@ -43,6 +43,7 @@ export class DetalheServicoPage {
       tipo: "",
       fotoPerfil: "",
       email: "",
+      avaliacao: null
     }
   };
 

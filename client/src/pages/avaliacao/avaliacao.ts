@@ -6,79 +6,79 @@ import { AvaliacaoService } from '../../services/avaliacao.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-avaliacao',
-  templateUrl: 'avaliacao.html'
+    selector: 'page-avaliacao',
+    templateUrl: 'avaliacao.html'
 })
 export class AvaliacaoPage {
 
-  servico: ServicoDTO = {
-    id: null,
-    descricao: "",
-    data: "",
-    horario: "",
-    valor: "",
-    tipo: "",
-    endereco: {
-      rua: "",
-      bairro: "",
-      numero: ""
-    },
-    fornecedor: null,
-    status: "",
-    cliente: {
-      id: null,
-      login: "",
-      nomeCompleto: "",
-      tipo: "",
-      fotoPerfil: "",
-      email: "",
-    }
-  };
-
-  avaliar: AvaliacaoDTO = {
-    avaliacao: {
+    servico: ServicoDTO = {
         id: null,
-        nota: null
-    },  
-    servico: this.servico
-  };
-  
-  constructor(
-    public avaliacaoService: AvaliacaoService,
-    public alertCtrl: AlertController,
-    public viewCtrl: ViewController,
-  	public navCtrl: NavController, 
-  	public navParams: NavParams) {
-		this.servico = navParams.get('servico');
-  }
+        descricao: "",
+        data: "",
+        horario: "",
+        valor: "",
+        tipo: "",
+        endereco: {
+            rua: "",
+            bairro: "",
+            numero: ""
+        },
+        fornecedor: null,
+        status: "",
+        cliente: {
+            id: null,
+            login: "",
+            nomeCompleto: "",
+            tipo: "",
+            fotoPerfil: "",
+            email: "",
+            avaliacao: null
+        }
+    };
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad AvaliacaoPage');
-  }
+    avaliar: AvaliacaoDTO = {
+        avaliacao: {
+            id: null,
+            nota: null
+        },
+        servico: this.servico
+    };
 
-  confirmarAvaliacao(avaliar: AvaliacaoDTO) {
-	avaliar.servico = this.servico;
+    constructor(
+        public avaliacaoService: AvaliacaoService,
+        public alertCtrl: AlertController,
+        public viewCtrl: ViewController,
+        public navCtrl: NavController,
+        public navParams: NavParams) {
+        this.servico = navParams.get('servico');
+    }
 
-	this.avaliacaoService.avaliacaoServico(avaliar).subscribe(
-      response => {
-        let alertMessage = this.alertCtrl.create({
-          message: response.body['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.viewCtrl.dismiss();
-      }, error => {
-        let alertMessage = this.alertCtrl.create({
-          message: error.error['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.viewCtrl.dismiss();
-      });
-  }
+    ionViewDidLoad() {
+        console.log('ionViewDidLoad AvaliacaoPage');
+    }
 
+    confirmarAvaliacao(avaliar: AvaliacaoDTO) {
+        avaliar.servico = this.servico;
+
+        this.avaliacaoService.avaliacaoServico(avaliar).subscribe(
+            response => {
+                let alertMessage = this.alertCtrl.create({
+                    message: response.body['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+                this.viewCtrl.dismiss();
+            }, error => {
+                let alertMessage = this.alertCtrl.create({
+                    message: error.error['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+                this.viewCtrl.dismiss();
+            });
+    }
 }

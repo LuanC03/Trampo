@@ -22,19 +22,26 @@
         </ion-avatar>
 
         <ion-item>
-          <ion-label>Nome Completo: {{ dadosUsuario.nomeCompleto }} </ion-label>
+          <ion-label><b>Nome Completo:</b> {{ dadosUsuario.nomeCompleto }} </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Nome de Usuário: {{ dadosUsuario.login }} </ion-label>
+          <ion-label><b>Nome de Usuário:</b> {{ dadosUsuario.login }} </ion-label>
         </ion-item>
         <ion-item>
-          <ion-label>Email cadastrado: {{ dadosUsuario.email }} </ion-label>
+          <ion-label><b>Email:</b> {{ dadosUsuario.email }} </ion-label>
+        </ion-item>   
+        <ion-item>
+          <ion-label><b>Avaliação:</b>
+            <ion-col *ngFor="let star of stars">
+              <ion-icon name="star"></ion-icon>
+            </ion-col>
+          </ion-label>
         </ion-item>   
       </form>
 
       <ion-list *ngIf="dadosUsuario.tipo == 'FORNECEDOR'">
         <ion-item >
-          <ion-label>Especialidades: </ion-label>
+          <ion-label><b>Especialidades:</b> </ion-label>
         </ion-item>
         <ion-item *ngFor="let especialidade of dadosUsuario.listaEspecialidades">
           <ion-label> * {{ especialidade.nome }} </ion-label>

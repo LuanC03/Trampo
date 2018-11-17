@@ -25,7 +25,8 @@ export class HomePage {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
-    email : ""
+    email : "",
+    avaliacao: null
   };
   servicos: ServicoDTO[];
 
@@ -77,4 +78,7 @@ export class HomePage {
     this.navCtrl.push('DetalheServicoPage', servico)
   }
   
+  log(valor){
+    console.log(valor);
+  }
 }
