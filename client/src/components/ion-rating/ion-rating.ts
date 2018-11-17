@@ -8,6 +8,7 @@ export class IonRatingComponent {
 
   @Input() numStars: number = 5;
   @Input() value: number = 3;
+  @Input() edit: boolean = false;
 
   @Output() ionClick: EventEmitter<number> = new EventEmitter<number>();
   stars: string[] = [];
@@ -30,9 +31,12 @@ export class IonRatingComponent {
   }
 
   starClicked(i: number){
-    this.value = i + 1;
-    this.ionClick.emit(this.value);
-    this.reloadStars();
+    if (this.edit){
+      this.value = i + 1;
+      this.ionClick.emit(this.value);
+      this.reloadStars();
+    }
+    
   }
 
 
