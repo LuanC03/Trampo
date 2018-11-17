@@ -29,8 +29,8 @@
                 <ion-col col-12>
                     <ion-list class="form-logout">
                         <h3 *ngIf="servicos?.length == 0">Você ainda não tem nenhum serviço cadastrado</h3>
-                        <card-servico *ngFor="let servico of servicos" [servico]="servico">
-                        </card-servico>
+                        <item-list-servico *ngFor="let servico of servicos" [servico]="servico"></item-list-servico>
+                        <!--<card-servico *ngFor="let servico of servicos" [servico]="servico"></card-servico>-->
                     </ion-list>
                 </ion-col>
             </ion-row>

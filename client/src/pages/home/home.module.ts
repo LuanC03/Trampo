@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
+
+import { ItemListServicoModule } from '../../components/item-list-servico/item-list-servico.module';
 import { HomePage } from './home';
-import { CardServicoModule } from '../../components/card-servico/card-servico.module';
 
 @NgModule({
-  declarations: [
-    HomePage,
-  ],
-  imports: [
-    IonicPageModule.forChild(HomePage),
-    CardServicoModule
-  ],
+    declarations: [
+        HomePage,
+    ],
+    imports: [
+        IonicPageModule.forChild(HomePage),
+        ItemListServicoModule
+    ],
 })
-export class HomePageModule {}
+export class HomePageModule { }
