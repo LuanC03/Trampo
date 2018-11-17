@@ -7,20 +7,31 @@
 <ion-content class="cadastro-cliente-content">
   <div padding>
     <ion-list>
-      <form [formGroup]="clienteForm" (ngSubmit)="cadastrar()">
+
         <ion-avatar item-start>
           <ion-row>
             <ion-col col-5>
-              <img src="assets/imgs/default-avatar.png">
+              <p>Localização: {{path}}</p>
+              <!--
+              <img [src]="assets/imgs/default-avatar.png">
+              -->
+              <img [src]=path>
             </ion-col>
             <ion-col col-5>
               <p color="dark">Escolha seu avatar</p>
-              <button class="inserir" ion-button color="pink" round small>
+              <button class="inserir" ion-button color="pink" round small (click)="inserirFoto()">
                 <ion-icon ios="ios-add" md="md-add"></ion-icon>Inserir
               </button>
             </ion-col>
           </ion-row>
         </ion-avatar>
+
+
+      <form [formGroup]="clienteForm" (ngSubmit)="cadastrar()">
+
+
+
+
         <ion-item class="item">
           <ion-label floating>Nome Completo</ion-label>
           <ion-input type="text" formControlName="nomeCompleto"></ion-input>

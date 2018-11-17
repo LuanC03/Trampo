@@ -5,6 +5,8 @@ import { CadastroUsuarioService } from '../../services/cadastro-usuario.service'
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 import { Cliente } from '../../models/cliente.model';
 
+import { ImagePicker } from "@ionic-native/image-picker";
+
 @IonicPage()
 @Component({
   selector: 'page-cadastro-cliente',
@@ -25,11 +27,16 @@ export class CadastroClientePage {
     conf_senha: ""
   };
 
+  path: string;
+
   constructor(
+    public imagePicker: ImagePicker,
     public navCtrl: NavController,
     public alertCtrl: AlertController,
     public cadastro: CadastroUsuarioService,
     private formBuilder: FormBuilder) {
+
+      this.path = "assets/imgs/trampo-logo.png";
 
       this.clienteForm = this.formBuilder.group({
         nomeCompleto: new FormControl('', Validators.compose([
@@ -73,5 +80,27 @@ export class CadastroClientePage {
       });
       alertMessage.present();
     });
+  }
+
+  inserirFoto() {
+
+    let option = {
+      title: 'Select Image',
+      message: 'Selecione pelo menos uma foto',
+      maximumImagesCount: 1,
+      outType: 0 // 0= PATH, 1 BASE64
+    };
+
+    this.imagePicker.getPictures(option).then(
+      results => {
+        for (var i=0; i < results.length; i++) {
+          this.path = results[i];
+          alert("Caminho galeria: " + results[i]);  
+        }
+      },
+      err => {
+        alert("Error: " + err);
+      });
+
   }
 }

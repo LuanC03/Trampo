@@ -16,6 +16,8 @@ import { UsuarioService } from '../services/usuario.service';
 import { ServicoClienteService } from '../services/servico-cliente.service';
 import { ServicoFornecedorService } from '../services/servico-fornecedor.service';
 
+import { ImagePicker } from "@ionic-native/image-picker";
+
 @NgModule({
   declarations: [
     MyApp
@@ -42,7 +44,9 @@ import { ServicoFornecedorService } from '../services/servico-fornecedor.service
     ServicoClienteService,
     ServicoFornecedorService,
     UsuarioService,
-    ServicoFornecedorService
+    ServicoFornecedorService,
+    ImagePicker
   ]
 })
+
 export class AppModule {}
