@@ -11,10 +11,6 @@
         <ion-avatar item-start>
           <ion-row>
             <ion-col col-5>
-              <p>Localização: {{path}}</p>
-              <!--
-              <img [src]="assets/imgs/default-avatar.png">
-              -->
               <img [src]=path>
             </ion-col>
             <ion-col col-5>
@@ -26,12 +22,7 @@
           </ion-row>
         </ion-avatar>
 
-
       <form [formGroup]="clienteForm" (ngSubmit)="cadastrar()">
-
-
-
-
         <ion-item class="item">
           <ion-label floating>Nome Completo</ion-label>
           <ion-input type="text" formControlName="nomeCompleto"></ion-input>

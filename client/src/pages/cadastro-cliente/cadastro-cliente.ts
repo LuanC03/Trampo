@@ -36,7 +36,7 @@ export class CadastroClientePage {
     public cadastro: CadastroUsuarioService,
     private formBuilder: FormBuilder) {
 
-      this.path = "assets/imgs/trampo-logo.png";
+      this.path = "assets/imgs/default-avatar.png";
 
       this.clienteForm = this.formBuilder.group({
         nomeCompleto: new FormControl('', Validators.compose([
@@ -57,8 +57,11 @@ export class CadastroClientePage {
 
   cadastrar() {
     console.log(this.clienteForm.value);
+    
+    let dados = Cliente.parseFromCliente(this.clienteForm.value);
+    dados.fotoPerfil = this.path;
 
-    this.cadastro.cadastrar_cliente(Cliente.parseFromCliente(this.clienteForm.value)).subscribe(response => {
+    this.cadastro.cadastrar_cliente(dados).subscribe(response => {
       console.log(response.headers.get('Authorization'));
       let alertMessage = this.alertCtrl.create({
         title: "Cadastro efetuado com sucesso",
@@ -85,8 +88,8 @@ export class CadastroClientePage {
   inserirFoto() {
 
     let option = {
-      title: 'Select Image',
-      message: 'Selecione pelo menos uma foto',
+      title: 'Selecionar Imagem',
+      message: 'Selecione uma Imagem',
       maximumImagesCount: 1,
       outType: 0 // 0= PATH, 1 BASE64
     };
