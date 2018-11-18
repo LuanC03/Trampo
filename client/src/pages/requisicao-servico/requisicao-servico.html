@@ -15,6 +15,17 @@
 </ion-header>
 
 <ion-content class="requisicao-content">
+    <ion-avatar item-start>
+        <ion-card-content>
+            <ion-thumbnail item-start>
+                <ion-row>
+                    <ion-col col-12>
+                        <ion-icon ios="ios-construct" md="md-construct"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-thumbnail>
+        </ion-card-content>
+    </ion-avatar>
     <div padding>
         <form name="dadosServicoForm">
             <ion-grid>
@@ -87,12 +98,12 @@
                     <ion-col col-12>
                         <ion-item>
                             <ion-label stacked>Bairro</ion-label>
-                            <ion-input type="text" name="bairro" placeholder="Informe a rua onde ocorrerá o serviço" pattern=".{5,}"
-                                [(ngModel)]="dados_servico.endereco.bairro"></ion-input>
+                            <ion-input type="text" name="bairro" placeholder="Informe a rua onde ocorrerá o serviço"
+                                pattern=".{5,}" [(ngModel)]="dados_servico.endereco.bairro"></ion-input>
                         </ion-item>
                     </ion-col>
                 </ion-row>
-                <hr/>
+                <hr />
                 <ion-row>
                     <ion-col col-12>
                         <button class="confirmar" ion-button round full color="pink" (click)="cadastrar(dados_servico)"
