@@ -15,9 +15,17 @@
 </ion-header>
 
 <ion-content class="detalhes-content">
-    <div class="image-details-content">
-        <ion-icon name="contact"></ion-icon>
-    </div>
+    <ion-avatar item-start>
+        <ion-card-content>
+            <ion-thumbnail item-start>
+                <ion-row>
+                    <ion-col col-12>
+                        <ion-icon name="contact"></ion-icon>
+                    </ion-col>
+                </ion-row>
+            </ion-thumbnail>
+        </ion-card-content>
+    </ion-avatar>
     <div padding>
         <ion-grid>
             <ion-row *ngIf="servico.tipoStatus != 'EM_ABERTO' && (user && user.tipo == 'CLIENTE')">
