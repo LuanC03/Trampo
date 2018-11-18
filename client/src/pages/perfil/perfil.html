@@ -27,10 +27,15 @@
                     </ion-col>
                 </ion-row>
                 <ion-row>
-                    <ion-col col-12>
+                    <ion-col col-12 *ngIf="dadosUsuario.avaliacao > 0; else noRating">
                         <span>{{ dadosUsuario.avaliacao | number: '1.2-2'}}</span>
                         <ion-icon name="star"></ion-icon>
                     </ion-col>
+                    <ng-template #noRating>
+                        <ion-col col-12>
+                            <span>Usuário ainda não foi avaliado</span>
+                        </ion-col>
+                    </ng-template>
                 </ion-row>
             </ion-thumbnail>
         </ion-card-content>
