@@ -43,16 +43,7 @@ page-detalhes {
         }
     }
 
-    h5 {
-        font-weight: bold;  
-    }
-    
-    p {
-        align-items: left;
-        font-size: 1em;
-    }
-
-    button.aceitar, .finalizar {
+    button.aceitar, .cancelar, .finalizar {
         font-weight: bold;
 
         ion-icon {

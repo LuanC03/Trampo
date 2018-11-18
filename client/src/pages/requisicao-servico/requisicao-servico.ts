@@ -10,93 +10,90 @@ import { UsuarioService } from '../../services/usuario.service';
 
 @IonicPage()
 @Component({
-  selector: 'page-requisicao',
-  templateUrl: 'requisicao-servico.html',
+    selector: 'page-requisicao',
+    templateUrl: 'requisicao-servico.html',
 })
 export class RequisicaoServicoPage {
 
-  user: string;
-  especialidades : string[] = [];
+    user: string;
+    especialidades: string[] = [];
 
-  dados_servico : ServicoDTO  = {
-    id: null,
-    descricao: "",
-    data: "",
-    horario: "",
-    valor: "",
-    tipo: "",
-    endereco: {
-    rua: "",
-    bairro: "",
-    numero: ""
+    dados_servico: ServicoDTO = {
+        id: null,
+        descricao: "",
+        data: "",
+        horario: "",
+        valor: "",
+        tipo: "",
+        endereco: {
+            rua: "",
+            bairro: "",
+            numero: ""
+        },
+        isAvaliadoCliente: null,
+        isAvaliadoFornecedor: null
     }
-}
 
-
-
-  constructor(public navCtrl: NavController,
-    public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService,
-    public especialidadesService: EspecialidadesService,
-    public cadastroServService: ServicoClienteService,
-    public alertCtrl: AlertController,
-    public usuarioService: UsuarioService)     {
-      this.getEspecialidades();
-  }
-
-  ionViewDidLoad() {
-    let localUser = this.storageService.getLocalUser();
-    if (localUser && localUser.username){
-      this.user = localUser.username.split(" ")[0];
+    constructor(public navCtrl: NavController,
+        public autenticacaoService: AutenticacaoService,
+        public storageService: StorageService,
+        public especialidadesService: EspecialidadesService,
+        public cadastroServService: ServicoClienteService,
+        public alertCtrl: AlertController,
+        public usuarioService: UsuarioService) {
+        this.getEspecialidades();
     }
-  }
 
-  ionBackPage() {
-    this.navCtrl.setRoot('HomePage');
-  }
+    ionViewDidLoad() {
+        let localUser = this.storageService.getLocalUser();
+        if (localUser && localUser.username) {
+            this.user = localUser.username.split(" ")[0];
+        }
+    }
 
-  getEspecialidades(){
-    this.especialidadesService.getEspecialidades().subscribe(response => {
-      for (var key in response.body){
-        this.especialidades.push(response.body[key]['nome']);    
-      }
-    });      
-  }
-
-  cadastrar(servico: ServicoDTO){
-    console.log(servico);
-    this.cadastroServService.cadastraServicoCliente(servico).subscribe(
-      response => {
-        let alertMessage = this.alertCtrl.create({
-          message: response.body['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
+    ionBackPage() {
         this.navCtrl.setRoot('HomePage');
-      },
-      error => {
-        let alertMessage = this.alertCtrl.create({
-          message: error.error['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
+    }
+
+    getEspecialidades() {
+        this.especialidadesService.getEspecialidades().subscribe(response => {
+            for (var key in response.body) {
+                this.especialidades.push(response.body[key]['nome']);
+            }
         });
-        alertMessage.present();
-      }
-    );
-    
-  }
+    }
 
-  isEnabled() {
-    let isValid = false;
-    if (this.dados_servico.data && this.dados_servico.horario && this.dados_servico.valor && this.dados_servico.tipo
-       && this.dados_servico.endereco.bairro && this.dados_servico.endereco.rua && this.dados_servico.endereco.numero){
-      isValid=true;
-    } 
-    return isValid;
-  }
+    cadastrar(servico: ServicoDTO) {
+        console.log(servico);
+        this.cadastroServService.cadastraServicoCliente(servico).subscribe(
+            response => {
+                let alertMessage = this.alertCtrl.create({
+                    message: response.body['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+                this.navCtrl.setRoot('HomePage');
+            },
+            error => {
+                let alertMessage = this.alertCtrl.create({
+                    message: error.error['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+            }
+        );
+    }
 
-
+    isEnabled() {
+        let isValid = false;
+        if (this.dados_servico.data && this.dados_servico.horario && this.dados_servico.valor && this.dados_servico.tipo
+            && this.dados_servico.endereco.bairro && this.dados_servico.endereco.rua && this.dados_servico.endereco.numero) {
+            isValid = true;
+        }
+        return isValid;
+    }
 }

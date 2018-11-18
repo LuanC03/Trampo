@@ -4,12 +4,12 @@ import { ListagemServicoPage } from './listagem-servico';
 import { ItemListServicoModule } from '../../components/item-list-servico/item-list-servico.module';
 
 @NgModule({
-  declarations: [
-    ListagemServicoPage,
-  ],
-  imports: [
-    IonicPageModule.forChild(ListagemServicoPage),
-    ItemListServicoModule
-  ],
+    declarations: [
+        ListagemServicoPage,
+    ],
+    imports: [
+        IonicPageModule.forChild(ListagemServicoPage),
+        ItemListServicoModule
+    ],
 })
-export class ListagemServicoPageModule {}
+export class ListagemServicoPageModule { }

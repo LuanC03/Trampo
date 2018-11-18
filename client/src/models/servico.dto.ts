@@ -12,7 +12,9 @@ export interface ServicoDTO {
         bairro: string,
         numero: string
     },
-    fornecedor?: string,
+    fornecedor?: DadosUsuarioDTO,
     tipoStatus?: string,
-    cliente?: DadosUsuarioDTO
+    cliente?: DadosUsuarioDTO,
+    isAvaliadoCliente: boolean,
+    isAvaliadoFornecedor: boolean
 }

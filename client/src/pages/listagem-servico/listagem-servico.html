@@ -20,13 +20,18 @@
 <ion-content class="listagem-content">
     <div padding>
         <ion-grid>
-            <ion-row>
+            <ion-row *ngIf="servicos?.length > 0; else noServices">
                 <ion-col col-12>
                     <ion-list>
                         <item-list-servico *ngFor="let servico of servicos" [servico]="servico" (click)="openDetalhes(servico)"></item-list-servico>
                     </ion-list>
                 </ion-col>
             </ion-row>
+            <ng-template #noServices>
+                <ion-col col-12>
+                    <span>Não existe nenhum serviço ativo no momento.</span>
+                </ion-col>
+            </ng-template>
         </ion-grid>
     </div>
 </ion-content>

@@ -12,66 +12,65 @@ import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
 
 @IonicPage()
 @Component({
-  selector: 'page-listagem',
-  templateUrl: 'listagem-servico-aceitos.html',
+    selector: 'page-listagem',
+    templateUrl: 'listagem-servico-aceitos.html',
 })
 export class ListagemServicoAceitosPage {
-  user: DadosUsuarioDTO;
-  servicos: ServicoDTO[];
-  
+    user: DadosUsuarioDTO;
+    servicos: ServicoDTO[];
 
-  constructor(public navCtrl: NavController,
-    public autenticacaoService: AutenticacaoService,
-    public storageService: StorageService,
-    public servicoClienteService: ServicoClienteService,
-    public servicoFornecedorService: ServicoFornecedorService,
-    public usuarioService: UsuarioService,
-    public alertCtrl: AlertController)     {
 
-  }
+    constructor(public navCtrl: NavController,
+        public autenticacaoService: AutenticacaoService,
+        public storageService: StorageService,
+        public servicoClienteService: ServicoClienteService,
+        public servicoFornecedorService: ServicoFornecedorService,
+        public usuarioService: UsuarioService,
+        public alertCtrl: AlertController) {
 
-  ionViewDidLoad() {
-    this.usuarioService.getMyUser().subscribe(
-      response => {
-          this.servicoFornecedorService.getServicosAceitos().subscribe(
+    }
+
+    ionViewDidLoad() {
+        this.usuarioService.getMyUser().subscribe(
             response => {
-              this.servicos = response.body['data'];
-            });   
-      }
-    );
-    
-  }
+                this.servicoFornecedorService.getServicosAceitos().subscribe(
+                    response => {
+                        this.servicos = response.body['data'];
+                    });
+            }
+        );
 
-  ionBackPage(){
-    this.navCtrl.setRoot('HomePage');
-  }
+    }
 
-  openDetalhes(servico: ServicoDTO){
-    this.navCtrl.push('DetalheServicoPage', servico)
-  }
+    ionBackPage() {
+        this.navCtrl.setRoot('HomePage');
+    }
 
-  cancel(servico: ServicoDTO){
-    this.servicoFornecedorService.cancelaServico(servico).subscribe(
-      response => {
-        let alertMessage = this.alertCtrl.create({
-          message: response.body['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.navCtrl.setRoot("HomePage");
-      }, error => {
-        let alertMessage = this.alertCtrl.create({
-          message: error.error['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.navCtrl.setRoot("HomePage");
-      }
-    )
-  }
+    openDetalhes(servico: ServicoDTO) {
+        this.navCtrl.push('DetalheServicoPage', servico)
+    }
 
+    cancel(servico: ServicoDTO) {
+        this.servicoFornecedorService.cancelaServico(servico).subscribe(
+            response => {
+                let alertMessage = this.alertCtrl.create({
+                    message: response.body['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+                this.navCtrl.setRoot("HomePage");
+            }, error => {
+                let alertMessage = this.alertCtrl.create({
+                    message: error.error['message'],
+                    buttons: [{
+                        text: 'Ok'
+                    }]
+                });
+                alertMessage.present();
+                this.navCtrl.setRoot("HomePage");
+            }
+        )
+    }
 }

@@ -79,13 +79,7 @@ public class ServicoService {
 	}
 	
 	public List<Servico> getServicosCliente(Cliente cliente) throws Exception {
-		List<Servico> servicos = servicoRepository.findServicosCliente(cliente);
-		
-		if(servicos.size() == 0) {
-			throw new Exception("O usuário não possui nenhum serviço cadastrado!");
-		}
-		
-		return servicos;
+		return servicoRepository.findServicosCliente(cliente);
 	}
 	
 	public List<ServicoDAO> setServicosToDAO(List<Servico> servicos) {
@@ -266,14 +260,7 @@ public class ServicoService {
 		
 	}
 
-	
 	public List<Servico> getServicosAceitosDoFornecedor(Fornecedor fornecedor) throws Exception {
-		List<Servico> servicosAceitos = servicoRepository.findServicoFornecedorStatus(fornecedor, TipoStatus.ACEITO);
-
-		if(servicosAceitos.size() > 0) {
-			return servicosAceitos;
-		}
-		
-		throw new Exception("O fornecedor não possui nenhum serviço aceito!");
+		return servicoRepository.findServicoFornecedorStatus(fornecedor, TipoStatus.ACEITO);
 	}
 }

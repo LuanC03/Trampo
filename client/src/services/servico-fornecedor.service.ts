@@ -6,57 +6,65 @@ import { ServicoDTO } from "../models/servico.dto";
 @Injectable()
 export class ServicoFornecedorService {
 
-    constructor(public http: HttpClient){}
+    constructor(public http: HttpClient) { }
 
-    getServicos(){
+    getServicoById(id: number) {
+        return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/${id}`, 
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
+    }
+
+    getServicos() {
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor`,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
-    getHistorico(){
+    getHistorico() {
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/historico`,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
-    getServicosAceitos(){
+    getServicosAceitos() {
         return this.http.get(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/aceitos`,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
-    cadastrarServico(servico: ServicoDTO){
+    cadastrarServico(servico: ServicoDTO) {
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor`,
-        servico,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            servico,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
-    cancelaServico(servico: ServicoDTO){
+    cancelaServico(servico: ServicoDTO) {
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/cancelar`,
-        servico,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            servico,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
-    concluirServico(servico: ServicoDTO){
+    concluirServico(servico: ServicoDTO) {
         return this.http.post(`${API_CONFIG.baseUrl}/api/servicos/fornecedor/concluir`,
-        servico,
-        {
-            observe: 'response',
-            responseType: 'json'
-        });
+            servico,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
     }
 
 }

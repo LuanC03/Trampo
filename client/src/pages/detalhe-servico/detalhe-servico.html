@@ -116,12 +116,12 @@
                     </ion-item>
                 </ion-col>
             </ion-row>
-            <ion-row *ngIf="servico.status == 'ACEITO'">
+            <ion-row *ngIf="servico.tipoStatus == 'EM_ABERTO' && (user && user.tipo == 'CLIENTE')">
                 <ion-col col-12>
-                    <ion-item>
-                        <ion-label stacked>Nome do Fornecedor</ion-label>
-                        <ion-label>{{ servico.fornecedor.nomeCompleto }}</ion-label>
-                    </ion-item>
+                    <button class="cancelar" ion-button round full color="dark" (click)="cancelService(servico)">
+                        <ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon>Cancelar
+                        Serviço
+                    </button>
                 </ion-col>
             </ion-row>
             <ion-row *ngIf="servico.tipoStatus == 'EM_ABERTO' && (user && user.tipo == 'FORNECEDOR')">

@@ -23,8 +23,16 @@ export class AvaliacaoPage {
             bairro: "",
             numero: ""
         },
-        fornecedor: null,
         tipoStatus: "",
+        fornecedor: {
+            id: null,
+            login: "",
+            nomeCompleto: "",
+            tipo: "",
+            fotoPerfil: "",
+            email: "",
+            avaliacao: null
+        },
         cliente: {
             id: null,
             login: "",
@@ -33,7 +41,9 @@ export class AvaliacaoPage {
             fotoPerfil: "",
             email: "",
             avaliacao: null
-        }
+        },
+        isAvaliadoCliente: null,
+        isAvaliadoFornecedor: null
     };
 
     avaliar: AvaliacaoDTO = {
@@ -50,11 +60,7 @@ export class AvaliacaoPage {
         public viewCtrl: ViewController,
         public navCtrl: NavController,
         public navParams: NavParams) {
-        this.servico = navParams.get('servico');
-    }
-
-    ionViewDidLoad() {
-        console.log('ionViewDidLoad AvaliacaoPage');
+        this.servico = this.navParams['data'];
     }
 
     confirmarAvaliacao(avaliar: AvaliacaoDTO) {
@@ -69,7 +75,7 @@ export class AvaliacaoPage {
                     }]
                 });
                 alertMessage.present();
-                this.viewCtrl.dismiss();
+                this.navCtrl.pop();
             }, error => {
                 let alertMessage = this.alertCtrl.create({
                     message: error.error['message'],
@@ -78,7 +84,10 @@ export class AvaliacaoPage {
                     }]
                 });
                 alertMessage.present();
-                this.viewCtrl.dismiss();
             });
+    }
+
+    ionBackPage() {
+        this.navCtrl.pop();
     }
 }
