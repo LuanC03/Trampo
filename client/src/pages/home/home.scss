@@ -30,22 +30,11 @@ page-home {
         align-items: center;
         display: flex;
         flex-direction: column;
-    }
 
-    h5 {
-        font-weight: bold;  
-    }
-
-    p {
-        align-items: left;
-        font-size: 1em;
-    }
-
-    button.logout {
-        font-size: 12px;
-        font-weight: bold;  
-        height: 25px;
-        width: 110px;
+        ion-fab {
+            bottom: 25px;
+            right: calc(25px + env(safe-area-inset-right));
+        }
     }
 }
 
