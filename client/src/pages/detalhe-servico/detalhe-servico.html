@@ -1,125 +1,136 @@
 <ion-header class="detalhes-header">
-  <ion-navbar>
-    <h5>Detalhes do Serviço</h5>
-  </ion-navbar>
+    <ion-navbar>
+        <ion-grid>
+            <ion-row>
+                <ion-col col-12>
+                    <div class="title-header">
+                        <div class="title-text">
+                            <span>Detalhes do Serviço</span>
+                        </div>
+                    </div>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </ion-navbar>
 </ion-header>
 
 <ion-content class="detalhes-content">
-  <div padding>
-    <ion-list>
-
-      <form name="dadosClienteForm">      
-        <ion-card-content>
-          <h5>Cliente</h5>
-          <ion-item>
-            Nome:
-            <ion-note class="note" item-end>
-              {{ servico.cliente.nomeCompleto }}
-            </ion-note>
-          </ion-item>
-        </ion-card-content>     
-      </form>
-      
-      <form name="dadosServicoForm">
-        <ion-card-content>
-          <h5>Serviço</h5>
-          <ion-list>
-            <ion-item>
-                Descrição:
-              <ion-note class="note" item-end>
-                {{ servico.descricao }}
-              </ion-note>
-            </ion-item>
-            <ion-item>
-                Tipo do Serviço:
-              <ion-note class="note" item-end>
-                {{ servico.tipo }}
-              </ion-note>
-            </ion-item>
-            <ion-item>
-                Data do Serviço:
-              <ion-note class="note" item-end>
-                {{ servico.data }}
-              </ion-note>
-            </ion-item>
-            <ion-item>
-                Horário do Serviço:
-              <ion-note class="note" item-end>
-                {{ servico.horario }}
-              </ion-note>
-            </ion-item>
-            <ion-item>
-                Valor do Serviço:
-              <ion-note class="note" item-end>
-                {{ servico.valor }}
-              </ion-note>
-            </ion-item>
-            <ion-item>
-                Status:
-              <ion-note class="note" item-end>
-                {{ servico.tipoStatus }}
-              </ion-note>
-            </ion-item>
-          </ion-list>
-
-          <ion-card-content>
-            <h5>Endereço</h5>
-            <ion-list>
-              <ion-item>
-                  Rua:
-                <ion-note class="note" item-end>
-                  {{ servico.endereco.rua }}
-                </ion-note>
-              </ion-item>
-              <ion-item>
-                  Número:
-                <ion-note class="note" item-end>
-                  {{ servico.endereco.numero }}
-                </ion-note>
-              </ion-item>
-              <ion-item>
-                  Bairro:
-                <ion-note class="note" item-end>
-                  {{ servico.endereco.bairro }}
-                </ion-note>
-              </ion-item>
-            </ion-list>
-          </ion-card-content>
-
-        </ion-card-content>
-      </form>
-
-      <form name="dadosFornecedorForm" *ngIf="servico.status == 'ACEITO'">
-        <ion-card-content>
-          <h5>Fornecedor</h5>
-          <ion-list>
-            <ion-item>
-                Nome:
-              <ion-note class="note" item-end>
-                {{ servico.fornecedor.nomeCompleto }}
-              </ion-note>
-            </ion-item>
-          </ion-list>
-        </ion-card-content>
-      </form>
-
-      <ion-item *ngIf="servico.tipoStatus == 'EM_ABERTO' && user.tipo == 'FORNECEDOR'">      
-        <button class="aceitar" ion-button round full color="primary" (click)="cadastrarServico(servico)">
-          <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Aceitar Serviço
-        </button>
-      </ion-item>
-      <ion-item *ngIf="servico.tipoStatus == 'ACEITO' && user.tipo == 'FORNECEDOR'">      
-        <button class="finalizar" ion-button round full color="dark" (click)="concluirServico(servico)">
-            <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Concluir
-        </button>
-      </ion-item>
-      <ion-item>      
-        <button class="voltar" ion-button round full color="pink" (click)="ionBackPage()">
-          <ion-icon ios="ios-arrow-back" md="md-arrow-back"></ion-icon>Voltar
-        </button>
-      </ion-item>
-
-    </ion-list> 
-  </div>
-
+    <div class="image-details-content">
+        <ion-icon name="contact"></ion-icon>
+    </div>
+    <div padding>
+        <ion-grid>
+            <ion-row *ngIf="servico.tipoStatus != 'EM_ABERTO' && (user && user.tipo == 'CLIENTE')">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Nome do Fornecedor</ion-label>
+                        <ion-label>{{ servico.fornecedor.nomeCompleto }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="servico.tipoStatus != 'EM_ABERTO' && (user && user.tipo == 'FORNECEDOR')">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Nome do Cliente</ion-label>
+                        <ion-label>{{ servico.cliente.nomeCompleto }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Descrição</ion-label>
+                        <ion-label>{{ servico.descricao }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Tipo do Serviço</ion-label>
+                        <ion-label>{{ servico.tipo }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Data do Serviço</ion-label>
+                        <ion-label>{{ servico.data }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Horário do Serviço</ion-label>
+                        <ion-label>{{ servico.horario }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Valor do Serviço</ion-label>
+                        <ion-label>{{ servico.valor }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Status</ion-label>
+                        <ion-label>{{ servico.tipoStatus }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Rua</ion-label>
+                        <ion-label>{{ servico.endereco.rua }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Número</ion-label>
+                        <ion-label>{{ servico.endereco.numero }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Bairro</ion-label>
+                        <ion-label>{{ servico.endereco.bairro }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="servico.status == 'ACEITO'">
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Nome do Fornecedor</ion-label>
+                        <ion-label>{{ servico.fornecedor.nomeCompleto }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="servico.tipoStatus == 'EM_ABERTO' && (user && user.tipo == 'FORNECEDOR')">
+                <ion-col col-12>
+                    <button class="aceitar" ion-button round full color="pink" (click)="cadastrarServico(servico)">
+                        <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Aceitar
+                        Serviço
+                    </button>
+                </ion-col>
+            </ion-row>
+            <ion-row *ngIf="servico.tipoStatus == 'ACEITO' && (user && user.tipo == 'FORNECEDOR')">
+                <ion-col col-12>
+                    <button class="finalizar" ion-button round full color="dark" (click)="concluirServico(servico)">
+                        <ion-icon ios="ios-checkmark-circle-outline" md="md-checkmark-circle-outline"></ion-icon>Concluir
+                    </button>
+                </ion-col>
+            </ion-row>
+        </ion-grid>
+    </div>
 </ion-content>

@@ -32,11 +32,12 @@ page-requisicao {
 
     button.confirmar {
         font-weight: bold;
+        
+        ion-icon {
+            margin-right: 10px;
+        }
     }
 
-    ion-icon {
-        padding-right: 10px;
-    }
 
     ion-note.note {
         opacity: 0.6;

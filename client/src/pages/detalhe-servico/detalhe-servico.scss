@@ -2,50 +2,67 @@ page-detalhes {
     font-family: Dessau-Light;
 
     ion-header.detalhes-header {
-        font-weight: bold;  
+        color:  white;
+        font-weight: bold;
 
-        display: flex;
-        align-items: center;
-        flex-direction: column;
+        .title-header {
+            display: table;
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 100%;
 
-        color:  black;
-        background: #EFEEF4;
+            button {
+                float: left;
+            }
+
+            .title-text {
+                align-items: center; 
+                height: 32px;
+            }
+        }
+
+        .toolbar-md {
+            height: 56px;
+        }
     }
 
-    ion-content.detalhes-content {      
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-    }
+    ion-content.detalhes-content {
+        
+        .image-details-content {
+            background-color: #e0e0e0;
+            display: table;
+            font-size: 25vh;
+            height: 25vh;
+            line-height: 25vh;
+            text-align: center;
+            vertical-align: middle;
+            width: 100%;
+        }
 
-    div {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        background: transparent !important;
-    }
-
-    p {
-        font-size: 1em;
-        align-items: left;
+        ion-label {
+            margin: 0 8px 11px 0;
+        }
     }
 
     h5 {
         font-weight: bold;  
     }
-
-    button.voltar, .aceitar, .finalizar {
-        font-size: 25px;
-        font-weight: bold;
+    
+    p {
+        align-items: left;
+        font-size: 1em;
     }
 
-    ion-icon {
-        padding-right: 10px;
+    button.aceitar, .finalizar {
+        font-weight: bold;
+
+        ion-icon {
+            margin-right: 10px;
+        }
     }
 
     ion-note.note {
-        opacity: 0.6;
         color: black;
+        opacity: 0.6;
     }
-
 }

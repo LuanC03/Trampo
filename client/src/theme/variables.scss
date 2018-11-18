@@ -35,7 +35,7 @@ $app-direction: ltr;
 
 $colors: (
   primary:    #212121,
-  secondary:  gray,
+  secondary:  #757575,
   danger:     #f53d3d,
   light:      #f4f4f4,
   dark:       #222,
@@ -45,7 +45,7 @@ $colors: (
 
 );
 
-$toolbar-background: color($colors, primary, base);
+$toolbar-background: color($colors, secondary, base);
 
 $text-input-md-highlight-color-valid: 1px #dedede;
 
