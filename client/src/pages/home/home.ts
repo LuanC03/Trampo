@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, Events, NavParams } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
-import { RequisicaoServicoPage } from '../requisicao-servico/requisicao-servico';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -80,4 +79,5 @@ export class HomePage {
     openAddService() {
         this.navCtrl.push('RequisicaoServicoPage');
     }
+
 }

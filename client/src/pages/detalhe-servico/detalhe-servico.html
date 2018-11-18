@@ -118,7 +118,7 @@
             </ion-row>
             <ion-row *ngIf="servico.tipoStatus == 'EM_ABERTO' && (user && user.tipo == 'CLIENTE')">
                 <ion-col col-12>
-                    <button class="cancelar" ion-button round full color="dark" (click)="cancelService(servico)">
+                    <button class="cancelar" ion-button round full color="dark" (click)="cancelaServicoCliente(servico)">
                         <ion-icon ios="ios-close-circle" md="md-close-circle"></ion-icon>Cancelar
                         Serviço
                     </button>

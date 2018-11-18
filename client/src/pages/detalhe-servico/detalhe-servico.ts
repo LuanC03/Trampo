@@ -6,6 +6,8 @@ import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
 import { UsuarioService } from '../../services/usuario.service';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
+import { ServicoClienteService } from '../../services/servico-cliente.service';
+
 
 import { ServicoDTO } from '../../models/servico.dto';
 import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
@@ -75,6 +77,7 @@ export class DetalheServicoPage {
         public storageService: StorageService,
         public avaliacaoService: AvaliacaoService,
         public autenticacaoService: AutenticacaoService,
+        public servicoClienteService: ServicoClienteService,
         public servicoFornecedorService: ServicoFornecedorService) { }
 
     ionViewDidLoad() {
@@ -143,8 +146,10 @@ export class DetalheServicoPage {
             });
     }
 
-    cancelService(servico: ServicoDTO) {
-        this.servicoFornecedorService.cancelaServico(servico).subscribe(
+
+
+    cancelaServicoCliente(servico: ServicoDTO) {
+        this.servicoClienteService.cancelaServico(servico).subscribe(
             response => {
                 let alertMessage = this.alertCtrl.create({
                     message: response.body['message'],
