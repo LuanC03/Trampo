@@ -28,11 +28,19 @@
     </ion-avatar>
     <div padding>
         <ion-grid>
+            <ion-row>
+                <ion-col col-12>
+                    <ion-item>
+                        <ion-label stacked>Status</ion-label>
+                        <ion-label>{{ servico.tipoStatus }}</ion-label>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
             <ion-row *ngIf="servico.tipoStatus != 'EM_ABERTO' && (user && user.tipo == 'CLIENTE')">
                 <ion-col col-12>
                     <ion-item>
                         <ion-label stacked>Nome do Fornecedor</ion-label>
-                        <ion-label>{{ servico.fornecedor.nomeCompleto }}</ion-label>
+                        <ion-label>{{ servico.fornecedor?.nomeCompleto || "Nenhum fornecedor havia aceitado o serviço" }}</ion-label>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -87,8 +95,8 @@
             <ion-row>
                 <ion-col col-12>
                     <ion-item>
-                        <ion-label stacked>Status</ion-label>
-                        <ion-label>{{ servico.tipoStatus }}</ion-label>
+                        <ion-label stacked>Bairro</ion-label>
+                        <ion-label>{{ servico.endereco.bairro }}</ion-label>
                     </ion-item>
                 </ion-col>
             </ion-row>
@@ -105,14 +113,6 @@
                     <ion-item>
                         <ion-label stacked>Número</ion-label>
                         <ion-label>{{ servico.endereco.numero }}</ion-label>
-                    </ion-item>
-                </ion-col>
-            </ion-row>
-            <ion-row>
-                <ion-col col-12>
-                    <ion-item>
-                        <ion-label stacked>Bairro</ion-label>
-                        <ion-label>{{ servico.endereco.bairro }}</ion-label>
                     </ion-item>
                 </ion-col>
             </ion-row>

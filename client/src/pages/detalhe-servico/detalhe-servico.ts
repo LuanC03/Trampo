@@ -80,22 +80,25 @@ export class DetalheServicoPage {
         public servicoClienteService: ServicoClienteService,
         public servicoFornecedorService: ServicoFornecedorService) { }
 
+
     ionViewDidLoad() {
         this.usuarioService.getMyUser().subscribe(
             response => {
                 this.user = response['data'];
+                this.servico = this.navParams['data'];
 
-                this.servicoFornecedorService.getServicoById(this.navParams['data'].id).subscribe(
-                    response => {
-                        this.servico = response.body['data'];
-
-                        if (this.user.tipo == 'CLIENTE' && this.servico.tipoStatus == 'CONCLUIDO' && !this.servico.isAvaliadoCliente) {
+                if(this.user.tipo == 'FORNECEDOR') {
+                    if (this.servico.tipoStatus == 'CONCLUIDO' && !this.servico.isAvaliadoFornecedor) {
+                        this.avaliarServico();
+                    }
+                } else {
+                    if (this.servico.tipoStatus == 'CONCLUIDO' && !this.servico.isAvaliadoCliente) {
                             this.avaliarServico();
-                        } else if (this.user.tipo == 'FORNECEDOR' && this.servico.tipoStatus == 'CONCLUIDO' && !this.servico.isAvaliadoFornecedor) {
-                            this.avaliarServico();
-                        }
-                    });
+                    }
+                }
+                console.log(this.servico);
             });
+
     }
 
     ionBackPage() {
@@ -172,7 +175,13 @@ export class DetalheServicoPage {
         )
     }
 
-    avaliarServico() {
+    avaliarServico() {         
         this.navCtrl.push('AvaliacaoPage', this.servico);
+
+        if(this.user.tipo == 'FORNECEDOR') {                 
+            this.servico.isAvaliadoFornecedor = true;                
+        } else {
+            this.servico.isAvaliadoCliente = true;
+        }
     }
 }

@@ -50,27 +50,4 @@ export class ListagemServicoAceitosPage {
         this.navCtrl.push('DetalheServicoPage', servico)
     }
 
-    cancel(servico: ServicoDTO) {
-        this.servicoFornecedorService.cancelaServico(servico).subscribe(
-            response => {
-                let alertMessage = this.alertCtrl.create({
-                    message: response.body['message'],
-                    buttons: [{
-                        text: 'Ok'
-                    }]
-                });
-                alertMessage.present();
-                this.navCtrl.setRoot("HomePage");
-            }, error => {
-                let alertMessage = this.alertCtrl.create({
-                    message: error.error['message'],
-                    buttons: [{
-                        text: 'Ok'
-                    }]
-                });
-                alertMessage.present();
-                this.navCtrl.setRoot("HomePage");
-            }
-        )
-    }
 }
