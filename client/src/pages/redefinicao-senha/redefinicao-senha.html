@@ -19,17 +19,17 @@
         <ion-grid>
             <ion-row>
                 <ion-col col-12>
-                    <h4 class="title">Por favor, informe seu email para enviarmos sua nova senha!</h4>
+                    <h4 class="title">Por favor, informe seu email para enviarmos sua nova senha.</h4>
                 </ion-col>
             </ion-row>
             <ion-row>
                 <ion-col col-12>
                     <ion-item>
-                        <ion-label floating> Email</ion-label>
+                        <ion-label floating>E-mail</ion-label>
                         <ion-input type="email" name="email" ngModel required email #email="ngModel" [class.invalid]="email.errors && email.dirty"></ion-input>
                     </ion-item>
                     <div class="error-message" *ngIf="email.errors?.email && email.dirty">
-                        <span>Email inválido</span>
+                        <span>E-mail inválido</span>
                     </div>
                 </ion-col>
             </ion-row>
