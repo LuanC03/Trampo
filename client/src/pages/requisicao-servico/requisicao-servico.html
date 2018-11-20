@@ -52,8 +52,9 @@
                     <ion-col col-12>
                         <ion-item>
                             <ion-label stacked>Data do Serviço:</ion-label>
-                            <ion-datetime displayFormat="DD MMM YYYY" placeholder="Informe a data do início do serviço"
-                                name="data" [(ngModel)]="dados_servico.data"></ion-datetime>
+                            <ion-datetime displayFormat="DD MMM YYYY" monthShortNames='Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez' doneText="Ok" cancelText="Cancelar"
+                            placeholder="Informe a data do início do serviço"
+                                name="data" [min]="minData" [max]="maxData" [(ngModel)]="dados_servico.data"></ion-datetime>
                         </ion-item>
                     </ion-col>
                 </ion-row>
@@ -61,8 +62,7 @@
                     <ion-col col-12>
                         <ion-item>
                             <ion-label stacked>Horário do Serviço:</ion-label>
-                            <ion-datetime displayFormat="H:mm " pickerFormat="H mm" placeholder="Informe o horário do início do serviço"
-                                name="horario" [(ngModel)]="dados_servico.horario"></ion-datetime>
+                            <ion-datetime displayFormat="HH:mm " pickerFormat="HH mm" min="07:00" max="20:00" doneText="Ok" cancelText="Cancelar" placeholder="Informe o horário do início do serviço" name="horario" [(ngModel)]="dados_servico.horario"></ion-datetime>
                         </ion-item>
                     </ion-col>
                 </ion-row>

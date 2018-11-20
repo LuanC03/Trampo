@@ -14,7 +14,9 @@ import { UsuarioService } from '../../services/usuario.service';
     templateUrl: 'requisicao-servico.html',
 })
 export class RequisicaoServicoPage {
-
+    
+    minData = null;
+    maxData = null;
     user: string;
     especialidades: string[] = [];
 
@@ -42,6 +44,8 @@ export class RequisicaoServicoPage {
         public alertCtrl: AlertController,
         public usuarioService: UsuarioService) {
         this.getEspecialidades();
+        this.minData = new Date().toISOString();
+        this.maxData = (new Date().getFullYear()) + 2; // O "2" representa anos posteriores
     }
 
     ionViewDidLoad() {
