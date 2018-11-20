@@ -43,4 +43,9 @@ export class PerfilPage {
     editar() {
         this.navCtrl.push('EditPerfilPage');
     }
+
+    getMediaAvaliacao(nota: number) {
+        return ((nota/5)*100) + '%';
+
+    }
 }

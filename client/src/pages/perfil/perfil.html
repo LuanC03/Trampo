@@ -28,8 +28,11 @@
                 </ion-row>
                 <ion-row>
                     <ion-col col-12 *ngIf="dadosUsuario.avaliacao > 0; else noRating">
+                        <span>Média Avaliações: </span>
                         <span>{{ dadosUsuario.avaliacao | number: '1.2-2'}}</span>
-                        <ion-icon name="star"></ion-icon>
+                        <span class="stars align" >
+                            <span   [ngStyle]="{ 'width': getMediaAvaliacao(dadosUsuario.avaliacao) }"></span>
+                        </span>                      
                     </ion-col>
                     <ng-template #noRating>
                         <ion-col col-12>

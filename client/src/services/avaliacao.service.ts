@@ -17,4 +17,13 @@ export class AvaliacaoService {
                 responseType: 'json'
             });
     }
+
+
+    getAvaliacaoServico() {
+        return this.http.get(`${API_CONFIG.baseUrl}/api/usuarios/avaliacao/get`,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
+    }
 }
