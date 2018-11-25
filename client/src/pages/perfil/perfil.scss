@@ -2,44 +2,73 @@ page-perfil {
      font-family: Dessau-Light;
 
      ion-header.perfil-header {
-        font-weight: bold;  
+        color:  white;
+        font-weight: bold;
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
+        .title-header {
+            display: table;
+            font-size: 1.5em;
+            font-weight: bold;
+            width: 100%;
 
-        color:  black;
-        background: #EFEEF4;
+            button {
+                float: left;
+            }
+
+            .title-text {
+                align-items: center; 
+                height: 32px;
+            }
+        }
+
+        .toolbar-md {
+            height: 56px;
+        }
     }
 
     ion-content.perfil-content {        
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-    }
+        ion-label {
+            margin: 0 8px 11px 0;
+        }
 
-    div {
-        display: flex;
-        align-items: center;
-        flex-direction: column;
-        background: transparent !important;
-    }
+        ion-avatar {
+            background-color: #e0e0e0;
+            text-align: center;
 
-    p {
-        font-size: 1em;
-    }
+            ion-card-content {
+                width: 100%;
+            }
 
-    h5 {
-        font-weight: bold;  
+            img {
+                margin-left: auto;
+                margin-right: auto;
+            }
+        }
     }
 
     button.editar {
-        font-size: 25px;
         font-weight: bold;
+        
+        ion-icon {
+            margin-right: 10px;
+        }
     }
 
-    ion-icon {
-        padding-right: 10px;
+    span.stars, .stars span {
+        display: block;
+        background: url('../../assets/icon/stars.png') 0 -16px repeat-x;
+        width: 80px;
+        height: 16px;
+    }
+
+    span.stars span {
+        background-position: 0 0;
+    }
+
+    .align {
+        display:table;
+        margin-left: auto;
+        margin-right: auto;
     }
 
 }

@@ -24,7 +24,8 @@ export class ListagemServicoPage {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
-    email : ""
+    email : "",
+    avaliacao: null,
   };
   servicos: ServicoDTO[];
   
@@ -68,31 +69,6 @@ export class ListagemServicoPage {
 
   openDetalhes(servico: ServicoDTO){
     this.navCtrl.push('DetalheServicoPage', servico)
-  }
-
-  cancel(servico: ServicoDTO){
-    console.log(servico);
-    this.servicoClienteService.cancelaServico(servico).subscribe(
-      response => {
-        let alertMessage = this.alertCtrl.create({
-          message: response.body['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.navCtrl.setRoot("HomePage");
-      },error => {
-        console.log(error);
-        let alertMessage = this.alertCtrl.create({
-          message: error.error['message'],
-          buttons: [{
-            text: 'Ok'
-          }]
-        });
-        alertMessage.present();
-        this.navCtrl.setRoot("HomePage");
-      });
   }
 
 }

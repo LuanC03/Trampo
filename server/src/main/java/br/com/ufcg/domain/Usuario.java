@@ -157,7 +157,7 @@ public abstract class Usuario implements Serializable {
 			}
 		}
 		
-		return 5.0;
+		return Double.valueOf(0);
 	}
 	@Override
 	public int hashCode() {

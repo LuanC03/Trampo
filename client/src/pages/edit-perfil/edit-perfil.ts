@@ -23,7 +23,8 @@ export class EditPerfilPage {
     fotoPerfil : "",
     nomeCompleto : "",
     login : "",
-    email : ""
+    email : "",
+    avaliacao: null
   };
 
   dadosAtualizados : DadosAtualizadosDTO = {
@@ -31,6 +32,7 @@ export class EditPerfilPage {
     novoNomeCompleto : "",
     novoLogin : "",
     novoEmail : "",
+    avaliacao: null,
     novaEspecialidades : []
   }
   

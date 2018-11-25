@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -26,9 +27,25 @@ public class ServicoController {
 
 	@Autowired
 	private ServicoService servicoService;
-	
+
 	@Autowired
 	private UsuarioService usuarioService;
+
+	@RequestMapping(value = "/api/servicos/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+	public ResponseEntity<Response> getServicoById(@PathVariable Long id) {
+		Response response;
+
+		try {
+			Servico servico = servicoService.getServicoByID(id);
+			
+			response = new Response("Serviço solicitado", HttpStatus.OK.value(), servico.toDAO());
+			return new ResponseEntity<>(response, HttpStatus.OK);
+
+		} catch (Exception e) {
+			response = new Response(e.getMessage(), HttpStatus.BAD_REQUEST.value());
+			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+		}
+	}
 
 	@RequestMapping(value = "/api/servicos/fornecedor/historico", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
 	public ResponseEntity<Response> historicoServicoFornecedor(HttpServletRequest request) {

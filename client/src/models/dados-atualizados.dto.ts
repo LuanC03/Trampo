@@ -4,4 +4,5 @@ export interface DadosAtualizadosDTO {
     novoLogin : string;
     novoEmail : string;
     novaEspecialidades? : string[];
+    avaliacao: number;
 }

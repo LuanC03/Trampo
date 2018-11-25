@@ -207,7 +207,7 @@ public class Servico {
 
 	public ServicoDAO toDAO() {
 		return new ServicoDAO(this.id, this.tipo, this.descricao, this.data, this.horario, this.valor, this.endereco,
-				this.cliente, this.fornecedor, this.status);
+				this.cliente, this.fornecedor, this.status, this.clienteAvaliou, this.fornecedorAvaliou);
 	}
 
 	public List<TipoUsuario> getQuemAvaliou() {

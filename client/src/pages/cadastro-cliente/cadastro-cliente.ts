@@ -22,7 +22,8 @@ export class CadastroClientePage {
     login: "",
     email: "",
     senha: "",
-    conf_senha: ""
+    conf_senha: "",
+    avaliacao: null
   };
 
   constructor(
