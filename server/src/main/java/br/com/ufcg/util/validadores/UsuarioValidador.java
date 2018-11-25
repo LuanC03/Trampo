@@ -1,5 +1,8 @@
 package br.com.ufcg.util.validadores;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import br.com.ufcg.domain.Fornecedor;
 import br.com.ufcg.domain.Usuario;
 import br.com.ufcg.domain.enums.TipoUsuario;
@@ -13,24 +16,26 @@ public class UsuarioValidador {
 	private static final int TAMANHO_MINIMO_LOGIN = 4;
 	private static final int TAMANHO_MAXIMO_LOGIN = 15;
 	
-	private static final String TAMANHO_MAXIMO_LOGIN_EXCEPTION = "O login deve ter no maximo 15 digitos";
-	private static final String TAMANHO_MAXIMO_SENHA_EXCEPTION = "A senha deve ter no maximo 20 digitos";
-	private static final String TAMANHO_MAXIMO_NOME_EXCEPTION = "O nome completo deve ter no maximo 50 digitos";
-	private static final String TAMANHO_MINIMO_NOME_EXCEPTION = "O nome completo deve ter no minimo 8 digitos";
-	private static final String TAMANHO_MINIMO_LOGIN_EXCEPTION = "O login deve ter no minimo 4 digitos e nao pode conter espaco";
-	private static final String TAMANHO_MINIMO_SENHA_EXCEPTION = "A senha deve ter no minimo 8 digitos";
-	private static final String FORNECEDOR_SEM_ESPECIALIDADE = "O fornecedor tem que ter ao menos uma especialidade.";
+	public static final String TAMANHO_MAXIMO_LOGIN_EXCEPTION = "O login deve ter no maximo 15 digitos";
+	public static final String TAMANHO_MAXIMO_SENHA_EXCEPTION = "A senha deve ter no maximo 20 digitos";
+	public static final String TAMANHO_MAXIMO_NOME_EXCEPTION = "O nome completo deve ter no maximo 50 digitos";
+	public static final String TAMANHO_MINIMO_NOME_EXCEPTION = "O nome completo deve ter no minimo 8 digitos";
+	public static final String TAMANHO_MINIMO_LOGIN_EXCEPTION = "O login deve ter no minimo 4 digitos e nao pode conter espaco";
+	public static final String TAMANHO_MINIMO_SENHA_EXCEPTION = "A senha deve ter no minimo 8 digitos";
+	public static final String FORNECEDOR_SEM_ESPECIALIDADE = "O fornecedor tem que ter ao menos uma especialidade.";
+	public static final String FORMATO_EMAIL_INVALIDO = "Formato de email inválido! Tente outro!";
 	
 	public static boolean validaUsuario(Usuario usuario) throws Exception {
 		boolean senhaComMaisDe8Digitos = validaSenha(usuario.getSenha());
 		boolean loginValido = validaLogin(usuario.getLogin());
 		boolean nomeValido = validaNome(usuario.getNomeCompleto());
+		boolean emailValido = validaEmail(usuario.getEmail());
 		boolean temEspecialidade = validaEspecialidade(usuario);
 		
-		return (senhaComMaisDe8Digitos && loginValido && nomeValido && temEspecialidade);
+		return (senhaComMaisDe8Digitos && loginValido && nomeValido && temEspecialidade && emailValido);
 	}
 	
-	private static boolean validaEspecialidade(Usuario usuario) throws Exception {
+	public static boolean validaEspecialidade(Usuario usuario) throws Exception {
 		if(usuario.getTipo().equals(TipoUsuario.CLIENTE)) {
 			return true;
 		}
@@ -44,7 +49,7 @@ public class UsuarioValidador {
 		throw new Exception(FORNECEDOR_SEM_ESPECIALIDADE);
 	}
 
-	private static boolean validaNome(String nomeCompleto) throws Exception {
+	public static boolean validaNome(String nomeCompleto) throws Exception {
 		int tamanho = nomeCompleto.length();
 		
 		if (tamanho < TAMANHO_MINIMO_NOME) {
@@ -58,7 +63,7 @@ public class UsuarioValidador {
 		return true;
 	}
 
-	private static boolean validaLogin(String login) throws Exception  {
+	public static boolean validaLogin(String login) throws Exception  {
 		int tamanho = login.length();
 		boolean loginComEspaco = login.contains(" ");
 		
@@ -73,7 +78,7 @@ public class UsuarioValidador {
 		return true;
 	}
 	
-	private static boolean validaSenha(String senha) throws Exception {
+	public static boolean validaSenha(String senha) throws Exception {
 		int tamanho = senha.length();
 		
 		if (tamanho < TAMANHO_MINIMO_SENHA) {
@@ -86,4 +91,18 @@ public class UsuarioValidador {
 		
 		return true;
 	}
+	
+	public static boolean validaEmail(String email) throws Exception {
+        
+        if (email != null && email.length() > 0) {
+            String expression = "^[\\w\\.-]+@([\\w\\-]+\\.)+[A-Z]{2,4}$";
+            Pattern pattern = Pattern.compile(expression, Pattern.CASE_INSENSITIVE);
+            Matcher matcher = pattern.matcher(email);
+            if (matcher.matches()) {
+               return true;
+            }
+        }
+        
+       throw new Exception(FORMATO_EMAIL_INVALIDO);
+    }
 }

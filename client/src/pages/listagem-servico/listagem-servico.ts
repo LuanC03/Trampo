@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 
 import { AutenticacaoService } from '../../services/autenticacao.service';
 import { StorageService } from '../../services/storage.service';
@@ -7,7 +7,8 @@ import { ServicoClienteService } from '../../services/servico-cliente.service';
 import { ServicoDTO } from '../../models/servico.dto';
 import { ServicoFornecedorService } from '../../services/servico-fornecedor.service';
 import { UsuarioService } from '../../services/usuario.service';
-import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
+import { DadosUsuarioDTO } from '../../models/dados-usuario.dto';
+
 
 
 @IonicPage()
@@ -17,7 +18,15 @@ import { DadosUsuarioLogadoDTO } from '../../models/dados-usuario-logado.dto';
 })
 export class ListagemServicoPage {
 
-  user: DadosUsuarioLogadoDTO;
+  user: DadosUsuarioDTO = {
+    id: null,
+    tipo: "",
+    fotoPerfil : "",
+    nomeCompleto : "",
+    login : "",
+    email : "",
+    avaliacao: null,
+  };
   servicos: ServicoDTO[];
   
 
@@ -26,18 +35,23 @@ export class ListagemServicoPage {
     public storageService: StorageService,
     public servicoClienteService: ServicoClienteService,
     public servicoFornecedorService: ServicoFornecedorService,
-    public usuarioService: UsuarioService)     {
+    public usuarioService: UsuarioService,
+    public alertCtrl: AlertController)     {
 
   }
 
   ionViewDidLoad() {
-    this.usuarioService.findByUsername(this.storageService.getLocalUser().username).subscribe(
+    this.usuarioService.getMyUser().subscribe(
+      response => {
+        this.user = response['data'];
+      }
+    )
+    this.usuarioService.getMyUser().subscribe(
       response => {
         if (response['data']['tipo'] == 'CLIENTE'){
           this.servicoClienteService.getServicos().subscribe(
             response => {
               this.servicos = response.body['data'];
-              console.log(this.servicos);
             });
         }else {
           this.servicoFornecedorService.getServicos().subscribe(
@@ -46,8 +60,7 @@ export class ListagemServicoPage {
             });   
         }
       }
-    );
-    
+    );    
   }
 
   ionBackPage(){

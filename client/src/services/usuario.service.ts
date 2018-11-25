@@ -2,6 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { API_CONFIG } from "../config/api.config";
 import { StorageService } from "./storage.service";
+import { DadosAtualizadosDTO } from "../models/dados-atualizados.dto";
+import { senhaAtualizadaDTO } from "../models/senha-atualizada.dto";
 
 
 @Injectable()
@@ -14,9 +16,29 @@ export class UsuarioService {
         public storage: StorageService){
     }
 
-    findByUsername(username: string) {
-        return this.http.get(`${API_CONFIG.baseUrl}/api/cliente/${username}`);
+    getMyUser() {
+        return this.http.get(`${API_CONFIG.baseUrl}/api/usuarios/me`);
     }
 
-  
+    atualizaDados(dadosAtualizados : DadosAtualizadosDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/api/usuarios/ajustes`,
+            dadosAtualizados,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
+    }
+
+    atualizaSenha(senhaAtualizada : senhaAtualizadaDTO){
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/api/usuarios/senha`,
+            senhaAtualizada,
+            {
+                observe: 'response',
+                responseType: 'json'
+            });
+    }
+
+
 }

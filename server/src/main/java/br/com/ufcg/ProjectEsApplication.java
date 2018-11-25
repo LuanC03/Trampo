@@ -25,11 +25,13 @@ public class ProjectEsApplication {
 	public FilterRegistrationBean filtroJwt() {
 		ArrayList<String> urlPatterns = new ArrayList<>();
 		urlPatterns.add("/api/servicos/*");
+		urlPatterns.add("/api/usuarios/*");
 		FilterRegistrationBean frb = new FilterRegistrationBean();
 		frb.setFilter(new TokenFilter());
 		frb.setUrlPatterns(urlPatterns);
 		return frb;
 	}
+	
 	
 	@Bean
 	public FilterRegistrationBean filtroCliente() {
