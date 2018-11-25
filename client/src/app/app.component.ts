@@ -8,7 +8,7 @@ import { AutenticacaoService } from '../services/autenticacao.service';
     templateUrl: 'app.html'
 })
 export class MyApp {
-    
+
     @ViewChild(Nav) nav: Nav;
     rootPage: string = 'LoginPage';
     pages: Array<{ title: string, component: string }>;

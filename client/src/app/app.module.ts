@@ -34,7 +34,7 @@ import { AvaliacaoService } from '../services/avaliacao.service';
         StatusBar,
         SplashScreen,
         { provide: ErrorHandler, useClass: IonicErrorHandler },
-        {provide: LocationStrategy, useClass: PathLocationStrategy},  //Ativar essa função na SPRINT 4
+        // {provide: LocationStrategy, useClass: PathLocationStrategy},  //Ativar essa função na SPRINT 4
         CadastroUsuarioService,
         AutenticacaoService,
         StorageService,
