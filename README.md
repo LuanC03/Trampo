@@ -1,6 +1,6 @@
 # Trampo
 
-Repositório contento o Projeto da Disciplina de Engenharia de Software do período 2018.2
+Repositório contendo o Projeto da Disciplina de Engenharia de Software do período 2018.2
 
 **Link da hospedagem do Heroku** - https://trampo-projeto-es.herokuapp.com/
 
